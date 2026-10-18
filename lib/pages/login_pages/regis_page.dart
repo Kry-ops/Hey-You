@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'fake_loading_page.dart';
+
 enum JenisKelamin {
   cowok,
   cewek,
@@ -43,8 +44,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     final nama = _namaController.text.trim();
     final tinggi = double.tryParse(_tinggiController.text);
 
-    if (nama.isEmpty || tinggi == null ||
-        tinggi <= 0) {
+    if (nama.isEmpty || tinggi == null || tinggi <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Isi yang benar tuh data jing'),
@@ -52,13 +52,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
       return;
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('OK thank'),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FakeLoadingPage(
+          nama: nama,
+          tinggi: tinggi,
+        ),
       ),
     );
   }
+
 
   @override
   void dispose() {
