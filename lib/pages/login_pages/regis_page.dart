@@ -19,6 +19,13 @@ enum HewanFavorit {
   pohon,
 }
 
+enum Pekerjaan {
+  mahasiswa,
+  hero,
+  asli,
+  pengangguran,
+}
+
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
 
@@ -32,28 +39,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _tinggiController = TextEditingController();
   final _hewanController = TextEditingController();
 
-  DateTime? _tanggalLahir;
-
-  Future<void> _pilihTanggalLahir() async {
-    final tanggal = await showDatePicker(
-      context: context,
-      initialDate: DateTime(2005, 1, 1),
-      firstDate: DateTime(1950),
-      lastDate: DateTime.now(),
-    );
-
-    if (tanggal != null) {
-      setState(() {
-        _tanggalLahir = tanggal;
-      });
-    }
-  }
-
   void _daftar() {
     final nama = _namaController.text.trim();
     final tinggi = double.tryParse(_tinggiController.text);
 
-    if (nama.isEmpty || _tanggalLahir == null || tinggi == null ||
+    if (nama.isEmpty || tinggi == null ||
         tinggi <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -82,6 +72,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 // Dipercaya baris kode ini untuk form enum AKA pilih salah satu
 JenisKelamin? _jenisKelamin;
 HewanFavorit? _hewanFavorit;
+Pekerjaan? _pekerjaan;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +85,7 @@ HewanFavorit? _hewanFavorit;
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                                
+
               const SizedBox(height: 2),
               Center(
                 child: SizedBox(
@@ -103,7 +94,6 @@ HewanFavorit? _hewanFavorit;
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // Background logo
                       Container(
                         width: double.infinity,
                         height: 190,
@@ -119,8 +109,6 @@ HewanFavorit? _hewanFavorit;
                           ],
                         ),
                       ),
-
-                      // Animated logo text
                       DefaultTextStyle(
                         style: const TextStyle(
                           fontSize: 40,
@@ -133,9 +121,11 @@ HewanFavorit? _hewanFavorit;
                           animatedTexts: [
                             FadeAnimatedText('HEY!'),
                             FadeAnimatedText('HEY, YOU!'),
+                            FadeAnimatedText('YEAH YOU!'),
+                            FadeAnimatedText('MONYET😜'),
                           ],
                           onTap: () {
-                            debugPrint('Hey, You logo tapped!');
+                            debugPrint('Hey, You logo!');
                           },
                         ),
                       ),
@@ -161,7 +151,7 @@ HewanFavorit? _hewanFavorit;
                         WavyAnimatedText('Mat Datang Prenn'),
                       ],
                       onTap: () {
-                        debugPrint('Tap Event');
+                        debugPrint('Aloo, mat datang ');
                       },
                     ),
                   ),
@@ -180,7 +170,7 @@ HewanFavorit? _hewanFavorit;
                   controller: _namaController,
                   decoration: InputDecoration(
                     labelText: 'Nama you siape?',
-                    hintText: 'piwpiw',
+                    hintText: 'Developer Ganteng Pro Max Special Edition',
                     prefixIcon: const Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -240,7 +230,7 @@ HewanFavorit? _hewanFavorit;
                 DropdownButtonFormField<HewanFavorit>(
                   value: _hewanFavorit,
                   decoration: InputDecoration(
-                    labelText: 'Hewan Favorit?',
+                    labelText: 'Hewan Favorit? (jawab jujur!)',
                     hintText: 'Pilih Buru',
                     prefixIcon: const Icon(Icons.pets),
                     border: OutlineInputBorder(
@@ -283,13 +273,51 @@ HewanFavorit? _hewanFavorit;
                 ),
 
                 const SizedBox(height: 16),
+                DropdownButtonFormField<Pekerjaan>(
+                  value: _pekerjaan,
+                  decoration: InputDecoration(
+                    labelText: 'Pekerjaan lu ape?',
+                    hintText: 'Pilih Buru',
+                    prefixIcon: const Icon(Icons.work),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: Pekerjaan.mahasiswa,
+                      child: Text('Mahasiswa'),
+                    ),
+                    DropdownMenuItem(
+                      value: Pekerjaan.pengangguran,
+                      child: Text('Pengangguran LVL 99'),
+                    ),
+                    DropdownMenuItem(
+                      value: Pekerjaan.hero,
+                      child: Text('Jadi badut cwk orang'),
+                    ),
+                    DropdownMenuItem(
+                      value: Pekerjaan.asli,
+                      child: Text('Mengagumi Developer Ganteng 24/7'),
+                    ),
+                  ],
+                  onChanged: (Pekerjaan? value) {
+                    setState(() {
+                      _pekerjaan = value;
+                    });
+                  },
+                ),
+                
+                const SizedBox(height: 16),
                 TextField(
                   controller: _tinggiController,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Tinggi badan berapa? (cm)',
+                    labelText: 'Tinggi badan berapa? (cm) (Kejujuran itu PENTING)',
                     hintText: 'Contoh: 150 (pendek inimah)',
                     prefixIcon: const Icon(Icons.height),
                     border: OutlineInputBorder(
@@ -299,31 +327,8 @@ HewanFavorit? _hewanFavorit;
                     fillColor: Colors.white,
                   ),
                 ),
-
-                const SizedBox(height: 16),
-                InkWell(
-                  onTap: _pilihTanggalLahir,
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: 'Tanggal lahir',
-                      prefixIcon: const Icon(Icons.calendar_month),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    child: Text(
-                      _tanggalLahir == null
-                          ? 'Lahir kapan?'
-                          : '${_tanggalLahir!.day.toString().padLeft(2, '0')}/'
-                            '${_tanggalLahir!.month.toString().padLeft(2, '0')}/'
-                            '${_tanggalLahir!.year}',
-                    ),
-                  ),
-                ),
+                
                 const SizedBox(height: 24),
-
                 ElevatedButton(
                   onPressed: _daftar,
                   style: ElevatedButton.styleFrom(
