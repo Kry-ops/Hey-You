@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -13,6 +12,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _namaController = TextEditingController();
   final _jenisController = TextEditingController();
   final _tinggiController = TextEditingController();
+  final _hewanController = TextEditingController();
 
   DateTime? _tanggalLahir;
 
@@ -45,7 +45,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
       return;
     }
 
-    // Halaman sambutan kita buat di langkah berikutnya.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('OK thank'),
@@ -58,6 +57,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     _namaController.dispose();
     _jenisController.dispose();
     _tinggiController.dispose();
+    _hewanController.dispose();
     super.dispose();
   }
 
@@ -92,8 +92,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.grey),
                 ),
-                const SizedBox(height: 32),
 
+                const SizedBox(height: 32),
                 TextField(
                   controller: _namaController,
                   decoration: InputDecoration(
@@ -124,37 +124,37 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
 
                 const SizedBox(height: 16),
-                Transform.rotate(
-                  angle: math.pi,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
+                TextField(
+                  controller: _hewanController,
+                  decoration: InputDecoration(
+                    labelText: 'Pet Favorit?',
+                    hintText: 'Cuking ga sih',
+                    prefixIcon: const Icon(Icons.person),
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.deepPurple),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 4,
-                    ),
-                    child: Transform.rotate(
-                      angle: math.pi,
-                      child: TextField(
-                        controller: _tinggiController,
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        decoration: const InputDecoration(
-                          labelText: 'Tinggi badan (cm)',
-                          hintText: 'Contoh: 150',
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.height),
-                        ),
-                      ),
-                    ),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
                 ),
 
-
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _tinggiController,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Tinggi badan berapa? (cm)',
+                    hintText: 'Contoh: 150 (pendek inimah)',
+                    prefixIcon: const Icon(Icons.height),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                ),
 
                 const SizedBox(height: 16),
                 InkWell(
@@ -178,24 +178,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                   ),
                 ),
-                // const SizedBox(height: 16),
-
-                // TextField(
-                //   controller: _tinggiController,
-                //   keyboardType: const TextInputType.numberWithOptions(
-                //     decimal: true,
-                //   ),
-                //   decoration: InputDecoration(
-                //     labelText: 'Tinggi badan (cm)',
-                //     hintText: 'Contoh: 150 (pendek inimah)',
-                //     prefixIcon: const Icon(Icons.height),
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //   ),
-                // ),
                 const SizedBox(height: 24),
 
                 ElevatedButton(
