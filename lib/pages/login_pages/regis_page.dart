@@ -1,6 +1,24 @@
 
 import 'package:flutter/material.dart';
 
+enum JenisKelamin {
+  cowok,
+  cewek,
+  dinosaur,
+  car,
+  table,
+  not,
+}
+
+enum HewanFavorit {
+  kucing,
+  anjing,
+  teman,
+  developer,
+  kursi,
+  pohon,
+}
+
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
 
@@ -61,6 +79,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.dispose();
   }
 
+// Dipercaya baris kode ini untuk form enum AKA pilih salah satu
+JenisKelamin? _jenisKelamin;
+HewanFavorit? _hewanFavorit;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,34 +131,111 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
 
                 const SizedBox(height: 16),
-                TextField(
-                  controller: _jenisController,
+                DropdownButtonFormField<JenisKelamin>(
+                  value: _jenisKelamin,
                   decoration: InputDecoration(
                     labelText: 'Jenis kelamin?',
-                    hintText: 'CWK/CWK',
-                    prefixIcon: const Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),  
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _hewanController,
-                  decoration: InputDecoration(
-                    labelText: 'Pet Favorit?',
-                    hintText: 'Cuking ga sih',
-                    prefixIcon: const Icon(Icons.person),
+                    hintText: 'Pilih jenis kelamin',
+                    prefixIcon: const Icon(Icons.transgender),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     filled: true,
                     fillColor: Colors.white,
                   ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: JenisKelamin.cowok,
+                      child: Text('Laki-laki'),
+                    ),
+                    DropdownMenuItem(
+                      value: JenisKelamin.cewek,
+                      child: Text('Perempuan'),
+                    ),
+                    DropdownMenuItem(
+                      value: JenisKelamin.dinosaur,
+                      child: Text('Dinosaurus'),
+                    ),
+                    DropdownMenuItem(
+                      value: JenisKelamin.car,
+                      child: Text('Mobil'),
+                    ),
+                    DropdownMenuItem(
+                      value: JenisKelamin.table,
+                      child: Text('Meja'),
+                    ),
+                    DropdownMenuItem(
+                      value: JenisKelamin.not,
+                      child: Text('Transgender = Idiot'),
+                    ),
+                  ],
+                  onChanged: (JenisKelamin? value) {
+                    setState(() {
+                      _jenisKelamin = value;
+                    });
+                  },
                 ),
+
+                const SizedBox(height: 16),
+                DropdownButtonFormField<HewanFavorit>(
+                  value: _hewanFavorit,
+                  decoration: InputDecoration(
+                    labelText: 'Hewan Favorit?',
+                    hintText: 'Pilih SASASATU',
+                    prefixIcon: const Icon(Icons.pets),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: HewanFavorit.kucing,
+                      child: Text('Cuking'),
+                    ),
+                    DropdownMenuItem(
+                      value: HewanFavorit.anjing,
+                      child: Text('Jingan'),
+                    ),
+                    DropdownMenuItem(
+                      value: HewanFavorit.teman,
+                      child: Text('Your Friend'),
+                    ),
+                    DropdownMenuItem(
+                      value: HewanFavorit.kursi,
+                      child: Text('Kursi'),
+                    ),
+                    DropdownMenuItem(
+                      value: HewanFavorit.pohon,
+                      child: Text('Pohon Mangga'),
+                    ),
+                    DropdownMenuItem(
+                      value: HewanFavorit.developer,
+                      child: Text('Developer Ganteng'),
+                    ),
+                  ],
+                  onChanged: (HewanFavorit? value) {
+                    setState(() {
+                      _hewanFavorit = value;
+                    });
+                  },
+                ),
+
+                // const SizedBox(height: 16),
+                // TextField(
+                //   controller: _hewanController,
+                //   decoration: InputDecoration(
+                //     labelText: 'Pet Favorit?',
+                //     hintText: 'Cuking ga sih',
+                //     prefixIcon: const Icon(Icons.pets),
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(12),
+                //     ),
+                //     filled: true,
+                //     fillColor: Colors.white,
+                //   ),
+                // ),
 
                 const SizedBox(height: 16),
                 TextField(
