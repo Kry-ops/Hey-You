@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:animated_text_kit/animated_text_kit.dart';
 enum JenisKelamin {
   cowok,
   cewek,
@@ -94,20 +94,80 @@ HewanFavorit? _hewanFavorit;
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(
-                  Icons.person_add_alt_sharp,
-                  size: 72,
-                  color: Colors.deepPurple,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Alooo, Mat Datang',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
+                                
+              const SizedBox(height: 2),
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 190,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Background logo
+                      Container(
+                        width: double.infinity,
+                        height: 190,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.deepPurple.withValues(alpha: 0.25),
+                              blurRadius: 16,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Animated logo text
+                      DefaultTextStyle(
+                        style: const TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        child: AnimatedTextKit(
+                          repeatForever: true,
+                          pause: const Duration(milliseconds: 500),
+                          animatedTexts: [
+                            FadeAnimatedText('HEY!'),
+                            FadeAnimatedText('HEY, YOU!'),
+                          ],
+                          onTap: () {
+                            debugPrint('Hey, You logo tapped!');
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+              ),
+
+                const SizedBox(height: 36),
+                SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: Center(
+                  child: DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 26,
+                      color: Colors.black,
+                    ),
+                    child: AnimatedTextKit(
+                      repeatForever: true,
+                      animatedTexts: [
+                        WavyAnimatedText('Alooooo'),
+                        WavyAnimatedText('Mat Datang Prenn'),
+                      ],
+                      onTap: () {
+                        debugPrint('Tap Event');
+                      },
+                    ),
+                  ),
+                ),
+              ),
+
                 const SizedBox(height: 8),
                 const Text(
                   'Dipercaya FBI membutuhkan data diri kalian untuk mengambil pinjaman online ༼ つ ◕_◕ ༽つ',
@@ -181,7 +241,7 @@ HewanFavorit? _hewanFavorit;
                   value: _hewanFavorit,
                   decoration: InputDecoration(
                     labelText: 'Hewan Favorit?',
-                    hintText: 'Pilih SASASATU',
+                    hintText: 'Pilih Buru',
                     prefixIcon: const Icon(Icons.pets),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
