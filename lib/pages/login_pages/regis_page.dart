@@ -222,21 +222,6 @@ HewanFavorit? _hewanFavorit;
                   },
                 ),
 
-                // const SizedBox(height: 16),
-                // TextField(
-                //   controller: _hewanController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Pet Favorit?',
-                //     hintText: 'Cuking ga sih',
-                //     prefixIcon: const Icon(Icons.pets),
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //   ),
-                // ),
-
                 const SizedBox(height: 16),
                 TextField(
                   controller: _tinggiController,
