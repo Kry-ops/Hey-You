@@ -1,13 +1,12 @@
 # Hey, You!
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&duration=3000&pause=1000&color=B794F6&center=true&vCenter=true&width=600&lines=Hey%2C+You!+%F0%9F%91%8B;An+app+for+trolling+your+friends+%F0%9F%92%80;Made+with+Flutter+%F0%9F%92%9C;Powered+by+questionable+ideas+%F0%9F%98%AD" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&duration=3000&pause=1000&color=B794F6&center=true&vCenter=true&width=600&lines=Hey%2C+You!+%F0%9F%91%8B;An+app+for+trolling+your+friends+%F0%9F%92%80;Made+with+Flutter+%F0%9F%92%9C;Powered+by+questionable+ideas+\(￣︶￣*\))" alt="Typing SVG" />
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
   <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
-  <img src="https://img.shields.io/badge/Status-Still_Cooking-9B72F2?style=for-the-badge" alt="Project Status" />
 </p>
 
 ---
