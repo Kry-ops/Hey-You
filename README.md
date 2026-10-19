@@ -4,11 +4,7 @@
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&duration=3000&pause=1000&color=B794F6&center=true&vCenter=true&width=600&lines=Hey%2C+You!+%28%2A%3E%EF%B9%8F%3C%2A%29;App+for+trolling+ma+prennn+%28+%2A%EF%B8%BE%E2%96%BD%EF%B8%BE%29;Made+with+Flutter+%28%E3%83%BB%CF%89%E3%83%BB%29;Powered+by+kasih+sayang+%28%2A%E2%89%A7%E2%96%BD%E2%89%A6%29" alt="Typing SVG" />
 </p>
 
-## Technology
-<p align="center">
-  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
-  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
-</p>
+
 
 ---
 
@@ -27,7 +23,10 @@ Fitur berikutnya? Ide berikutnya? Arah project ini?
 </p>
 
 ## Features & Tech Stack
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
+</p>
 -  **Flutter** — framework pengembangan aplikasi.
 -  **Dart** — bahasa pemrograman.
 -  **Trolling features** — belum ada sih, masih proses.
