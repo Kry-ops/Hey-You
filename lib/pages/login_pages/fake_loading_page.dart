@@ -76,12 +76,8 @@ class _FakeLoadingPageState extends State<FakeLoadingPage> {
                 color: Colors.deepPurple,
                 size: 50,
               ), 
-              // const CircularProgressIndicator(
-              //   color: Colors.deepPurple,
-              // ),
 
               const SizedBox(height: 32),
-
               Text(
                 'Tinggi Badan ${widget.nama} ${widget.tinggi}CM',
                 textAlign: TextAlign.center,
@@ -89,7 +85,6 @@ class _FakeLoadingPageState extends State<FakeLoadingPage> {
               ),
 
               const SizedBox(height: 16),
-
               Text(
                 ejekan,
                 textAlign: TextAlign.center,
@@ -101,7 +96,6 @@ class _FakeLoadingPageState extends State<FakeLoadingPage> {
               ),
 
               const SizedBox(height: 12),
-
               Text(
                 'Loading Bentar Pren',
                 style: const TextStyle(color: Colors.grey),
