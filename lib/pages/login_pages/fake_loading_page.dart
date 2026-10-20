@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import '../home_page.dart';
+import 'package:hey_you/pages/home_page.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FakeLoadingPage extends StatefulWidget {
@@ -50,7 +50,7 @@ class _FakeLoadingPageState extends State<FakeLoadingPage> {
   }
 
   Future<void> _mulaiLoading() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 10));
 
     if (!mounted) return;
 

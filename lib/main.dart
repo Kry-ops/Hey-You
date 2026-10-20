@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'pages/login_pages/regis_page.dart';
+import 'package:hey_you/pages/first_loading_page.dart';
+// import 'pages/login_pages/regis_page.dart';
+// import 'pages/first_loading_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const RegistrationPage(),
+      home: const FirstLoadingPage(),
     );
   }
 }
