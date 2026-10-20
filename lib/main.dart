@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hey_you/pages/first_loading_page.dart';
-// import 'pages/login_pages/regis_page.dart';
-// import 'pages/first_loading_page.dart';
+
 
 void main() {
   runApp(const MyApp());
