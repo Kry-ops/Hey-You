@@ -31,8 +31,7 @@ class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
 
   @override
-  State<RegistrationPage> createState() =>
-      _RegistrationPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
@@ -45,6 +44,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
   HewanFavorit? _hewanFavorit;
   Pekerjaan? _pekerjaan;
 
+  // Cream       : #FCF1D0
+  // Charcoal    : #4B4242
+  // Warm Gray   : #8C8987
+  // Terracotta  : #D58A65
+  // Coral       : #C96A62
+
   InputDecoration _inputStyle({
     required String label,
     required String hint,
@@ -53,9 +58,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return InputDecoration(
       labelText: label,
       hintText: hint,
-      prefixIcon: Icon(icon, color: Colors.deepPurple),
+      prefixIcon: const Icon(
+        Icons.circle,
+        color: Color(0xFF4B4242),
+        size: 0,
+      ),
       filled: true,
-      fillColor: Colors.white,
+      fillColor: const Color(0xFFFCF1D0),
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 18,
@@ -67,26 +76,39 @@ class _RegistrationPageState extends State<RegistrationPage> {
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: const BorderSide(
-          color: Color(0xFFE5E0ED),
+          color: Color(0xFF8C8987),
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: const BorderSide(
-          color: Colors.deepPurple,
-          width: 1.5,
+          color: Color(0xFFD58A65),
+          width: 1.8,
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(color: Colors.red),
+        borderSide: const BorderSide(
+          color: Color(0xFFC96A62),
+        ),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: const BorderSide(
-          color: Colors.red,
+          color: Color(0xFFC96A62),
           width: 1.5,
         ),
+      ),
+      labelStyle: const TextStyle(
+        color: Color(0xFF4B4242),
+      ),
+      hintStyle: const TextStyle(
+        color: Color(0xFF8C8987),
+      ),
+    ).copyWith(
+      prefixIcon: Icon(
+        icon,
+        color: const Color(0xFF4B4242),
       ),
     );
   }
@@ -123,7 +145,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F4FA),
+      backgroundColor: const Color(0xFFFCF1D0),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(22),
@@ -132,14 +154,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // HEADER
+                // Kepala sekalian animasi teks bergantian Yang ga tau untuk apa
                 Container(
                   height: 190,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       colors: [
-                        Color(0xFF512DA8),
-                        Color(0xFF9575CD),
+                        Color(0xFF4B4242),
+                        Color(0xFFD58A65),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -147,9 +169,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.deepPurple.withValues(
-                          alpha: 0.20,
-                        ),
+                        color: const Color(0xFF4B4242)
+                            .withValues(alpha: 0.18),
                         blurRadius: 18,
                         offset: const Offset(0, 8),
                       ),
@@ -160,16 +181,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       style: const TextStyle(
                         fontSize: 38,
                         fontWeight: FontWeight.w900,
-                        color: Colors.white,
+                        color: Color(0xFFFCF1D0),
                         letterSpacing: 1.5,
                       ),
                       child: AnimatedTextKit(
                         repeatForever: true,
                         pause: const Duration(milliseconds: 600),
                         animatedTexts: [
-                          FadeAnimatedText('HEY!'),
-                          FadeAnimatedText('HEY, YOU!'),
-                          FadeAnimatedText('YEAH YOU!'),
+                          FadeAnimatedText('HeYou'),
+                          FadeAnimatedText('By Kiryu'),
+                          FadeAnimatedText('(～﹃～)~zZ'),
                           FadeAnimatedText('MONYET 😜'),
                         ],
                       ),
@@ -177,13 +198,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                 ),
 
-                const SizedBox(height: 28),
+                // Animasi teks bererak naik turun
+                const SizedBox(height: 32),
                 Center(
                   child: DefaultTextStyle(
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF292333),
+                      color: Color(0xFF4B4242),
                     ),
                     child: AnimatedTextKit(
                       repeatForever: true,
@@ -195,6 +217,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                 ),
 
+                // Teks yapping gajelas
                 const SizedBox(height: 12),
                 const Text(
                   'Formulir resmi dari FBI untuk mendata '
@@ -202,20 +225,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   'buat seru-seruan kok 😂',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Color(0xFF8C8987),
                     height: 1.5,
                   ),
                 ),
 
-                const SizedBox(height: 30),
+                // Base buat formulirnya
+                const SizedBox(height: 10),
                 Container(
-                  padding: const EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(19),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFFCF1D0).withValues(alpha: 0.55),
                     borderRadius: BorderRadius.circular(22),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
+                        color: const Color(0xFF4B4242)
+                            .withValues(alpha: 0.06),
                         blurRadius: 16,
                         offset: const Offset(0, 5),
                       ),
@@ -223,6 +248,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   child: Column(
                     children: [
+                      // Form nama
                       TextFormField(
                         controller: _namaController,
                         textCapitalization: TextCapitalization.words,
@@ -240,15 +266,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         },
                       ),
 
+                      // Form jenis kelamin
                       const SizedBox(height: 18),
                       DropdownButtonFormField<JenisKelamin>(
                         value: _jenisKelamin,
                         isExpanded: true,
+                        dropdownColor: Color(0xFFFCF1D0),
+                        style: const TextStyle(
+                          color: Color(0xFF4B4242),
+                          fontSize: 16,
+                        ),
                         decoration: _inputStyle(
                           label: 'Jenis kelamin?',
                           hint: 'Pilih identitas',
                           icon: Icons.person_search_outlined,
                         ),
+          
                         items: const [
                           DropdownMenuItem(
                             value: JenisKelamin.cowok,
@@ -260,19 +293,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           DropdownMenuItem(
                             value: JenisKelamin.dinosaur,
-                            child: Text('Dinosaurus 🦖'),
+                            child: Text('Dinosaurus Rawr'),
                           ),
                           DropdownMenuItem(
                             value: JenisKelamin.car,
-                            child: Text('Mobil 🚗'),
+                            child: Text('Mobil'),
                           ),
                           DropdownMenuItem(
                             value: JenisKelamin.table,
-                            child: Text('Meja 🪑'),
+                            child: Text('Meja'),
                           ),
                           DropdownMenuItem(
                             value: JenisKelamin.not,
-                            child: Text('Lainnya'),
+                            child: Text('Lainnya ( ͠° ͟ʖ ͡°)'),
                           ),
                         ],
                         onChanged: (value) {
@@ -285,10 +318,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         },
                       ),
 
+                      // Form hewan favorit
                       const SizedBox(height: 18),
                       DropdownButtonFormField<HewanFavorit>(
                         value: _hewanFavorit,
                         isExpanded: true,
+                        dropdownColor: Color(0xFFFCF1D0),
+                        style: const TextStyle(
+                          color: Color(0xFF4B4242),
+                          fontSize: 16,
+                        ),
                         decoration: _inputStyle(
                           label: 'Hewan favorit?',
                           hint: 'Jawab jujur!',
@@ -297,15 +336,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         items: const [
                           DropdownMenuItem(
                             value: HewanFavorit.kucing,
-                            child: Text('Cuking 🐱'),
+                            child: Text('Cuking /ᐠ - ˕ -マ'),
                           ),
                           DropdownMenuItem(
                             value: HewanFavorit.anjing,
-                            child: Text('Jingan 🐶'),
+                            child: Text('Jingan ૮( > ꒳ <)ა'),
                           ),
                           DropdownMenuItem(
                             value: HewanFavorit.teman,
-                            child: Text('Your Friend 🗿'),
+                            child: Text('Your Friend'),
                           ),
                           DropdownMenuItem(
                             value: HewanFavorit.kursi,
@@ -313,11 +352,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           DropdownMenuItem(
                             value: HewanFavorit.pohon,
-                            child: Text('Pohon mangga 🌳'),
+                            child: Text('Pohon mangga'),
                           ),
                           DropdownMenuItem(
                             value: HewanFavorit.developer,
-                            child: Text('Developer ganteng 😎'),
+                            child: Text('Developer ganteng (づ￣3￣)づ╭❤️～'),
                           ),
                         ],
                         onChanged: (value) {
@@ -330,10 +369,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         },
                       ),
 
+                      // Form pekerjaan
                       const SizedBox(height: 18),
                       DropdownButtonFormField<Pekerjaan>(
                         value: _pekerjaan,
                         isExpanded: true,
+                        dropdownColor: Color(0xFFFCF1D0),
+                        style: const TextStyle(
+                          color: Color(0xFF4B4242),
+                          fontSize: 16,
+                        ),
                         decoration: _inputStyle(
                           label: 'Pekerjaan kamu apa?',
                           hint: 'Pilih pekerjaan',
@@ -342,7 +387,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         items: const [
                           DropdownMenuItem(
                             value: Pekerjaan.mahasiswa,
-                            child: Text('Mahasiswa 🎓'),
+                            child: Text('Mahasiswa'),
                           ),
                           DropdownMenuItem(
                             value: Pekerjaan.pengangguran,
@@ -350,7 +395,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           DropdownMenuItem(
                             value: Pekerjaan.hero,
-                            child: Text('Badut cinta 🤡'),
+                            child: Text('Badut cinta'),
                           ),
                           DropdownMenuItem(
                             value: Pekerjaan.asli,
@@ -369,6 +414,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         },
                       ),
 
+                      // Form tinggi badan
                       const SizedBox(height: 18),
                       TextFormField(
                         controller: _tinggiController,
@@ -383,7 +429,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         validator: (value) {
                           final tinggi = double.tryParse(
-                            (value ?? '').trim().replaceAll(',', '.'),
+                            (value ?? '')
+                                .trim()
+                                .replaceAll(',', '.'),
                           );
 
                           if (tinggi == null || tinggi <= 0) {
@@ -394,6 +442,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         },
                       ),
 
+                      // Tombol masuk
                       const SizedBox(height: 26),
                       SizedBox(
                         width: double.infinity,
@@ -412,8 +461,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepPurple,
-                            foregroundColor: Colors.white,
+                            backgroundColor: const Color(0xFF4B4242),
+                            foregroundColor: const Color(0xFFFCF1D0),
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14),
@@ -425,15 +474,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                 ),
 
-                const SizedBox(height: 22),
-
+                const SizedBox(height: 18),
                 const Text(
-                  '© FBI abal-abal • Data kamu aman '
-                  '(katanya) 😂',
+                  'Kiryu Personal Flutter Project',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.black45,
+                    color: Color(0xFF8C8987),
                   ),
                 ),
               ],
@@ -444,3 +491,5 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 }
+
+// BY KIRYU
