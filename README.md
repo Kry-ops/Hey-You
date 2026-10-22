@@ -87,10 +87,6 @@ Tidak ada jaminan aplikasi ini akan menjadi lebih berguna. Yang ada hanyalah keg
 ---
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&duration=3500&pause=1000&color=9B72F2&center=true&vCenter=true&width=500&lines=Made+with+Flutter+%F0%9F%92%9C;Fueled+by+chaos+%F0%9F%92%80;Maintained+by+a+handsome+developer+%F0%9F%98%8E" alt="Footer typing animation" />
-</p>
-
-<p align="center">
   <i>By Kry-ops</i>
 </p>
 
