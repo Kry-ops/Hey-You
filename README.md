@@ -16,9 +16,7 @@
 
 Awalnya, project ini dibuat cuma buat **trolling teman**. Namun, tak menutup kemungkinan aplikasi ini berkembang menjadi aplikasi serba bisa.
 
-Fitur berikutnya? Ide berikutnya? Arah project ini?
-
-**Jujur ga ada arah. Hehe (～￣▽￣)～.**
+**Hehe (～￣▽￣)～.**
 
 <p align="center">
   <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="260" alt="Cat typing on a laptop" />
@@ -32,7 +30,6 @@ Fitur berikutnya? Ide berikutnya? Arah project ini?
 
 - **Flutter** — framework pengembangan aplikasi.
 - **Dart** — bahasa pemrograman.
-- **Trolling features** — belum ada sih, masih proses.
 - **More features coming soon** — kalau lagi niat.
 
 ## Getting Started
@@ -75,7 +72,7 @@ Kalau build berhasil, APK biasanya tersedia di:
 build/app/outputs/flutter-apk/app-release.apk
 ```
 
-Tinggal pindahkan file tersebut ke perangkat Android dan instal. Jika proses build gagal, periksa pesan error dan konfigurasi Android project terlebih dahulu.
+Tinggal pindahkan file tersebut ke perangkat Android dan instal. Jika proses build gagal, Tanya AI ajah hehe `(*>﹏<*)′
 
 ## Disclaimer
 
