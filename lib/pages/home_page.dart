@@ -9,21 +9,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AppColors {
   // Warna latar dan komponen utama.
-  static const background = Color(0xFFFBEFD0);
-  static const dark = Color(0xFF4B4240);
-  static const cream = Color(0xFFFBEFD0);
+  static const background = Color(0xFFFCF1D0);
+  static const dark = Color(0xFF4B4242);
+  static const cream = Color(0xFFFCF1D0);
 
   // Warna tombol fitur.
-  static const green = Color(0xFF7A9A7E);
-  static const orange = Color(0xFFD58A63);
-  static const blue = Color(0xFF8399B0);
+  static const green = Color(0xFF7C9A83);
+  static const orange = Color(0xFFD58A65);
+  static const blue = Color(0xFF829AB1);
 
   // Warna indikator navbar dan bingkai header.
-  static const navIndicator = Color(0xFF8C8681);
-  static const videoFrame = Color(0xFF8C8681);
+  static const navIndicator = Color(0xFF8C8987);
+  static const videoFrame = Color(0xFF8C8987);
 
   // Warna latar tombol logo dan menu pada header.
-  static const overlay = Color(0xD9FBEFD0);
+  static const overlay = Color(0xFFFCF1D0);
 }
 
 class HomeLayout {
@@ -65,9 +65,9 @@ class HomeLayout {
   // UKURAN IKON
   // ---------------------------------------------------------------
 
-  static const double featureIconSize = 46;
-  static const double navIconSize = 34;
-  static const double overlayButtonSize = 46;
+  static const double featureIconSize = 30;
+  static const double navIconSize = 22;
+  static const double overlayButtonSize = 30;
 }
 
 // Lokasi gambar dan ikon.
@@ -101,8 +101,8 @@ class AppText {
 
   static const navLabel = TextStyle(
     fontFamily: 'monospace',
-    fontSize: 13,
-    letterSpacing: 1,
+    fontSize: 12,
+    letterSpacing: 0,
     color: AppColors.cream,
   );
 }
@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> {
 
             // Margin kiri dan kanan navbar dibuat seimbang.
             final navSideSpace =
-                screenWidth * (1 - HomeLayout.navbarWidth) / 2;
+                screenWidth * (1 - HomeLayout.navbarWidth) / 7;
 
             return SizedBox(
               // PENTING:
@@ -187,8 +187,8 @@ class _HomePageState extends State<HomePage> {
                   // -------------------------------------------------
 
                   Positioned(
-                    right: -screenWidth * 0.08,
-                    bottom: HomeLayout.navbarHeight + 5,
+                    right: -screenWidth * 0.17,
+                    bottom: HomeLayout.navbarHeight + 20,
                     child: IgnorePointer(
                       child: AssetOrIcon(
                         assetPath: AppAssets.cat,
@@ -465,7 +465,7 @@ class VideoHeader extends StatelessWidget {
                 child: AssetOrIcon(
                   assetPath: AppAssets.logo,
                   fallbackIcon: Icons.pets,
-                  size: 28,
+                  size: 25,
                 ),
               ),
             ),
@@ -729,8 +729,8 @@ class CustomBottomNav extends StatelessWidget {
   static const double height = HomeLayout.navbarHeight;
 
   // Radius sudut navbar.
-  static const double _bigRadius = 70;
-  static const double _smallRadius = 10;
+  static const double _bigRadius = 125;
+  static const double _smallRadius = 2;
 
   final List<NavItemData> items;
   final int currentIndex;
