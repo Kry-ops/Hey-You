@@ -68,6 +68,14 @@ class HomeLayout {
   static const double featureIconSize = 30;
   static const double navIconSize = 22;
   static const double overlayButtonSize = 30;
+
+  // ---------------------------------------------------------------
+  // POINTER NAVBAR (kotak abu-abu di belakang menu aktif)
+  // ---------------------------------------------------------------
+
+  static const double navIndicatorWidth = 0.68; // 0.0–1.0 dari lebar satu menu
+  static const double navIndicatorRadius = 60;  // lengkung kiri atas pointer
+  static const double navIndicatorRightRadius = 60; // lengkung kanan bawah pointer  
 }
 
 // Lokasi gambar dan ikon.
@@ -742,7 +750,7 @@ class CustomBottomNav extends StatelessWidget {
       height: height,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
-        color: AppColors.dark,
+        color: AppColors.dark,        
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(_bigRadius),
           bottomRight: Radius.circular(_bigRadius),
@@ -754,23 +762,26 @@ class CustomBottomNav extends StatelessWidget {
         builder: (context, constraints) {
           // Setiap item mendapat lebar yang sama.
           final itemWidth = constraints.maxWidth / items.length;
+          final indicatorWidth = itemWidth * HomeLayout.navIndicatorWidth;
 
           return Stack(
             children: [
-              // Indikator menu aktif.
+              // Pointer abu-abu: berada di tengah menu aktif.
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOutCubic,
-                left: currentIndex * itemWidth,
+                left: currentIndex * itemWidth +
+                    (itemWidth - indicatorWidth) / 2,
                 top: 0,
                 bottom: 0,
-                width: itemWidth,
+                width: indicatorWidth,
                 child: Container(
                   decoration: const BoxDecoration(
                     color: AppColors.navIndicator,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(_bigRadius),
-                    ),
+                      topLeft: Radius.circular(HomeLayout.navIndicatorRadius),
+                      bottomRight: Radius.circular(HomeLayout.navIndicatorRightRadius),
+                    ),        
                   ),
                 ),
               ),
