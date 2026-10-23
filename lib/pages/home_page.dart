@@ -1,6 +1,67 @@
-
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+
+// =====================================================================
+// BAGIAN 1 — PENGATURAN (edit warna, asset, dan font di sini saja)
+// =====================================================================
+
+/// Warna aplikasi
+class AppColors {
+  static const background = Color(0xFFFBEFD0); // latar krem
+  static const dark = Color(0xFF4B4240); // tombol & navbar (cokelat tua)
+  static const cream = Color(0xFFFBEFD0); // warna teks & ikon
+  static const green = Color(0xFF7A9A7E); // tombol Test MBTI
+  static const orange = Color(0xFFD58A63); // tombol Chose One
+  static const blue = Color(0xFF8399B0); // tombol Puzzle Game
+  static const navIndicator = Color(0xFF8C8681); // pointer abu-abu navbar
+  static const videoFrame = Color(0xFF8C8681); // bingkai video
+  static const overlay = Color(0xD9FBEFD0); // kotak logo & menu di atas video
+}
+
+/// Lokasi file asset.
+/// Kalau file belum ada, aplikasi otomatis menampilkan ikon sementara.
+class AppAssets {
+  // Header
+  static const video = 'assets/videos/amo.mp4';
+  static const logo = 'assets/home_page_assets/logo_HY_mini.svg';
+
+  // Ikon tombol fitur
+  static const iconMbti = 'assets/home_page_assets/icon_testMBTI.svg';
+  static const iconPickOne = 'assets/home_page_assets/icon_pickone.svg';
+  static const iconPuzzle = 'assets/home_page_assets/icon_puzzle.svg';
+
+  // Ikon navbar
+  static const navHome = 'assets/home_page_assets/icon_home.svg';
+  static const navPets = 'assets/home_page_assets/icon_pet.svg';
+  static const navProfile = 'assets/home_page_assets/icon_profile.svg';
+
+  // Kucing yang mengintip
+  static const cat = 'assets/home_page_assets/kucing.png';
+}
+
+/// Font & gaya teks
+class AppText {
+  /// Isi dengan nama font dari pubspec.yaml, contoh: 'Gilda'.
+  /// null = memakai font bawaan Flutter.
+  static const String? mainFont = null;
+
+  static const featureTitle = TextStyle(
+    fontFamily: mainFont,
+    fontSize: 30,
+    color: AppColors.cream,
+  );
+
+  static const navLabel = TextStyle(
+    fontFamily: 'monospace',
+    fontSize: 13,
+    letterSpacing: 1,
+    color: AppColors.cream,
+  );
+}
+
+// =====================================================================
+// BAGIAN 2 — HALAMAN HOME (susunan halaman, daftar fitur & menu navbar)
+// =====================================================================
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,822 +70,514 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with TickerProviderStateMixin {
-  late final AnimationController _floatController;
-  late final AnimationController _particleController;
-  late final AnimationController _glowController;
+class _HomePageState extends State<HomePage> {
+  int _navIndex = 0; // menu navbar yang sedang aktif
+
+  // Daftar menu navbar -> tambah / ubah di sini
+  static const _navItems = [
+    NavItemData(label: 'HOME', assetPath: AppAssets.navHome, fallbackIcon: Icons.home_rounded),
+    NavItemData(label: 'PETS', assetPath: AppAssets.navPets, fallbackIcon: Icons.pets),
+    NavItemData(label: 'PROFILE', assetPath: AppAssets.navProfile, fallbackIcon: Icons.account_circle_outlined),
+  ];
+
+  void _openPage(Widget page) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => page));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // 1. Kucing mengintip (paling belakang)
+            //    Atur posisi lewat right / bottom, ukuran lewat size.
+            Positioned(
+              right: -screenWidth * 0.08,
+              bottom: CustomBottomNav.height + 5,
+              child: IgnorePointer(
+                child: AssetOrIcon(
+                  assetPath: AppAssets.cat,
+                  fallbackIcon: Icons.pets,
+                  size: screenWidth * 0.55,
+                  // Tanpa `color`, warna asli gambar kucing dipakai
+                ),
+              ),
+            ),
+
+            // 2. Konten utama: video + tombol fitur
+            SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                20, 16, 20, CustomBottomNav.height + 40,
+              ),
+              child: Column(
+                children: [
+                  VideoHeader(onMenuTap: () {
+                    // TODO: buka menu / drawer
+                  }),
+                  const SizedBox(height: 40),
+
+                  // Daftar fitur -> tambah / ubah di sini.
+                  // Ganti `_PlaceholderPage(...)` dengan halaman aslimu.
+                  SwipeFeatureButton(
+                    label: 'Test MBTI',
+                    assetPath: AppAssets.iconMbti,
+                    fallbackIcon: Icons.checklist_rounded,
+                    color: AppColors.green,
+                    onCompleted: () => _openPage(const _PlaceholderPage('Test MBTI')),
+                  ),
+                  const SizedBox(height: 20),
+                  SwipeFeatureButton(
+                    label: 'Chose One',
+                    assetPath: AppAssets.iconPickOne,
+                    fallbackIcon: Icons.touch_app_rounded,
+                    color: AppColors.orange,
+                    onCompleted: () => _openPage(const _PlaceholderPage('Chose One')),
+                  ),
+                  const SizedBox(height: 20),
+                  SwipeFeatureButton(
+                    label: 'Puzzle Game',
+                    assetPath: AppAssets.iconPuzzle,
+                    fallbackIcon: Icons.extension_rounded,
+                    color: AppColors.blue,
+                    onCompleted: () => _openPage(const _PlaceholderPage('Puzzle Game')),
+                  ),
+                ],
+              ),
+            ),
+
+            // 3. Navbar bawah
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 12,
+              child: CustomBottomNav(
+                items: _navItems,
+                currentIndex: _navIndex,
+                onTap: (index) {
+                  setState(() => _navIndex = index);
+                  // TODO: pindah ke halaman Pets / Profile
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Halaman sementara. HAPUS setelah halaman fitur aslimu siap.
+class _PlaceholderPage extends StatelessWidget {
+  const _PlaceholderPage(this.title);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(title: Text(title), backgroundColor: AppColors.background),
+      body: Center(child: Text('Halaman $title')),
+    );
+  }
+}
+
+// =====================================================================
+// BAGIAN 3 — KOMPONEN (biasanya tidak perlu diubah)
+// =====================================================================
+
+/// Menampilkan gambar dari assets.
+/// Kalau file gambarnya belum ada, otomatis tampil ikon sementara.
+class AssetOrIcon extends StatelessWidget {
+  const AssetOrIcon({
+    super.key,
+    required this.assetPath,
+    required this.fallbackIcon,
+    this.size = 24,
+    this.color, // isi untuk mewarnai ikon; kosongkan agar warna asli dipakai
+  });
+
+  final String assetPath;
+  final IconData fallbackIcon;
+  final double size;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      assetPath,
+      width: size,
+      height: size,
+      color: color,
+      errorBuilder: (_, __, ___) => Icon(fallbackIcon, size: size, color: color),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------
+// Bingkai video di atas, lengkap dengan logo & tombol menu
+// ---------------------------------------------------------------------
+class VideoHeader extends StatefulWidget {
+  const VideoHeader({super.key, this.onMenuTap});
+
+  final VoidCallback? onMenuTap;
+
+  @override
+  State<VideoHeader> createState() => _VideoHeaderState();
+}
+
+class _VideoHeaderState extends State<VideoHeader> {
+  late final VideoPlayerController _controller;
+  bool _ready = false;
 
   @override
   void initState() {
     super.initState();
 
-    // Animasi karakter melayang
-    _floatController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2200),
-    )..repeat(reverse: true);
+    // Video dari assets. Untuk video dari internet, ganti dengan:
+    // VideoPlayerController.networkUrl(Uri.parse('https://.../video.mp4'))
+    _controller = VideoPlayerController.asset(AppAssets.video)
+      ..setLooping(true)
+      ..setVolume(0);
 
-    // Animasi partikel background
-    _particleController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 12),
-    )..repeat();
-
-    // Animasi cahaya berdenyut
-    _glowController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1800),
-    )..repeat(reverse: true);
+    _controller.initialize().then((_) {
+      if (!mounted) return;
+      setState(() => _ready = true);
+      _controller.play();
+    }).catchError((_) {
+      // Video belum ada / gagal dimuat -> tetap tampil bingkai kosong.
+    });
   }
 
   @override
   void dispose() {
-    _floatController.dispose();
-    _particleController.dispose();
-    _glowController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
-  void _bukaMenu() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (sheetContext) {
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 536 / 284, // ubah untuk mengatur tinggi bingkai
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Colors.black54,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: AppColors.videoFrame, width: 5),
+        ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // 1. Video
+            if (_ready)
+              FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
+                  child: VideoPlayer(_controller),
+                ),
+              )
+            else
+              const Center(
+                child: Icon(Icons.play_circle_outline, size: 56, color: Colors.white54),
+              ),
+
+            // 2. Logo (kiri atas)
+            const Positioned(
+              top: 10,
+              left: 10,
+              child: _OverlayButton(
+                child: AssetOrIcon(
+                  assetPath: AppAssets.logo,
+                  fallbackIcon: Icons.pets,
+                  size: 28,
+                ),
+              ),
+            ),
+
+            // 3. Tombol menu (kanan atas)
+            Positioned(
+              top: 10,
+              right: 10,
+              child: _OverlayButton(
+                onTap: widget.onMenuTap,
+                child: const Icon(Icons.sort, color: AppColors.dark),
+              ),
+            ),
+
+            // 4. Progress bar video (bawah)
+            if (_ready)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: VideoProgressIndicator(
+                  _controller,
+                  allowScrubbing: false,
+                  padding: EdgeInsets.zero,
+                  colors: const VideoProgressColors(
+                    playedColor: AppColors.orange,
+                    bufferedColor: Colors.white24,
+                    backgroundColor: Colors.white12,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Kotak krem transparan di atas video (dipakai logo & menu).
+class _OverlayButton extends StatelessWidget {
+  const _OverlayButton({required this.child, this.onTap});
+
+  final Widget child;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 50,
+        height: 50,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: AppColors.overlay,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: child,
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------
+// Tombol fitur yang harus DIGESER ke kanan untuk membuka fitur
+//  - Geser melewati [_threshold] -> onCompleted dipanggil
+//  - Dilepas sebelum itu         -> bulatan kembali ke awal
+// ---------------------------------------------------------------------
+class SwipeFeatureButton extends StatefulWidget {
+  const SwipeFeatureButton({
+    super.key,
+    required this.label,
+    required this.assetPath,
+    required this.fallbackIcon,
+    required this.color,
+    required this.onCompleted,
+  });
+
+  final String label;
+  final String assetPath; // ikon di dalam bulatan
+  final IconData fallbackIcon; // ikon sementara jika asset belum ada
+  final Color color; // warna bulatan
+  final VoidCallback onCompleted; // dipanggil saat geseran berhasil
+
+  @override
+  State<SwipeFeatureButton> createState() => _SwipeFeatureButtonState();
+}
+
+class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
+  static const double _height = 102; // tinggi tombol
+  static const double _padding = 12; // jarak bulatan ke tepi
+  static const double _threshold = 0.7; // 70% geseran dianggap berhasil
+
+  double _dx = 0; // posisi geser saat ini
+  bool _dragging = false;
+
+  Future<void> _onDragEnd(double maxDx) async {
+    if (_dx >= maxDx * _threshold) {
+      // Berhasil: bulatan meluncur ke ujung, lalu buka halaman.
+      setState(() {
+        _dragging = false;
+        _dx = maxDx;
+      });
+      await Future.delayed(const Duration(milliseconds: 250));
+      if (!mounted) return;
+      widget.onCompleted();
+
+      // Kembalikan posisi setelah pindah halaman.
+      await Future.delayed(const Duration(milliseconds: 400));
+      if (mounted) setState(() => _dx = 0);
+    } else {
+      // Belum cukup jauh: kembali ke awal.
+      setState(() {
+        _dragging = false;
+        _dx = 0;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final knobWidth = constraints.maxWidth * 0.28;
+        final maxDx = constraints.maxWidth - _padding * 2 - knobWidth;
+        final progress = (_dx / maxDx).clamp(0.0, 1.0);
+
         return Container(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 32),
-          decoration: const BoxDecoration(
-            color: Color(0xFF191329),
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(28),
-            ),
+          height: _height,
+          decoration: BoxDecoration(
+            color: AppColors.dark,
+            borderRadius: BorderRadius.circular(_height / 2),
           ),
-          child: SafeArea(
-            top: false,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 44,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: Colors.white24,
-                    borderRadius: BorderRadius.circular(10),
+          child: Stack(
+            children: [
+              // Teks (memudar saat digeser)
+              Center(
+                child: Opacity(
+                  opacity: 1 - progress,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: knobWidth + _padding),
+                    child: Text(widget.label, style: AppText.featureTitle),
                   ),
                 ),
+              ),
 
-                const SizedBox(height: 24),
-
-                const Text(
-                  'MAU NGAPAIN, PREN? 👀',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
+              // Bulatan yang bisa digeser
+              AnimatedPositioned(
+                duration: _dragging ? Duration.zero : const Duration(milliseconds: 250),
+                curve: Curves.easeOut,
+                left: _padding + _dx,
+                top: _padding,
+                bottom: _padding,
+                width: knobWidth,
+                child: GestureDetector(
+                  onHorizontalDragStart: (_) => setState(() => _dragging = true),
+                  onHorizontalDragUpdate: (details) => setState(() {
+                    _dx = (_dx + details.delta.dx).clamp(0.0, maxDx);
+                  }),
+                  onHorizontalDragEnd: (_) => _onDragEnd(maxDx),
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: widget.color,
+                      borderRadius: BorderRadius.circular((_height - _padding * 2) / 2),
+                    ),
+                    child: AssetOrIcon(
+                      assetPath: widget.assetPath,
+                      fallbackIcon: widget.fallbackIcon,
+                      size: 48,
+                      color: AppColors.cream,
+                    ),
                   ),
                 ),
-
-                const SizedBox(height: 8),
-
-                const Text(
-                  'Pilih aktivitas lu di sini.',
-                  style: TextStyle(color: Colors.white60),
-                ),
-
-                const SizedBox(height: 24),
-
-                _menuItem(
-                  icon: Icons.person_rounded,
-                  title: 'Profil Gue',
-                  subtitle: 'Lihat identitas diri lu',
-                  onTap: () {
-                    Navigator.pop(sheetContext);
-                    _pesan('Profil Gue');
-                  },
-                ),
-
-                const SizedBox(height: 12),
-
-                _menuItem(
-                  icon: Icons.sentiment_very_satisfied_rounded,
-                  title: 'Seberapa Unik Lu?',
-                  subtitle: 'Cari tahu tingkat keabsurdan lu',
-                  onTap: () {
-                    Navigator.pop(sheetContext);
-                    _pesan('Seberapa Unik Lu?');
-                  },
-                ),
-
-                const SizedBox(height: 12),
-
-                _menuItem(
-                  icon: Icons.settings_rounded,
-                  title: 'Pengaturan',
-                  subtitle: 'Atur pengalaman lu',
-                  onTap: () {
-                    Navigator.pop(sheetContext);
-                    _pesan('Pengaturan');
-                  },
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
     );
   }
+}
 
-  Widget _menuItem({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required VoidCallback onTap,
-  }) {
-    return Material(
-      color: const Color(0xFF29203D),
-      borderRadius: BorderRadius.circular(18),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(18),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
+// ---------------------------------------------------------------------
+// Navbar bawah dengan pointer abu-abu yang meluncur ke menu aktif
+// ---------------------------------------------------------------------
+
+/// Data satu menu di navbar.
+class NavItemData {
+  const NavItemData({
+    required this.label,
+    required this.assetPath,
+    required this.fallbackIcon,
+  });
+
+  final String label;
+  final String assetPath;
+  final IconData fallbackIcon;
+}
+
+class CustomBottomNav extends StatelessWidget {
+  const CustomBottomNav({
+    super.key,
+    required this.items,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  static const double height = 100;
+  static const double _bigRadius = 70; // lengkungan besar
+  static const double _smallRadius = 10; // sudut kecil
+
+  final List<NavItemData> items;
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      clipBehavior: Clip.antiAlias,
+      decoration: const BoxDecoration(
+        color: AppColors.dark,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(_bigRadius),
+          bottomRight: Radius.circular(_bigRadius),
+          topRight: Radius.circular(_smallRadius),
+          bottomLeft: Radius.circular(_smallRadius),
+        ),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final itemWidth = constraints.maxWidth / items.length;
+
+          return Stack(
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF8B5CF6).withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Icon(
-                  icon,
-                  color: const Color(0xFFC4A7FF),
-                  size: 26,
-                ),
-              ),
-
-              const SizedBox(width: 14),
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        color: Colors.white60,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+              // Pointer abu-abu (bergeser saat menu berpindah)
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOutCubic,
+                left: currentIndex * itemWidth,
+                top: 0,
+                bottom: 0,
+                width: itemWidth,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: AppColors.navIndicator,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(_bigRadius)),
+                  ),
                 ),
               ),
 
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white38,
-                size: 16,
+              // Ikon + label
+              Row(
+                children: [
+                  for (int i = 0; i < items.length; i++)
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => onTap(i),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AssetOrIcon(
+                              assetPath: items[i].assetPath,
+                              fallbackIcon: items[i].fallbackIcon,
+                              size: 36,
+                              color: AppColors.cream,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(items[i].label, style: AppText.navLabel),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ],
-          ),
-        ),
+          );
+        },
       ),
     );
-  }
-
-  void _pesan(String fitur) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$fitur belum tersedia, pren! 😭'),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: const Color(0xFF6D28D9),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF100B1D),
-
-      body: Stack(
-        children: [
-          // Background gradasi
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFF25133F),
-                    Color(0xFF100B1D),
-                    Color(0xFF170E2A),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // Partikel bergerak
-          Positioned.fill(
-            child: AnimatedBuilder(
-              animation: _particleController,
-              builder: (context, child) {
-                return CustomPaint(
-                  painter: _ParticlePainter(
-                    progress: _particleController.value,
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Cahaya di belakang karakter
-          Center(
-            child: AnimatedBuilder(
-              animation: _glowController,
-              builder: (context, child) {
-                final glowSize =
-                    230.0 + (_glowController.value * 35);
-
-                return Container(
-                  width: glowSize,
-                  height: glowSize,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color(0xFF8B5CF6).withOpacity(
-                      0.06 + (_glowController.value * 0.08),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF8B5CF6)
-                            .withOpacity(0.12),
-                        blurRadius: 80,
-                        spreadRadius: 20,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Konten utama
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 26,
-                vertical: 18,
-              ),
-              child: Column(
-                children: [
-                  // Header
-                  Row(
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.08),
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.1),
-                          ),
-                        ),
-                        child: const Icon(
-                          Icons.bubble_chart_rounded,
-                          color: Color(0xFFC4A7FF),
-                          size: 25,
-                        ),
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      const Text(
-                        'HEY, YOU!',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
-                        ),
-                      ),
-
-                      const Spacer(),
-
-                      const Icon(
-                        Icons.auto_awesome_rounded,
-                        color: Color(0xFFC4A7FF),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // Area karakter
-                  Expanded(
-                    child: Center(
-                      child: AnimatedBuilder(
-                        animation: _floatController,
-                        builder: (context, child) {
-                          final t = _floatController.value;
-
-                          return Transform.translate(
-                            offset: Offset(
-                              math.sin(t * math.pi * 2) * 7,
-                              -18 + (t * 36),
-                            ),
-                            child: Transform.rotate(
-                              angle: math.sin(t * math.pi * 2) * 0.045,
-                              child: child,
-                            ),
-                          );
-                        },
-                        child: const _GoofyMascot(),
-                      ),
-                    ),
-                  ),
-
-                  // Teks di bawah karakter
-                  const Text(
-                    'HEY, YOU! 👋',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.5,
-                    ),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  const Text(
-                    'Akhirnya sampai juga di sini, pren.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFFD0C5E8),
-                      fontSize: 15,
-                    ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  const Text(
-                    'Your existence is questionable. 💀',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF9584B5),
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-
-                  const SizedBox(height: 28),
-
-                  // Petunjuk interaksi
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.touch_app_rounded,
-                        size: 17,
-                        color: Colors.white.withOpacity(0.55),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Psst... coba cek menu lu.',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.55),
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 70),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-
-      // Floating menu
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _bukaMenu,
-        backgroundColor: const Color(0xFF9B72F2),
-        foregroundColor: Colors.white,
-        elevation: 10,
-        icon: const Icon(Icons.grid_view_rounded),
-        label: const Text(
-          'MENU',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.endFloat,
-    );
-  }
-}
-
-// =====================================================
-// MASKOT GOOFY: ILUSTRASI 2D DENGAN EFEK KEDALAMAN
-// =====================================================
-
-class _GoofyMascot extends StatelessWidget {
-  const _GoofyMascot();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 230,
-      height: 270,
-      child: Stack(
-        alignment: Alignment.center,
-        clipBehavior: Clip.none,
-        children: [
-          // Bayangan di lantai
-          Positioned(
-            bottom: 12,
-            child: Container(
-              width: 120,
-              height: 18,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(100),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF9B72F2)
-                        .withOpacity(0.2),
-                    blurRadius: 25,
-                    spreadRadius: 8,
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Tanduk kiri
-          Positioned(
-            top: 17,
-            left: 57,
-            child: Transform.rotate(
-              angle: -0.4,
-              child: Container(
-                width: 30,
-                height: 49,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFC4A7FF),
-                      Color(0xFF8051DB),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(18),
-                ),
-              ),
-            ),
-          ),
-
-          // Tanduk kanan
-          Positioned(
-            top: 17,
-            right: 57,
-            child: Transform.rotate(
-              angle: 0.4,
-              child: Container(
-                width: 30,
-                height: 49,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFC4A7FF),
-                      Color(0xFF8051DB),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(18),
-                ),
-              ),
-            ),
-          ),
-
-          // Badan dan kepala maskot
-          Positioned(
-            top: 37,
-            child: Container(
-              width: 190,
-              height: 195,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFFD6BFFF),
-                    Color(0xFF9B72F2),
-                    Color(0xFF6638BD),
-                  ],
-                  stops: [0.0, 0.48, 1.0],
-                ),
-                borderRadius: BorderRadius.circular(75),
-                border: Border.all(
-                  color: const Color(0xFFE5D8FF),
-                  width: 2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF8B5CF6)
-                        .withOpacity(0.3),
-                    blurRadius: 35,
-                    spreadRadius: 2,
-                    offset: const Offset(0, 12),
-                  ),
-                ],
-              ),
-              child: Stack(
-                children: [
-                  // Kilau di kepala
-                  Positioned(
-                    top: 15,
-                    left: 24,
-                    child: Container(
-                      width: 43,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.45),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-
-                  // Mata kiri
-                  Positioned(
-                    top: 61,
-                    left: 36,
-                    child: _eye(),
-                  ),
-
-                  // Mata kanan
-                  Positioned(
-                    top: 61,
-                    right: 36,
-                    child: _eye(),
-                  ),
-
-                  // Pipi kiri
-                  Positioned(
-                    top: 111,
-                    left: 22,
-                    child: _cheek(),
-                  ),
-
-                  // Pipi kanan
-                  Positioned(
-                    top: 111,
-                    right: 22,
-                    child: _cheek(),
-                  ),
-
-                  // Mulut goofy
-                  Positioned(
-                    top: 112,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Container(
-                        width: 42,
-                        height: 29,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF392052),
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(5),
-                            bottom: Radius.circular(22),
-                          ),
-                        ),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            width: 25,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFFFB7D5),
-                              borderRadius: BorderRadius.vertical(
-                                bottom: Radius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // Bintik di wajah
-                  Positioned(
-                    top: 38,
-                    right: 30,
-                    child: Icon(
-                      Icons.auto_awesome_rounded,
-                      color: Colors.white.withOpacity(0.75),
-                      size: 18,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Tangan kiri
-          Positioned(
-            left: 2,
-            top: 125,
-            child: Transform.rotate(
-              angle: -0.7,
-              child: Container(
-                width: 42,
-                height: 25,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFA782F6),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xFFD6BFFF),
-                    width: 1.5,
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // Tangan kanan
-          Positioned(
-            right: 2,
-            top: 140,
-            child: Transform.rotate(
-              angle: 0.7,
-              child: Container(
-                width: 42,
-                height: 25,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFA782F6),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xFFD6BFFF),
-                    width: 1.5,
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // Bintang dekorasi
-          const Positioned(
-            top: 72,
-            left: 5,
-            child: Icon(
-              Icons.star_rounded,
-              color: Color(0xFFFFD166),
-              size: 25,
-            ),
-          ),
-
-          const Positioned(
-            top: 54,
-            right: 5,
-            child: Icon(
-              Icons.auto_awesome,
-              color: Color(0xFFFFD166),
-              size: 20,
-            ),
-          ),
-
-          const Positioned(
-            bottom: 40,
-            right: 10,
-            child: Icon(
-              Icons.favorite_rounded,
-              color: Color(0xFFFF8FB8),
-              size: 22,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _eye() {
-    return Container(
-      width: 47,
-      height: 58,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(50),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.12),
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            right: 7,
-            bottom: 8,
-            child: Container(
-              width: 25,
-              height: 33,
-              decoration: BoxDecoration(
-                color: const Color(0xFF30203D),
-                borderRadius: BorderRadius.circular(50),
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 9,
-            right: 10,
-            child: Container(
-              width: 9,
-              height: 9,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _cheek() {
-    return Container(
-      width: 23,
-      height: 12,
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFA6CF).withOpacity(0.75),
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
-  }
-}
-
-// =====================================================
-// BACKGROUND PARTIKEL
-// =====================================================
-
-class _ParticlePainter extends CustomPainter {
-  final double progress;
-
-  _ParticlePainter({required this.progress});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint();
-
-    for (int i = 0; i < 45; i++) {
-      final x = ((i * 73.0) % size.width);
-      final startY = ((i * 97.0) % size.height);
-
-      final y = (startY -
-              progress * (size.height + 30) +
-              size.height * 2) %
-          size.height;
-
-      final radius = 1.0 + ((i % 4) * 0.65);
-
-      final opacity = 0.15 + ((i % 5) * 0.12);
-
-      paint.color = i % 3 == 0
-          ? Colors.pinkAccent.withOpacity(opacity)
-          : const Color(0xFFC4A7FF).withOpacity(opacity);
-
-      canvas.drawCircle(
-        Offset(x, y),
-        radius,
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _ParticlePainter oldDelegate) {
-    return oldDelegate.progress != progress;
   }
 }

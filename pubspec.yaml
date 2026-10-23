@@ -36,6 +36,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  video_player: ^2.14.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,21 @@ flutter:
   assets:
   - assets/logo_assets/P.jpg
   - assets/logo_assets/logo_HY.png
+  # Home Assets (👉ﾟヮﾟ)👉
+  - assets/home_page_assets/icon_home.svg
+  - assets/home_page_assets/icon_menu.svg
+  - assets/home_page_assets/icon_pet.svg
+  - assets/home_page_assets/icon_pickone.svg
+  - assets/home_page_assets/icon_profile.svg
+  - assets/home_page_assets/icon_puzzle.svg
+  - assets/home_page_assets/icon_testMBTI.svg
+  - assets/home_page_assets/logo_HY_mini.svg
+  - assets/home_page_assets/kucing.png
+  # Home Assets Video _-
+  - assets/videos/amo.mp4
+
+
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
