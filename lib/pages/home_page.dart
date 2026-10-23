@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // =====================================================================
 // BAGIAN 1 — PENGATURAN UTAMA
@@ -350,6 +351,12 @@ class _PlaceholderPage extends StatelessWidget {
 // Menampilkan gambar asset atau ikon pengganti jika gagal dimuat.
 // =====================================================================
 
+// =====================================================================
+// PEMUAT ASSET
+// Mendukung SVG dan gambar biasa seperti PNG.
+// Fallback hanya muncul jika asset gagal dimuat.
+// =====================================================================
+
 class AssetOrIcon extends StatelessWidget {
   const AssetOrIcon({
     super.key,
@@ -366,20 +373,40 @@ class AssetOrIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SVG harus dirender menggunakan flutter_svg.
+    if (assetPath.toLowerCase().endsWith('.svg')) {
+      return SvgPicture.asset(
+        assetPath,
+        width: size,
+        height: size,
+        fit: BoxFit.contain,
+
+        // Isi color hanya jika memang ingin mewarnai SVG.
+        colorFilter: color == null
+            ? null
+            : ColorFilter.mode(color!, BlendMode.srcIn),
+
+        // Tampilkan ikon pengganti jika SVG gagal dimuat.
+        placeholderBuilder: (_) => Icon(
+          fallbackIcon,
+          size: size,
+          color: color,
+        ),
+      );
+    }
+
+    // PNG, JPG, dan format gambar biasa.
     return Image.asset(
       assetPath,
       width: size,
       height: size,
+      fit: BoxFit.contain,
       color: color,
-
-      // Jika asset gagal dimuat, tampilkan ikon pengganti.
-      errorBuilder: (_, __, ___) {
-        return Icon(
-          fallbackIcon,
-          size: size,
-          color: color,
-        );
-      },
+      errorBuilder: (_, __, ___) => Icon(
+        fallbackIcon,
+        size: size,
+        color: color,
+      ),
     );
   }
 }
