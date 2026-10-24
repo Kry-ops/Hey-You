@@ -73,11 +73,11 @@ flutter:
   - assets/home_page_assets/icon_home.svg
   - assets/home_page_assets/icon_menu.svg
   - assets/home_page_assets/icon_pet.svg
-  - assets/home_page_assets/icon_pickone.svg
+  - assets/home_page_assets/icon_pick.svg
   - assets/home_page_assets/icon_profile.svg
   - assets/home_page_assets/icon_puzzle.svg
-  - assets/home_page_assets/icon_testMBTI.svg
-  - assets/home_page_assets/logo_HY_mini.svg
+  - assets/home_page_assets/icon_test.svg
+  - assets/home_page_assets/logo_HY_nobg.svg
   - assets/home_page_assets/kucing.png
   # Home Assets Video _-
   - assets/videos/amo.png

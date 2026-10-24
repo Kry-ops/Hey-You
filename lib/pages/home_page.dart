@@ -82,10 +82,10 @@ class HomeLayout {
 // Jika lokasi asset berubah, perbarui path di sini.
 class AppAssets {
   static const headerImage = 'assets/videos/amo.png';
-  static const logo = 'assets/home_page_assets/logo_HY_mini.svg';
+  static const logo = 'assets/home_page_assets/logo_HY_nobg.svg';
 
-  static const iconMbti = 'assets/home_page_assets/icon_testMBTI.svg';
-  static const iconPickOne = 'assets/home_page_assets/icon_pickone.svg';
+  static const iconMbti = 'assets/home_page_assets/icon_test.svg';
+  static const iconPickOne = 'assets/home_page_assets/icon_pick.svg';
   static const iconPuzzle = 'assets/home_page_assets/icon_puzzle.svg';
 
   static const navHome = 'assets/home_page_assets/icon_home.svg';
