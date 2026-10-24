@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -29,30 +30,28 @@ class AppColors {
 class HomeLayout {
   // ---------------------------------------------------------------
   // LEBAR KOMPONEN
-  // Nilai proporsi menggunakan rentang 0.0 sampai 1.0.
-  // Contoh: 0.90 berarti 90% dari lebar area layar.
   // ---------------------------------------------------------------
 
-  static const double contentWidth = 0.90; // Lebar header dan tombol.
-  static const double navbarWidth = 0.92;  // Lebar navbar.
-  static const double catSize = 0.65;      // Ukuran kucing terhadap layar.
+  static const double contentWidth = 0.90;
+  static const double navbarWidth = 0.92;
+  static const double catSize = 0.65;
 
   // ---------------------------------------------------------------
   // JARAK VERTIKAL
   // ---------------------------------------------------------------
 
-  static const double topSpace = 24;       // Jarak header dari atas.
-  static const double headerToButton = 40; // Jarak header ke tombol pertama.
-  static const double buttonGap = 20;      // Jarak antar tombol.
-  static const double bottomSpace = 12;    // Jarak navbar dari bawah.
+  static const double topSpace = 24;
+  static const double headerToButton = 40;
+  static const double buttonGap = 20;
+  static const double bottomSpace = 12;
 
   // ---------------------------------------------------------------
   // UKURAN KOMPONEN
   // ---------------------------------------------------------------
 
   static const double headerAspectRatio = 536 / 284;
-  static const double buttonHeight = 62; // Tinggi tombol fitur.
-  static const double navbarHeight = 60; // Tinggi navbar.
+  static const double buttonHeight = 62;
+  static const double navbarHeight = 60;
 
   // ---------------------------------------------------------------
   // BENTUK KOMPONEN
@@ -70,16 +69,15 @@ class HomeLayout {
   static const double overlayButtonSize = 30;
 
   // ---------------------------------------------------------------
-  // POINTER NAVBAR (kotak abu-abu di belakang menu aktif)
+  // POINTER NAVBAR
   // ---------------------------------------------------------------
 
-  static const double navIndicatorWidth = 0.68; // 0.0–1.0 dari lebar satu menu
-  static const double navIndicatorRadius = 60;  // lengkung kiri atas pointer
-  static const double navIndicatorRightRadius = 60; // lengkung kanan bawah pointer  
+  static const double navIndicatorWidth = 0.68;
+  static const double navIndicatorRadius = 60;
+  static const double navIndicatorRightRadius = 60;
 }
 
 // Lokasi gambar dan ikon.
-// Jika lokasi asset berubah, perbarui path di sini.
 class AppAssets {
   static const headerImage = 'assets/videos/amo.png';
   static const logo = 'assets/home_page_assets/logo_HY_nobg.svg';
@@ -97,8 +95,6 @@ class AppAssets {
 
 // Pengaturan gaya tulisan.
 class AppText {
-  // Isi nama font jika font khusus sudah didaftarkan di pubspec.yaml.
-  // Biarkan null untuk menggunakan font bawaan Flutter.
   static const String? mainFont = null;
 
   static const featureTitle = TextStyle(
@@ -117,7 +113,6 @@ class AppText {
 
 // =====================================================================
 // BAGIAN 2 — HALAMAN HOME
-// Mengatur susunan header, tombol fitur, kucing, dan navbar.
 // =====================================================================
 
 class HomePage extends StatefulWidget {
@@ -132,7 +127,6 @@ class _HomePageState extends State<HomePage> {
   int _navIndex = 0;
 
   // Daftar menu navbar.
-  // Ubah label atau asset ikon di sini.
   static const List<NavItemData> _navItems = [
     NavItemData(
       label: 'HOME',
@@ -151,11 +145,49 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  // Membuka halaman tujuan setelah tombol berhasil digeser.
+  // Membuka halaman tujuan.
   void _openPage(Widget page) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => page),
     );
+  }
+
+  // Menangani pilihan dropdown untuk pengaturan aplikasi.
+  // Menu ini tidak diarahkan ke fitur utama aplikasi.
+  void _handleMenuSelection(String value) {
+    switch (value) {
+      case 'settings':
+        _openPage(const _PlaceholderPage('Settings'));
+        break;
+
+      case 'theme':
+        _openPage(const _PlaceholderPage('Change Theme'));
+        break;
+    }
+  }
+
+  // Menangani navigasi navbar bawah.
+  void _handleNavTap(int index) {
+    // Perbarui indikator navbar.
+    setState(() {
+      _navIndex = index;
+    });
+
+    // Home adalah halaman yang sedang dibuka.
+    if (index == 0) {
+      return;
+    }
+
+    // Buka halaman dummy berdasarkan menu yang dipilih.
+    switch (index) {
+      case 1:
+        _openPage(const _PlaceholderPage('Pets'));
+        break;
+
+      case 2:
+        _openPage(const _PlaceholderPage('Profile'));
+        break;
+    }
   }
 
   @override
@@ -163,35 +195,28 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      // SafeArea menjaga konten agar tidak tertutup status bar
-      // atau area navigasi sistem Android.
+      // SafeArea menjaga konten agar tidak tertutup status bar.
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
             final screenWidth = constraints.maxWidth;
             final screenHeight = constraints.maxHeight;
 
-            // Lebar konten dihitung berdasarkan lebar layar.
+            // Lebar konten mengikuti ukuran layar.
             final contentWidth =
                 screenWidth * HomeLayout.contentWidth;
 
-            // Margin kiri dan kanan navbar dibuat seimbang.
+            // Margin kiri dan kanan navbar.
             final navSideSpace =
                 screenWidth * (1 - HomeLayout.navbarWidth) / 7;
 
             return SizedBox(
-              // PENTING:
-              // Stack harus memenuhi tinggi area layar agar navbar
-              // yang menggunakan bottom benar-benar berada di bawah.
               width: screenWidth,
               height: screenHeight,
               child: Stack(
                 children: [
                   // -------------------------------------------------
                   // 1. DEKORASI KUCING
-                  // Berada di belakang konten dan tidak menerima tap.
-                  // Ubah posisi dan ukuran melalui HomeLayout
-                  // atau nilai right/bottom di bawah.
                   // -------------------------------------------------
 
                   Positioned(
@@ -208,8 +233,6 @@ class _HomePageState extends State<HomePage> {
 
                   // -------------------------------------------------
                   // 2. KONTEN UTAMA
-                  // Dapat digulir jika tinggi layar tidak mencukupi.
-                  // Navbar tetap berada di posisi bawah.
                   // -------------------------------------------------
 
                   SingleChildScrollView(
@@ -217,9 +240,6 @@ class _HomePageState extends State<HomePage> {
                       0,
                       HomeLayout.topSpace,
                       0,
-
-                      // Ruang tambahan mencegah tombol terakhir
-                      // tertutup navbar saat halaman digulir.
                       HomeLayout.navbarHeight + 30,
                     ),
                     child: Center(
@@ -229,12 +249,10 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             // HEADER GAMBAR.
                             VideoHeader(
-                              onMenuTap: () {
-                                // TODO: Tambahkan aksi untuk tombol menu.
-                              },
+                              onMenuSelected: _handleMenuSelection,
                             ),
 
-                            // Jarak antara header dan tombol pertama.
+                            // Jarak header ke tombol pertama.
                             SizedBox(
                               height: HomeLayout.headerToButton,
                             ),
@@ -298,8 +316,6 @@ class _HomePageState extends State<HomePage> {
 
                   // -------------------------------------------------
                   // 3. NAVBAR BAWAH
-                  // Tetap menempel di bawah area layar.
-                  // Lebar dan jaraknya dapat diatur di HomeLayout.
                   // -------------------------------------------------
 
                   Positioned(
@@ -309,14 +325,7 @@ class _HomePageState extends State<HomePage> {
                     child: CustomBottomNav(
                       items: _navItems,
                       currentIndex: _navIndex,
-                      onTap: (index) {
-                        setState(() {
-                          _navIndex = index;
-                        });
-
-                        // TODO:
-                        // Tambahkan navigasi ke halaman Pets/Profile.
-                      },
+                      onTap: _handleNavTap,
                     ),
                   ),
                 ],
@@ -331,7 +340,8 @@ class _HomePageState extends State<HomePage> {
 
 // =====================================================================
 // BAGIAN 3 — HALAMAN SEMENTARA
-// Ganti halaman ini setelah halaman fitur yang sebenarnya siap.
+// Digunakan untuk Settings, Change Theme, Pets, dan Profile.
+// Ganti dengan halaman sebenarnya setelah siap.
 // =====================================================================
 
 class _PlaceholderPage extends StatelessWidget {
@@ -346,23 +356,26 @@ class _PlaceholderPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         backgroundColor: AppColors.background,
+        foregroundColor: AppColors.dark,
+        elevation: 0,
       ),
       body: Center(
-        child: Text('Halaman $title'),
+        child: Text(
+          'Halaman $title',
+          style: const TextStyle(
+            color: AppColors.dark,
+            fontSize: 18,
+          ),
+        ),
       ),
     );
   }
 }
 
 // =====================================================================
-// BAGIAN 4 — KOMPONEN GAMBAR
-// Menampilkan gambar asset atau ikon pengganti jika gagal dimuat.
-// =====================================================================
-
-// =====================================================================
-// PEMUAT ASSET
+// BAGIAN 4 — PEMUAT ASSET
 // Mendukung SVG dan gambar biasa seperti PNG.
-// Fallback hanya muncul jika asset gagal dimuat.
+// Fallback muncul jika asset gagal dimuat.
 // =====================================================================
 
 class AssetOrIcon extends StatelessWidget {
@@ -381,20 +394,16 @@ class AssetOrIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SVG harus dirender menggunakan flutter_svg.
+    // SVG dirender menggunakan flutter_svg.
     if (assetPath.toLowerCase().endsWith('.svg')) {
       return SvgPicture.asset(
         assetPath,
         width: size,
         height: size,
         fit: BoxFit.contain,
-
-        // Isi color hanya jika memang ingin mewarnai SVG.
         colorFilter: color == null
             ? null
             : ColorFilter.mode(color!, BlendMode.srcIn),
-
-        // Tampilkan ikon pengganti jika SVG gagal dimuat.
         placeholderBuilder: (_) => Icon(
           fallbackIcon,
           size: size,
@@ -421,15 +430,17 @@ class AssetOrIcon extends StatelessWidget {
 
 // =====================================================================
 // BAGIAN 5 — HEADER GAMBAR
-// Menampilkan gambar, logo kiri atas, dan tombol menu kanan atas.
-// Nama VideoHeader dipertahankan agar pemanggilan yang sudah ada
-// tidak perlu diubah, meskipun sekarang menggunakan gambar statis.
+// Gambar, logo, dan dropdown menu.
 // =====================================================================
 
 class VideoHeader extends StatelessWidget {
-  const VideoHeader({super.key, this.onMenuTap});
+  const VideoHeader({
+    super.key,
+    this.onMenuSelected,
+  });
 
-  final VoidCallback? onMenuTap;
+  // Callback ketika pengguna memilih menu dropdown.
+  final ValueChanged<String>? onMenuSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -450,19 +461,27 @@ class VideoHeader extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Gambar utama header.
-            Image.asset(
-              AppAssets.headerImage,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) {
-                return const Center(
-                  child: Icon(
-                    Icons.image_outlined,
-                    size: 56,
-                    color: Colors.white54,
-                  ),
-                );
-              },
+            // Gambar banner dipotong mengikuti radius bagian dalam.
+            // Ini mencegah sudut gambar terlihat runcing.
+            ClipRRect(
+              borderRadius: BorderRadius.circular(
+                HomeLayout.headerRadius - HomeLayout.headerBorder,
+              ),
+              child: Image.asset(
+                AppAssets.headerImage,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) {
+                  return const Center(
+                    child: Icon(
+                      Icons.image_outlined,
+                      size: 56,
+                      color: Colors.white54,
+                    ),
+                  );
+                },
+              ),
             ),
 
             // Logo di pojok kiri atas.
@@ -478,15 +497,79 @@ class VideoHeader extends StatelessWidget {
               ),
             ),
 
-            // Tombol menu di pojok kanan atas.
+            // -----------------------------------------------------
+            // DROPDOWN MENU KANAN ATAS
+            // Khusus pengaturan dan tema aplikasi.
+            // -----------------------------------------------------
+
             Positioned(
               top: 8,
               right: 8,
-              child: _OverlayButton(
-                onTap: onMenuTap,
-                child: const Icon(
-                  Icons.sort,
-                  color: AppColors.dark,
+              child: PopupMenuButton<String>(
+                tooltip: 'Pengaturan aplikasi',
+                  // Warna background dropdown.
+                  color: const Color(0xFFFCF1D0),
+                    // Mencegah tint warna Material mengubah warna pilihan.
+                    surfaceTintColor: Colors.transparent,
+
+                // Kirim pilihan ke HomePage.
+                onSelected: (value) {
+                  onMenuSelected?.call(value);
+                },
+
+                // Isi dropdown.
+                itemBuilder: (context) => const [
+                  PopupMenuItem<String>(
+                    value: 'settings',
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.settings_outlined,
+                          color: AppColors.dark,
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          'Settings',
+                          style: TextStyle(
+                            color: Color(0xFF484242)
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'theme',
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.palette_outlined,
+                          color: AppColors.dark,
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          'Theme',
+                          style: TextStyle(
+                            color: Color(0xFF484242)
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+
+                // Tampilan tombol dropdown.
+                child: Container(
+                  width: HomeLayout.overlayButtonSize,
+                  height: HomeLayout.overlayButtonSize,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.overlay,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.sort,
+                    color: AppColors.dark,
+                  ),
                 ),
               ),
             ),
@@ -497,7 +580,7 @@ class VideoHeader extends StatelessWidget {
   }
 }
 
-// Tombol kecil dengan latar transparan untuk logo dan menu.
+// Tombol kecil dengan latar untuk logo.
 class _OverlayButton extends StatelessWidget {
   const _OverlayButton({
     required this.child,
@@ -528,7 +611,6 @@ class _OverlayButton extends StatelessWidget {
 // =====================================================================
 // BAGIAN 6 — TOMBOL FITUR SWIPE
 // Geser bulatan ke kanan untuk membuka halaman.
-// Threshold menentukan seberapa jauh tombol harus digeser.
 // =====================================================================
 
 class SwipeFeatureButton extends StatefulWidget {
@@ -553,7 +635,7 @@ class SwipeFeatureButton extends StatefulWidget {
 }
 
 class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
-  // Ukuran tombol diambil dari pengaturan utama.
+  // Ukuran tombol dari pengaturan utama.
   static const double _height = HomeLayout.buttonHeight;
 
   // Jarak bulatan dari tepi tombol.
@@ -568,7 +650,7 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
 
   // Dipanggil ketika pengguna melepas bulatan.
   Future<void> _onDragEnd(double maxDx) async {
-    // Mencegah pemicu ganda ketika halaman sedang dibuka.
+    // Mencegah pemicu ganda.
     if (_opening) return;
 
     if (_dx >= maxDx * _threshold) {
@@ -585,7 +667,7 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
 
       if (!mounted) return;
 
-      // Jalankan aksi yang diberikan oleh HomePage.
+      // Jalankan aksi dari HomePage.
       widget.onCompleted();
 
       // Jeda sebelum mengembalikan posisi bulatan.
@@ -615,16 +697,16 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
         // Lebar bulatan menyesuaikan lebar tombol.
         final knobWidth = constraints.maxWidth * 0.28;
 
-        // Jarak maksimal bulatan untuk mencapai ujung kanan.
+        // Jarak maksimal bulatan ke ujung kanan.
         final maxDx = (
           constraints.maxWidth -
           _padding * 2 -
           knobWidth
-        ).clamp(0.0, double.infinity);
+        ).clamp(0.0, double.infinity).toDouble();
 
-        // Nilai progress digunakan untuk memudarkan teks.
+        // Progress digunakan untuk memudarkan teks.
         final progress = maxDx > 0
-            ? (_dx / maxDx).clamp(0.0, 1.0)
+            ? (_dx / maxDx).clamp(0.0, 1.0).toDouble()
             : 0.0;
 
         return Container(
@@ -635,7 +717,7 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
           ),
           child: Stack(
             children: [
-              // Teks berada di tengah dan memudar ketika bulatan digeser.
+              // Teks memudar ketika bulatan digeser.
               Center(
                 child: Opacity(
                   opacity: 1 - progress,
@@ -675,8 +757,9 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
                       ? null
                       : (details) {
                           setState(() {
-                            _dx = (_dx + details.delta.dx)
-                                .clamp(0.0, maxDx);
+                            _dx = (
+                              _dx + details.delta.dx
+                            ).clamp(0.0, maxDx).toDouble();
                           });
                         },
                   onHorizontalDragEnd: _opening
@@ -733,7 +816,7 @@ class CustomBottomNav extends StatelessWidget {
     required this.onTap,
   });
 
-  // Tinggi navbar diatur melalui HomeLayout.
+  // Tinggi navbar dari pengaturan utama.
   static const double height = HomeLayout.navbarHeight;
 
   // Radius sudut navbar.
@@ -750,7 +833,7 @@ class CustomBottomNav extends StatelessWidget {
       height: height,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
-        color: AppColors.dark,        
+        color: AppColors.dark,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(_bigRadius),
           bottomRight: Radius.circular(_bigRadius),
@@ -762,11 +845,13 @@ class CustomBottomNav extends StatelessWidget {
         builder: (context, constraints) {
           // Setiap item mendapat lebar yang sama.
           final itemWidth = constraints.maxWidth / items.length;
-          final indicatorWidth = itemWidth * HomeLayout.navIndicatorWidth;
+
+          final indicatorWidth =
+              itemWidth * HomeLayout.navIndicatorWidth;
 
           return Stack(
             children: [
-              // Pointer abu-abu: berada di tengah menu aktif.
+              // Pointer abu-abu di belakang menu aktif.
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOutCubic,
@@ -779,21 +864,28 @@ class CustomBottomNav extends StatelessWidget {
                   decoration: const BoxDecoration(
                     color: AppColors.navIndicator,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(HomeLayout.navIndicatorRadius),
-                      bottomRight: Radius.circular(HomeLayout.navIndicatorRightRadius),
-                    ),        
+                      topLeft: Radius.circular(
+                        HomeLayout.navIndicatorRadius,
+                      ),
+                      bottomRight: Radius.circular(
+                        HomeLayout.navIndicatorRightRadius,
+                      ),
+                    ),
                   ),
                 ),
               ),
 
-              // Ikon dan label untuk setiap menu.
+              // Ikon dan label setiap menu.
               Row(
                 children: [
                   for (int i = 0; i < items.length; i++)
                     Expanded(
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
+
+                        // Jalankan navigasi yang diberikan HomePage.
                         onTap: () => onTap(i),
+
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
