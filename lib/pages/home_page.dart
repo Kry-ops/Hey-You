@@ -91,6 +91,10 @@ class AppAssets {
   static const navProfile = 'assets/home_page_assets/icon_profile.svg';
 
   static const cat = 'assets/home_page_assets/kucing.png';
+
+    // Ikon dropdown menu.
+  static const iconSettings = 'assets/home_page_assets/icon_settings.svg';
+  static const iconTheme = 'assets/home_page_assets/icon_dark_theme.svg';
 }
 
 // Pengaturan gaya tulisan.
@@ -517,39 +521,46 @@ class VideoHeader extends StatelessWidget {
                   onMenuSelected?.call(value);
                 },
 
-                // Isi dropdown.
-                itemBuilder: (context) => const [
+                // Isi dropdown menu.
+                itemBuilder: (context) => [
+                  // Menu Settings.
                   PopupMenuItem<String>(
                     value: 'settings',
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.settings_outlined,
+                        AssetOrIcon(
+                          assetPath: AppAssets.iconSettings,
+                          fallbackIcon: Icons.settings_outlined,
+                          size: 22,
                           color: AppColors.dark,
                         ),
-                        SizedBox(width: 12),
-                        Text(
+                        const SizedBox(width: 12),
+                        const Text(
                           'Settings',
                           style: TextStyle(
-                            color: Color(0xFF484242)
+                            color: AppColors.dark,
                           ),
                         ),
                       ],
                     ),
                   ),
+
+                  // Menu Theme.
                   PopupMenuItem<String>(
                     value: 'theme',
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.palette_outlined,
+                        AssetOrIcon(
+                          assetPath: AppAssets.iconTheme,
+                          fallbackIcon: Icons.palette_outlined,
+                          size: 22,
                           color: AppColors.dark,
                         ),
-                        SizedBox(width: 12),
-                        Text(
-                          'Theme',
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Dark heme',
                           style: TextStyle(
-                            color: Color(0xFF484242)
+                            color: AppColors.dark,
                           ),
                         ),
                       ],

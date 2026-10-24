@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hey_you/pages/first_loading_page.dart';
+// import 'package:hey_you/pages/first_loading_page.dart';
+import 'package:hey_you/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           selectionHandleColor: Color(0xFF4B4242),
         ),
       ),
-      home: const FirstLoadingPage(),
+      home: const HomePage(),
     );
   }
 }

@@ -71,6 +71,8 @@ flutter:
   - assets/logo_assets/logo_HY.png
   # Home Assets (👉ﾟヮﾟ)👉
   - assets/home_page_assets/icon_home.svg
+  - assets/home_page_assets/icon_dark_theme.svg
+  - assets/home_page_assets/icon_settings.svg
   - assets/home_page_assets/icon_menu.svg
   - assets/home_page_assets/icon_pet.svg
   - assets/home_page_assets/icon_pick.svg
