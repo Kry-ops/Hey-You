@@ -2,11 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// =====================================================================
 // BAGIAN 1 — PENGATURAN UTAMA
-// Ubah pengaturan di bagian ini terlebih dahulu.
-// Tidak perlu mencari angka ukuran di seluruh file.
-// =====================================================================
 
 class AppColors {
   // Warna latar dan komponen utama.
@@ -28,53 +24,44 @@ class AppColors {
 }
 
 class HomeLayout {
-  // ---------------------------------------------------------------
-  // LEBAR KOMPONEN
-  // ---------------------------------------------------------------
 
+  // LEBAR KOMPONEN
   static const double contentWidth = 0.90;
   static const double navbarWidth = 0.92;
   static const double catSize = 0.65;
 
-  // ---------------------------------------------------------------
-  // JARAK VERTIKAL
-  // ---------------------------------------------------------------
 
+  // JARAK VERTIKAL
   static const double topSpace = 24;
   static const double headerToButton = 40;
   static const double buttonGap = 20;
   static const double bottomSpace = 12;
 
-  // ---------------------------------------------------------------
-  // UKURAN KOMPONEN
-  // ---------------------------------------------------------------
 
+  // UKURAN KOMPONEN
   static const double headerAspectRatio = 536 / 284;
   static const double buttonHeight = 62;
   static const double navbarHeight = 60;
 
-  // ---------------------------------------------------------------
-  // BENTUK KOMPONEN
-  // ---------------------------------------------------------------
 
+  // BENTUK KOMPONEN
   static const double headerRadius = 22;
   static const double headerBorder = 5;
 
-  // ---------------------------------------------------------------
-  // UKURAN IKON
-  // ---------------------------------------------------------------
 
+  // UKURAN IKON
   static const double featureIconSize = 30;
   static const double navIconSize = 22;
   static const double overlayButtonSize = 30;
 
-  // ---------------------------------------------------------------
-  // POINTER NAVBAR
-  // ---------------------------------------------------------------
 
+  // POINTER NAVBAR
   static const double navIndicatorWidth = 0.68;
   static const double navIndicatorRadius = 60;
   static const double navIndicatorRightRadius = 60;
+  
+  // Tombool Geser
+  static const double trailLabelCenter = 0.33;
 }
 
 // Lokasi gambar dan ikon.
@@ -115,9 +102,7 @@ class AppText {
   );
 }
 
-// =====================================================================
 // BAGIAN 2 — HALAMAN HOME
-// =====================================================================
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -219,10 +204,7 @@ class _HomePageState extends State<HomePage> {
               height: screenHeight,
               child: Stack(
                 children: [
-                  // -------------------------------------------------
-                  // 1. DEKORASI KUCING
-                  // -------------------------------------------------
-
+                  // 1. SI KUCINGGGGGG
                   Positioned(
                     right: -screenWidth * 0.17,
                     bottom: HomeLayout.navbarHeight + 20,
@@ -235,10 +217,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  // -------------------------------------------------
                   // 2. KONTEN UTAMA
-                  // -------------------------------------------------
-
                   SingleChildScrollView(
                     padding: EdgeInsets.fromLTRB(
                       0,
@@ -261,10 +240,7 @@ class _HomePageState extends State<HomePage> {
                               height: HomeLayout.headerToButton,
                             ),
 
-                            // ---------------------------------------
                             // FITUR 1 — TEST MBTI
-                            // ---------------------------------------
-
                             SwipeFeatureButton(
                               label: 'Test MBTI',
                               assetPath: AppAssets.iconMbti,
@@ -278,11 +254,7 @@ class _HomePageState extends State<HomePage> {
                             ),
 
                             SizedBox(height: HomeLayout.buttonGap),
-
-                            // ---------------------------------------
                             // FITUR 2 — CHOSE ONE
-                            // ---------------------------------------
-
                             SwipeFeatureButton(
                               label: 'Chose One',
                               assetPath: AppAssets.iconPickOne,
@@ -296,11 +268,7 @@ class _HomePageState extends State<HomePage> {
                             ),
 
                             SizedBox(height: HomeLayout.buttonGap),
-
-                            // ---------------------------------------
                             // FITUR 3 — PUZZLE GAME
-                            // ---------------------------------------
-
                             SwipeFeatureButton(
                               label: 'Puzzle Game',
                               assetPath: AppAssets.iconPuzzle,
@@ -318,10 +286,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  // -------------------------------------------------
                   // 3. NAVBAR BAWAH
-                  // -------------------------------------------------
-
                   Positioned(
                     left: navSideSpace,
                     right: navSideSpace,
@@ -342,11 +307,9 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// =====================================================================
 // BAGIAN 3 — HALAMAN SEMENTARA
 // Digunakan untuk Settings, Change Theme, Pets, dan Profile.
-// Ganti dengan halaman sebenarnya setelah siap.
-// =====================================================================
+// HEH BANGSAT INGAT GANTI HALAMAN DI SINI
 
 class _PlaceholderPage extends StatelessWidget {
   const _PlaceholderPage(this.title);
@@ -376,11 +339,8 @@ class _PlaceholderPage extends StatelessWidget {
   }
 }
 
-// =====================================================================
 // BAGIAN 4 — PEMUAT ASSET
-// Mendukung SVG dan gambar biasa seperti PNG.
-// Fallback muncul jika asset gagal dimuat.
-// =====================================================================
+// Load assets dan backup fallback jika assets gagal dimuat
 
 class AssetOrIcon extends StatelessWidget {
   const AssetOrIcon({
@@ -432,11 +392,8 @@ class AssetOrIcon extends StatelessWidget {
   }
 }
 
-// =====================================================================
-// BAGIAN 5 — HEADER GAMBAR
+// BAGIAN 5 — BAGIAN ATAS
 // Gambar, logo, dan dropdown menu.
-// =====================================================================
-
 class VideoHeader extends StatelessWidget {
   const VideoHeader({
     super.key,
@@ -465,8 +422,6 @@ class VideoHeader extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Gambar banner dipotong mengikuti radius bagian dalam.
-            // Ini mencegah sudut gambar terlihat runcing.
             ClipRRect(
               borderRadius: BorderRadius.circular(
                 HomeLayout.headerRadius - HomeLayout.headerBorder,
@@ -488,7 +443,7 @@ class VideoHeader extends StatelessWidget {
               ),
             ),
 
-            // Logo di pojok kiri atas.
+            // Logo di pojok kiri atas
             Positioned(
               top: 8,
               left: 8,
@@ -501,26 +456,18 @@ class VideoHeader extends StatelessWidget {
               ),
             ),
 
-            // -----------------------------------------------------
             // DROPDOWN MENU KANAN ATAS
-            // Khusus pengaturan dan tema aplikasi.
-            // -----------------------------------------------------
-
             Positioned(
               top: 8,
               right: 8,
               child: PopupMenuButton<String>(
                 tooltip: 'Pengaturan aplikasi',
-                  // Warna background dropdown.
                   color: const Color(0xFFFCF1D0),
-                    // Mencegah tint warna Material mengubah warna pilihan.
                     surfaceTintColor: Colors.transparent,
-
                 // Kirim pilihan ke HomePage.
                 onSelected: (value) {
                   onMenuSelected?.call(value);
                 },
-
                 // Isi dropdown menu.
                 itemBuilder: (context) => [
                   // Menu Settings.
@@ -619,10 +566,8 @@ class _OverlayButton extends StatelessWidget {
   }
 }
 
-// =====================================================================
 // BAGIAN 6 — TOMBOL FITUR SWIPE
-// Geser bulatan ke kanan untuk membuka halaman.
-// =====================================================================
+// Geser bulatan ke kanan untuk membuka halaman
 
 class SwipeFeatureButton extends StatefulWidget {
   const SwipeFeatureButton({
@@ -645,118 +590,180 @@ class SwipeFeatureButton extends StatefulWidget {
       _SwipeFeatureButtonState();
 }
 
+
 class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
-  // Ukuran tombol dari pengaturan utama.
+  // Ukuran tombol diambil dari pengaturan utama.
   static const double _height = HomeLayout.buttonHeight;
-
-  // Jarak bulatan dari tepi tombol.
+ 
+  // Jarak bulatan dan jejak warna dari tepi bingkai cokelat.
   static const double _padding = 10;
-
+ 
   // Persentase geseran minimum agar dianggap berhasil.
   static const double _threshold = 0.70;
-
+ 
+  // Durasi animasi ketika tombol kembali ke posisi awal.
+  static const Duration _resetDuration = Duration(milliseconds: 250);
+ 
+  // Durasi animasi sebelum halaman tujuan dibuka.
+  static const Duration _openingDuration = Duration(milliseconds: 250);
+ 
+  // Posisi horizontal bulatan yang sedang digeser.
   double _dx = 0;
+ 
+  // Menandakan apakah pengguna sedang menggeser bulatan.
   bool _dragging = false;
+ 
+  // Mencegah pengguna memicu navigasi berulang kali.
   bool _opening = false;
-
-  // Dipanggil ketika pengguna melepas bulatan.
+ 
+  // Mengatur animasi ketika pengguna melepas bulatan.
   Future<void> _onDragEnd(double maxDx) async {
-    // Mencegah pemicu ganda.
+    // Mencegah pemicu ganda ketika proses navigasi berlangsung.
     if (_opening) return;
-
+ 
+    // Periksa apakah geseran sudah mencapai batas minimum.
     if (_dx >= maxDx * _threshold) {
-      // Geseran berhasil: bulatan bergerak ke ujung kanan.
+      // Geseran berhasil: bulatan meluncur ke ujung kanan.
       setState(() {
         _dragging = false;
         _opening = true;
         _dx = maxDx;
       });
-
-      await Future.delayed(
-        const Duration(milliseconds: 250),
-      );
-
+ 
+      // Beri waktu agar animasi geseran terlihat.
+      await Future.delayed(_openingDuration);
+ 
+      // Hentikan proses jika widget sudah tidak digunakan.
       if (!mounted) return;
-
-      // Jalankan aksi dari HomePage.
+ 
+      // Jalankan navigasi menuju halaman yang ditentukan HomePage.
       widget.onCompleted();
-
-      // Jeda sebelum mengembalikan posisi bulatan.
-      await Future.delayed(
-        const Duration(milliseconds: 400),
-      );
-
+ 
+      // Tunggu sebentar sebelum mengatur ulang posisi tombol.
+      await Future.delayed(const Duration(milliseconds: 400));
+ 
+      // Pastikan widget masih aktif sebelum memperbarui tampilannya.
       if (!mounted) return;
-
+ 
+      // Kembalikan tombol ke posisi awal.
       setState(() {
         _dx = 0;
         _opening = false;
       });
     } else {
-      // Geseran tidak cukup jauh: kembali ke posisi awal.
+      // Geseran tidak mencapai batas: kembalikan tombol ke awal.
       setState(() {
         _dragging = false;
         _dx = 0;
       });
     }
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        final buttonWidth = constraints.maxWidth;
+ 
         // Lebar bulatan menyesuaikan lebar tombol.
-        final knobWidth = constraints.maxWidth * 0.28;
-
-        // Jarak maksimal bulatan ke ujung kanan.
+        final knobWidth = buttonWidth * 0.28;
+ 
+        // Hitung jarak maksimal bulatan hingga ujung kanan.
         final maxDx = (
-          constraints.maxWidth -
-          _padding * 2 -
-          knobWidth
+          buttonWidth - _padding * 2 - knobWidth
         ).clamp(0.0, double.infinity).toDouble();
-
-        // Progress digunakan untuk memudarkan teks.
-        final progress = maxDx > 0
-            ? (_dx / maxDx).clamp(0.0, 1.0).toDouble()
-            : 0.0;
-
+ 
+        // Lebar jejak warna = dari tepi kiri sampai ujung kanan bulatan.
+        final trailWidth = _dx + knobWidth;
+ 
+        // Bentuk pil bagian dalam (jejak warna dan bulatan).
+        final innerRadius = BorderRadius.circular(
+          (_height - _padding * 2) / 2,
+        );
+ 
+        // Lebar area teks pada jejak. Area ini dimulai dari tepi kiri
+        // tombol, sehingga titik tengahnya = buttonWidth * trailLabelCenter.
+        final trailLabelAreaWidth =
+            buttonWidth * HomeLayout.trailLabelCenter * 2;
+ 
+        // Saat digeser, animasi dimatikan agar mengikuti jari.
+        final animDuration = _dragging ? Duration.zero : _resetDuration;
+ 
         return Container(
           height: _height,
+ 
+          // Bingkai cokelat tua. Bagian ini tetap terlihat di sekeliling
+          // jejak warna.
           decoration: BoxDecoration(
             color: AppColors.dark,
             borderRadius: BorderRadius.circular(_height / 2),
           ),
+ 
           child: Stack(
             children: [
-              // Teks memudar ketika bulatan digeser.
+              // 1. TEKS ASLI
               Center(
-                child: Opacity(
-                  opacity: 1 - progress,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: knobWidth + _padding,
-                    ),
-                    child: Text(
-                      widget.label,
-                      style: AppText.featureTitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: knobWidth + _padding,
+                  ),
+                  child: Text(
+                    widget.label,
+                    style: AppText.featureTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
 
-              // Bulatan berwarna yang dapat digeser.
+              // 2. MELEBAR MENGIKUTI PERGESERAN TOMBOL DAN MUNCUL TEKS KEDUA
               AnimatedPositioned(
-                duration: _dragging
-                    ? Duration.zero
-                    : const Duration(milliseconds: 250),
+                duration: animDuration,
+                curve: Curves.easeOut,
+                left: _padding,
+                top: _padding,
+                bottom: _padding,
+                width: trailWidth,
+                child: Container(
+                  // Potong teks agar tidak keluar dari jejak warna.
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    color: widget.color,
+                    borderRadius: innerRadius,
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: -_padding,
+                        top: 0,
+                        bottom: 0,
+                        width: trailLabelAreaWidth,
+                        child: Center(
+                          child: Text(
+                            widget.label,
+                            style: AppText.featureTitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // 3. BULATAN YANG DAPAT DIGESER
+              // Warnanya sama dengan jejak, sehingga menyatu.
+              // Berada di paling atas dan menutupi teks di bawahnya.
+              AnimatedPositioned(
+                duration: animDuration,
                 curve: Curves.easeOut,
                 left: _padding + _dx,
                 top: _padding,
                 bottom: _padding,
                 width: knobWidth,
                 child: GestureDetector(
+                  // Mulai proses geseran.
                   onHorizontalDragStart: _opening
                       ? null
                       : (_) {
@@ -764,6 +771,8 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
                             _dragging = true;
                           });
                         },
+ 
+                  // Perbarui posisi bulatan dan jejak warna.
                   onHorizontalDragUpdate: _opening
                       ? null
                       : (details) {
@@ -773,17 +782,22 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
                             ).clamp(0.0, maxDx).toDouble();
                           });
                         },
+ 
+                  // Periksa apakah geseran berhasil saat dilepas.
                   onHorizontalDragEnd: _opening
                       ? null
                       : (_) => _onDragEnd(maxDx),
+ 
                   child: Container(
                     alignment: Alignment.center,
+ 
+                    // Warna bulatan mengikuti warna fitur.
                     decoration: BoxDecoration(
                       color: widget.color,
-                      borderRadius: BorderRadius.circular(
-                        (_height - _padding * 2) / 2,
-                      ),
+                      borderRadius: innerRadius,
                     ),
+ 
+                    // Ikon fitur tetap menggunakan asset yang tersedia.
                     child: AssetOrIcon(
                       assetPath: widget.assetPath,
                       fallbackIcon: widget.fallbackIcon,
@@ -801,10 +815,8 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
   }
 }
 
-// =====================================================================
 // BAGIAN 7 — NAVBAR BAWAH
 // Indikator abu-abu bergerak mengikuti menu yang dipilih.
-// =====================================================================
 
 // Data untuk satu item navbar.
 class NavItemData {
