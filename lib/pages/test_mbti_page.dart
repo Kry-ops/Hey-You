@@ -22,11 +22,11 @@ class MbtiConfig {
 
   // Pilihan jawaban, urut dari yang paling setuju.
   static const List<String> answerLabels = [
-    'Sangat Setuju',
-    'Setuju',
-    'Netral',
-    'Tidak Setuju',
-    'Sangat Tidak Setuju',
+    'Sangat Menggambarkan Dirimu',
+    'Cukup Menggambarkan Dirimu',
+    'Di Antara Keduanya',
+    'Kurang Menggambarkan Dirimu',
+    'Tidak Menggambarkan Dirimu',
   ];
 
   // Tulisan pada tombol bawah.
@@ -86,6 +86,34 @@ class MbtiLayout {
     DecoSpot(0.34, 0.19, 0.04),
     DecoSpot(0.37, 0.39, 0.04),
   ];
+
+  // ---------------------------------------------------------------
+  // UKURAN KARTU SOAL
+  // Tinggi kartu dihitung dari nilai-nilai di bawah, jadi selalu sama
+  // untuk semua soal, entah teksnya pendek atau panjang.
+  // ---------------------------------------------------------------
+  static const double cardPaddingTop = 30; // tepi atas kartu ke area soal
+  static const double cardPaddingSide = 20; // tepi kiri-kanan kartu
+  static const double cardPaddingBottom = cardCurveDepth + 14; // ruang bawah
+  static const double questionToAnswers = 28; // area soal ke jawaban pertama
+  static const int questionLines = 3; // area soal setinggi sekian baris
+
+  // Tinggi area soal = jumlah baris x tinggi satu baris teks.
+  static double get questionAreaHeight =>
+      questionLines *
+      (MbtiText.question.fontSize! * MbtiText.question.height!);
+
+  // Tinggi total kartu soal.
+  static double get cardHeight {
+    final count = MbtiConfig.answerLabels.length;
+    final answers = count * answerHeight + (count - 1) * answerGap;
+
+    return cardPaddingTop +
+        questionAreaHeight +
+        questionToAnswers +
+        answers +
+        cardPaddingBottom;
+  }
 }
 
 // Lokasi gambar dan ikon. Sesuaikan dengan nama file asset-mu.
@@ -801,29 +829,48 @@ class _CardClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
 
+// ---------------------------------------------------------------------
+// 2) class _CardShell (Bagian 6)
+//    GANTI seluruh class-nya dengan ini.
+//    Tanpa `height`, tinggi kartu mengikuti isi (dipakai kartu hasil).
+// ---------------------------------------------------------------------
+
 class _CardShell extends StatelessWidget {
-  const _CardShell({required this.child});
+  const _CardShell({required this.child, this.height});
 
   final Widget child;
+  final double? height; // null = tinggi mengikuti isi
 
   @override
   Widget build(BuildContext context) {
+    // Jika tinggi ditentukan, isi diletakkan di tengah area kartu.
+    final content = height == null
+        ? child
+        : SizedBox(
+            width: double.infinity,
+            height: height! -
+                MbtiLayout.cardPaddingTop -
+                MbtiLayout.cardPaddingBottom,
+            child: Center(child: child),
+          );
+
     return ClipPath(
       clipper: const _CardClipper(),
       child: Container(
         width: double.infinity,
+        height: height,
         color: AppColors.dark,
         child: Stack(
           children: [
             // Isi kartu
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                20,
-                36,
-                20,
-                MbtiLayout.cardCurveDepth + 28,
+                MbtiLayout.cardPaddingSide,
+                MbtiLayout.cardPaddingTop,
+                MbtiLayout.cardPaddingSide,
+                MbtiLayout.cardPaddingBottom,
               ),
-              child: child,
+              child: content,
             ),
 
             // Bulatan kecil di kiri atas
@@ -862,6 +909,13 @@ class _CardShell extends StatelessWidget {
 // ---------------------------------------------------------------------
 // Kartu soal + 5 pilihan jawaban
 // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// 3) class _QuestionCard (Bagian 6)
+//    GANTI seluruh class-nya dengan ini.
+//    Teks soal memakai area bertinggi tetap. Kalau ada soal yang
+//    lebih panjang dari area itu, ukuran hurufnya mengecil otomatis.
+// ---------------------------------------------------------------------
+
 class _QuestionCard extends StatelessWidget {
   const _QuestionCard({
     super.key,
@@ -877,14 +931,35 @@ class _QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _CardShell(
+      height: MbtiLayout.cardHeight,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            question,
-            textAlign: TextAlign.center,
-            style: MbtiText.question,
+          // Area soal (tinggi tetap, teks di tengah)
+          SizedBox(
+            height: MbtiLayout.questionAreaHeight,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: constraints.maxWidth,
+                    ),
+                    child: Text(
+                      question,
+                      textAlign: TextAlign.center,
+                      style: MbtiText.question,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
-          const SizedBox(height: 22),
+
+          const SizedBox(height: MbtiLayout.questionToAnswers),
+
+          // Pilihan jawaban
           for (int i = 0; i < MbtiConfig.answerLabels.length; i++) ...[
             _AnswerOption(
               label: MbtiConfig.answerLabels[i],
@@ -967,7 +1042,9 @@ class _RestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _CardShell(
+      height: MbtiLayout.cardHeight,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('Waktunya Istirahat', style: MbtiText.heading),
           const SizedBox(height: 12),
