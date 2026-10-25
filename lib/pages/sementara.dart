@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
 
 // BAGIAN 3 — HALAMAN SEMENTARA
-// // Digunakan untuk Settings, Change Theme, Pets, dan Profile.
-// // HEH BANGSAT INGAT GANTI HALAMAN DI SINI
+// Digunakan untuk Settings, Change Theme, Pets, dan Profile.
+// HEH BANGSAT INGAT GANTI HALAMAN DI SINI
 
 class PlaceholderPage extends StatelessWidget {
   const PlaceholderPage(this.title);
