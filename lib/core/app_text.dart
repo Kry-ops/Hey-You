@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../core/app_colors.dart';
 // Pengaturan gaya tulisan.
 class AppText {
   static const String? mainFont = null;

@@ -8,6 +8,8 @@ import '../widgets/video_header.dart';
 import '../widgets/swipe_feature_button.dart';
 import '../widgets/custom_bottom_nav.dart';
 import '../widgets/asset_or_icon.dart';
+import '../pages/sementara.dart';
+
 
 // BAGIAN 2 — HALAMAN HOME
 
@@ -53,11 +55,11 @@ class _HomePageState extends State<HomePage> {
   void _handleMenuSelection(String value) {
     switch (value) {
       case 'settings':
-        _openPage(const _PlaceholderPage('Settings'));
+        _openPage(const PlaceholderPage('Settings'));
         break;
 
       case 'theme':
-        _openPage(const _PlaceholderPage('Change Theme'));
+        _openPage(const PlaceholderPage('Change Theme'));
         break;
     }
   }
@@ -77,11 +79,11 @@ class _HomePageState extends State<HomePage> {
     // Buka halaman dummy berdasarkan menu yang dipilih.
     switch (index) {
       case 1:
-        _openPage(const _PlaceholderPage('Pets'));
+        _openPage(const PlaceholderPage('Pets'));
         break;
 
       case 2:
-        _openPage(const _PlaceholderPage('Profile'));
+        _openPage(const PlaceholderPage('Profile'));
         break;
     }
   }
@@ -155,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                               color: AppColors.green,
                               onCompleted: () {
                                 _openPage(
-                                  const _PlaceholderPage('Test MBTI'),
+                                  const PlaceholderPage('Test MBTI'),
                                 );
                               },
                             ),
@@ -169,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                               color: AppColors.orange,
                               onCompleted: () {
                                 _openPage(
-                                  const _PlaceholderPage('Chose One'),
+                                  const PlaceholderPage('Chose One'),
                                 );
                               },
                             ),
@@ -183,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                               color: AppColors.blue,
                               onCompleted: () {
                                 _openPage(
-                                  const _PlaceholderPage('Puzzle Game'),
+                                  const PlaceholderPage('Puzzle Game'),
                                 );
                               },
                             ),
