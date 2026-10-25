@@ -16,4 +16,12 @@ class AppAssets {
     // Ikon dropdown menu.
   static const iconSettings = 'assets/home_page_assets/icon_settings.svg';
   static const iconTheme = 'assets/home_page_assets/icon_dark_theme.svg';
+
+  // Daftar gambar untuk carousel header.
+  static const List<String> headerImages = [
+    'assets/home_page_assets/preview_assets/contoh_1.png',
+    'assets/home_page_assets/preview_assets/contoh_2.png',
+    'assets/home_page_assets/preview_assets/contoh_1.png',
+    'assets/home_page_assets/preview_assets/contoh_2.png',
+  ];
 }

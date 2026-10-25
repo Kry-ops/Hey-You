@@ -69,7 +69,7 @@ flutter:
   assets:
   - assets/logo_assets/P.jpg
   - assets/logo_assets/logo_HY.png
-  # Home Assets (👉ﾟヮﾟ)👉
+  # Home Page Assets (👉ﾟヮﾟ)👉
   - assets/home_page_assets/icon_home.svg
   - assets/home_page_assets/icon_dark_theme.svg
   - assets/home_page_assets/icon_settings.svg
@@ -81,8 +81,10 @@ flutter:
   - assets/home_page_assets/icon_test.svg
   - assets/home_page_assets/logo_HY_nobg.svg
   - assets/home_page_assets/kucing.png
-  # Home Assets Video _-
-  - assets/videos/amo.png
+  # Home Page Assets / Preview Assets
+  - assets/home_page_assets/preview_assets/contoh_1.png
+  - assets/home_page_assets/preview_assets/contoh_2.png
+
 
 
 
