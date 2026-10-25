@@ -28,7 +28,7 @@ class HomeLayout {
   // LEBAR KOMPONEN
   static const double contentWidth = 0.90;
   static const double navbarWidth = 0.92;
-  static const double catSize = 0.65;
+  static const double catSize = 0.90;
 
 
   // JARAK VERTIKAL
@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                   // 1. SI KUCINGGGGGG
                   Positioned(
                     right: -screenWidth * 0.17,
-                    bottom: HomeLayout.navbarHeight + 20,
+                    bottom: HomeLayout.navbarHeight + 3,
                     child: IgnorePointer(
                       child: AssetOrIcon(
                         assetPath: AppAssets.cat,
@@ -936,3 +936,4 @@ class CustomBottomNav extends StatelessWidget {
     );
   }
 }
+ 
