@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'test_mbti_page.dart';
 
 import '../core/app_colors.dart';
 import '../core/app_assets.dart';
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                               color: AppColors.green,
                               onCompleted: () {
                                 _openPage(
-                                  const PlaceholderPage('Test MBTI'),
+                                  const TestMbtiPage(),
                                 );
                               },
                             ),

@@ -67,6 +67,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+  # Logo Aplikasi Assets
   - assets/logo_assets/P.jpg
   - assets/logo_assets/logo_HY.png
   # Home Page Assets (👉ﾟヮﾟ)👉
@@ -84,6 +85,20 @@ flutter:
   # Home Page Assets / Preview Assets
   - assets/home_page_assets/preview_assets/contoh_1.png
   - assets/home_page_assets/preview_assets/contoh_2.png
+  # Test MBTI Page Assets
+  - assets/test_mbti_page_assets/daun_kanan_atas.svg
+  - assets/test_mbti_page_assets/daun_kiri_atas.svg
+  - assets/test_mbti_page_assets/daun_kiri_bawah.svg
+  - assets/test_mbti_page_assets/daun_kiri_tengah.svg
+  - assets/test_mbti_page_assets/bintang.svg
+  - assets/test_mbti_page_assets/kupu_kupu.svg
+  - assets/test_mbti_page_assets/kucing.png
+  - assets/test_mbti_page_assets/icon_panah_kanan.svg
+  - assets/test_mbti_page_assets/icon_panah_kiri.svg
+  - assets/test_mbti_page_assets/icon_panah_kembali.svg
+  - assets/test_mbti_page_assets/icon_menu.svg
+
+
 
 
 
