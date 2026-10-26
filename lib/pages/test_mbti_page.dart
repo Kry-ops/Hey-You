@@ -15,6 +15,7 @@ class MbtiColors {
   static const answerIdle = Color(0xFFB99B80); // pilihan jawaban belum dipilih*
   static const progressTrack = Color(0xFFE6D9B2); // latar progress bar*
   static const nextDisabled = Color(0xFFA7B5AB); // tombol NEXT sebelum menjawab*
+  static const curtainRoller = Color(0xFFB99B80); // gulungan tirai
 }
 
 class MbtiConfig {
@@ -32,6 +33,18 @@ class MbtiConfig {
   static const String nextLabel = 'NEXT';
   static const String finishLabel = 'SELESAI'; // dipakai di soal terakhir*
   static const String restLabel = 'LANJUT'; // dipakai di layar istirahat*
+
+  static const String startLabel = 'MULAI'; // tombol bawah di kartu awal
+
+  // Teks kartu awal.
+  static const String introTitle = 'Test MBTI';
+  static const String introDescription =
+      'Kenali tipe kepribadianmu lewat pernyataan-pernyataan sederhana. '
+      'Tidak ada jawaban benar atau salah, pilih yang paling '
+      'menggambarkan dirimu.';
+
+  // Lama animasi tirai jatuh (kartu awal dan kartu hasil).
+  static const Duration curtainDuration = Duration(milliseconds: 1400);
 }
 // Posisi satu dekorasi: right dan size dihitung dari LEBAR layar,
 // bottom dihitung dari TINGGI layar (nilai 0.0 sampai 1.0).
@@ -109,6 +122,9 @@ class MbtiLayout {
         answers +
         cardPaddingBottom;
   }
+
+  static const double curtainRollerHeight = 18; // tebal gulungan tirai
+  static const double curtainRollerOverhang = 6; // gulungan lebih lebar dari kartu
 }
 // Lokasi gambar dan ikon. Sesuaikan dengan nama file asset-mu.
 
@@ -353,8 +369,7 @@ _MbtiOutcome _calculateOutcome(List<int?> answers) {
 // BAGIAN 4 — HALAMAN TEST MBTI
 // Mengatur alur: soal -> istirahat (tiap 20 soal) -> hasil.
 
-
-enum _Phase { question, rest, result }
+enum _Phase { intro, question, rest, result }
 
 class TestMbtiPage extends StatefulWidget {
   const TestMbtiPage({super.key});
@@ -367,7 +382,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
   // null = belum dijawab.
   final List<int?> _answers = List<int?>.filled(mbtiQuestions.length, null);
   int _index = 0; // soal yang sedang tampil*
-  _Phase _phase = _Phase.question;
+  _Phase _phase = _Phase.intro;
   _MbtiOutcome? _outcome;
   int get _total => mbtiQuestions.length;
   int get _answeredCount => _answers.where((a) => a != null).length;
@@ -417,6 +432,15 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
       _answers[_index] = optionIndex;
     });
   }
+
+  // Dari kartu awal: mulai tes.
+  void _startTest() {
+    setState(() {
+      _index = 0;
+      _phase = _Phase.question;
+    });
+  }
+
   void _handleNext() {
     // Soal harus dijawab dulu sebelum lanjut.
     if (_answers[_index] == null) {
@@ -463,18 +487,33 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
       _phase = _Phase.question;
     });
   }
+//     (setelah "Ulangi Tes", kartu awal muncul lagi lengkap dengan tirainya):
+ 
   void _restart() {
     setState(() {
       _answers.fillRange(0, _total, null);
       _index = 0;
       _outcome = null;
-      _phase = _Phase.question;
+      _phase = _Phase.intro;
     });
   }
-  // Isi halaman sesuai tahap yang sedang berjalan.
+
+  // ---------------------------------------------------------------------
+// LANGKAH 5 — GANTI seluruh method `_buildBody` dengan ini.
+// Perubahan: ada case intro, dan kartu hasil dibungkus _CurtainReveal.
+// `key` wajib ada agar animasi diulang setiap kartunya muncul kembali.
+// ---------------------------------------------------------------------
  
   List<Widget> _buildBody() {
     switch (_phase) {
+      case _Phase.intro:
+        return [
+          const _CurtainReveal(
+            key: ValueKey('intro-curtain'),
+            child: _IntroCard(),
+          ),
+        ];
+ 
       case _Phase.question:
         return [
           _ProgressHeader(current: _index + 1, total: _total),
@@ -489,7 +528,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
             ),
           ),
         ];
-
+ 
       case _Phase.rest:
         return [
           // Progress bar tetap muncul pada papan jeda.
@@ -503,13 +542,13 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
             total: _total,
           ),
         ];
-
+ 
       case _Phase.result:
         return [
           // Tidak ada progress bar pada halaman hasil.
-          // Tinggi kartu tetap menggunakan cardHeight.
-          _ResultCard(
-            outcome: _outcome!,
+          _CurtainReveal(
+            key: const ValueKey('result-curtain'),
+            child: _ResultCard(outcome: _outcome!),
           ),
           const SizedBox(height: 16),
           _PillButton(
@@ -527,9 +566,42 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
     }
   }
 
+    // Tombol hijau di bawah, isinya mengikuti tahap yang sedang berjalan.
+  Widget _buildBottomBar() {
+    switch (_phase) {
+      case _Phase.intro:
+        return _NextBar(
+          label: MbtiConfig.startLabel,
+          enabled: true,
+          onNext: _startTest,
+          onPrev: null,
+        );
+
+      case _Phase.question:
+        return _NextBar(
+          label: _index == _total - 1
+              ? MbtiConfig.finishLabel
+              : MbtiConfig.nextLabel,
+          enabled: _answers[_index] != null,
+          onNext: _handleNext,
+          onPrev: _index > 0 ? _handlePrevious : null,
+        );
+
+      case _Phase.rest:
+        return _NextBar(
+          label: MbtiConfig.restLabel,
+          enabled: true,
+          onNext: _continueAfterRest,
+          onPrev: _backFromRest,
+        );
+
+      case _Phase.result:
+        return const SizedBox.shrink();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isLastQuestion = _index == _total - 1;
     return PopScope(
       // Tombol kembali bawaan Android juga melewati konfirmasi.
       canPop: false,
@@ -593,21 +665,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
                         child: Center(
                           child: SizedBox(
                             width: screenWidth * MbtiLayout.nextBarWidth,
-                            child: _phase == _Phase.question
-                                ? _NextBar(
-                                    label: isLastQuestion
-                                        ? MbtiConfig.finishLabel
-                                        : MbtiConfig.nextLabel,
-                                    enabled: _answers[_index] != null,
-                                    onNext: _handleNext,
-                                    onPrev: _index > 0 ? _handlePrevious : null,
-                                  )
-                                : _NextBar(
-                                    label: MbtiConfig.restLabel,
-                                    enabled: true,
-                                    onNext: _continueAfterRest,
-                                    onPrev: _backFromRest,
-                                  ),
+                            child: _buildBottomBar(),
                           ),
                         ),
                       ),
@@ -957,6 +1015,159 @@ class _CardShell extends StatelessWidget {
     );
   }
 }
+
+// Animasi tirai jatuh: isi dibuka dari atas ke bawah, dan gulungan
+// mengikuti ujung bawahnya. Animasi jalan sekali saat widget muncul.
+// Tinggi isi tidak perlu diketahui, jadi cocok untuk kartu hasil.
+class _CurtainReveal extends StatefulWidget {
+  const _CurtainReveal({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  State<_CurtainReveal> createState() => _CurtainRevealState();
+}
+
+class _CurtainRevealState extends State<_CurtainReveal>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: MbtiConfig.curtainDuration,
+  )..forward();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      child: widget.child,
+      builder: (context, child) {
+        // 0.0 = tirai tertutup, 1.0 = terbuka penuh.
+        final progress = Curves.easeInOutCubic.transform(_controller.value);
+
+        // Gulungan memudar di akhir animasi.
+        final rollerOpacity =
+            (1 - ((progress - 0.88) / 0.12).clamp(0.0, 1.0)).toDouble();
+
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Isi: hanya bagian atas setinggi `progress` yang terlihat.
+            ClipRect(
+              child: Align(
+                alignment: Alignment.topCenter,
+                heightFactor: progress,
+                child: child,
+              ),
+            ),
+
+            // Gulungan di ujung bawah bagian yang terlihat.
+            if (rollerOpacity > 0)
+              Positioned(
+                left: -MbtiLayout.curtainRollerOverhang,
+                right: -MbtiLayout.curtainRollerOverhang,
+                bottom: -MbtiLayout.curtainRollerHeight / 2,
+                child: Opacity(
+                  opacity: rollerOpacity,
+                  child: Container(
+                    height: MbtiLayout.curtainRollerHeight,
+                    decoration: BoxDecoration(
+                      color: MbtiColors.curtainRoller,
+                      borderRadius: BorderRadius.circular(
+                        MbtiLayout.curtainRollerHeight / 2,
+                      ),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x26000000),
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+// Mengecilkan isi otomatis jika lebih besar dari area yang tersedia,
+// sehingga tidak overflow (dipakai kartu awal).
+class _ScaleToFit extends StatelessWidget {
+  const _ScaleToFit({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FittedBox(
+          fit: BoxFit.scaleDown,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: constraints.maxWidth),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+}
+
+// Kartu awal sebelum tes dimulai. Tingginya sama dengan kartu soal.
+class _IntroCard extends StatelessWidget {
+  const _IntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final notes = [
+      '${mbtiQuestions.length} soal',
+      'Jeda istirahat setiap ${MbtiConfig.restEvery} soal',
+      'Hasil muncul setelah semua soal dijawab',
+    ];
+
+    return _CardShell(
+      height: MbtiLayout.cardHeight,
+      child: _ScaleToFit(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              MbtiConfig.introTitle,
+              style: MbtiText.heading.copyWith(fontSize: 28),
+            ),
+            const SizedBox(height: 14),
+            Text(
+              MbtiConfig.introDescription,
+              textAlign: TextAlign.center,
+              style: MbtiText.question,
+            ),
+            const SizedBox(height: 20),
+            for (final note in notes)
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Text(
+                  '•  $note',
+                  textAlign: TextAlign.center,
+                  style: MbtiText.answer,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 // ---------------------------------------------------------------------
 // Kartu soal + 5 pilihan jawaban
 // ---------------------------------------------------------------------
