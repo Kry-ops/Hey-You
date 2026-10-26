@@ -22,6 +22,6 @@ class AppAssets {
     'assets/home_page_assets/preview_assets/contoh_1.png',
     'assets/home_page_assets/preview_assets/contoh_2.png',
     'assets/home_page_assets/preview_assets/contoh_1.png',
-    'assets/home_page_assets/preview_assets/contoh_2.png',
+    'assets/home_page_assets/preview_assets/HeYou_.png',
   ];
 }
