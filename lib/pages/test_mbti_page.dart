@@ -74,11 +74,11 @@ class MbtiLayout {
   // ---------------------------------------------------------------
   static const double catSize = 0.85;
   static const double catRight = -0.17;
-  static const double plantLeftSize = 0.50;
+  static const double plantLeftSize = 0.40;
   static const double plantRightSize = 0.28;
   static const double butterflySize = 0.10;
-  static const double butterflyRight = 0.20;
-  static const double butterflyBottom = 0.26;
+  static const double butterflyRight = 0.40;
+  static const double butterflyBottom = 0.16;
   static const List<DecoSpot> sparkles = [
     DecoSpot(0.40, 0.27, 0.05),
     DecoSpot(0.43, 0.235, 0.03),
@@ -91,9 +91,9 @@ class MbtiLayout {
   // untuk semua soal, entah teksnya pendek atau panjang.
   // ---------------------------------------------------------------
   static const double cardPaddingTop = 30; // tepi atas kartu ke area soal*
-  static const double cardPaddingSide = 20; // tepi kiri-kanan kartu*
+  static const double cardPaddingSide = 25; // tepi kiri-kanan kartu*
   static const double cardPaddingBottom = cardCurveDepth + 14; // ruang bawah*
-  static const double questionToAnswers = 28; // area soal ke jawaban pertama*
+  static const double questionToAnswers = 25; // area soal ke jawaban pertama*
   static const int questionLines = 3; // area soal setinggi sekian baris*
   // Tinggi area soal = jumlah baris x tinggi satu baris teks.
   static double get questionAreaHeight =>
@@ -130,25 +130,25 @@ class MbtiAssets {
 class MbtiText {
   static const question = TextStyle(
     fontFamily: AppText.mainFont,
-    fontSize: 15,
+    fontSize: 18,
     height: 1.5,
     color: AppColors.cream,
   );
   static const answer = TextStyle(
     fontFamily: AppText.mainFont,
-    fontSize: 14,
+    fontSize: 15,
     color: AppColors.cream,
   );
   static const counter = TextStyle(
     fontFamily: AppText.mainFont,
-    fontSize: 13,
+    fontSize: 16,
     letterSpacing: 1,
     color: AppColors.dark,
   );
   static const nextLabel = TextStyle(
     fontFamily: AppText.mainFont,
-    fontSize: 22,
-    letterSpacing: 2,
+    fontSize: 24,
+    letterSpacing: 5,
     color: AppColors.cream,
   );
   static const heading = TextStyle(
@@ -163,7 +163,7 @@ class MbtiText {
     fontWeight: FontWeight.bold,
     color: AppColors.cream,
   );
-}
+}   
 
 // BAGIAN 2 — DAFTAR SOAL
 // 4 kelompok x 15 soal = 60 soal. Soal ditampilkan selang-seling
@@ -472,6 +472,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
     });
   }
   // Isi halaman sesuai tahap yang sedang berjalan.
+ 
   List<Widget> _buildBody() {
     switch (_phase) {
       case _Phase.question:
@@ -488,13 +489,28 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
             ),
           ),
         ];
+
       case _Phase.rest:
         return [
-          _RestCard(answered: _index + 1, total: _total),
+          // Progress bar tetap muncul pada papan jeda.
+          _ProgressHeader(
+            current: _index + 1,
+            total: _total,
+          ),
+          const SizedBox(height: MbtiLayout.progressToCard),
+          _RestCard(
+            answered: _index + 1,
+            total: _total,
+          ),
         ];
+
       case _Phase.result:
         return [
-          _ResultCard(outcome: _outcome!),
+          // Tidak ada progress bar pada halaman hasil.
+          // Tinggi kartu tetap menggunakan cardHeight.
+          _ResultCard(
+            outcome: _outcome!,
+          ),
           const SizedBox(height: 16),
           _PillButton(
             label: 'Ulangi Tes',
@@ -510,6 +526,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
         ];
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final isLastQuestion = _index == _total - 1;
