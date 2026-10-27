@@ -9,6 +9,7 @@ import '../widgets/video_header.dart';
 import '../widgets/swipe_feature_button.dart';
 import '../widgets/custom_bottom_nav.dart';
 import '../widgets/asset_or_icon.dart';
+import '../widgets/swipe_instruction.dart';
 import '../pages/sementara.dart';
 
 // =====================================================================
@@ -139,11 +140,23 @@ class _HomePageState extends State<HomePage> {
                             VideoHeader(
                               onMenuSelected: _handleMenuSelection,
                             ),
+                            // PETUNJUK SWIPE.
+                            SizedBox(
+                              height: HomeLayout.swipeInstructionSpacing,
+                            ),
 
-                            // PETUNJUK SWIPE DI ANTARA HEADER DAN FITUR.
-                            SizedBox(height: HomeLayout.headerToButton * 0.45),
-                            const _SwipeInstruction(),
-                            SizedBox(height: HomeLayout.headerToButton * 0.45),
+                            const SwipeInstruction(
+                              label: 'SWIPE KE KANAN TOMBOLNYA',
+                              assetPath: AppAssets.iconSwipe,
+                              fallbackIcon: Icons.swipe_right_alt_rounded,
+                              rightAssetPath: AppAssets.iconPanahSwipe,
+                              rightFallbackIcon: Icons.arrow_forward_rounded,
+                            ),
+
+                            SizedBox(
+                              height: HomeLayout.swipeInstructionSpacing,
+                            ),
+
 
                             // FITUR 1 — TEST MBTI
                             SwipeFeatureButton(
@@ -204,59 +217,6 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
-    );
-  }
-}
-
-// =====================================================================
-// PETUNJUK SWIPE
-// =====================================================================
-
-
-class _SwipeInstruction extends StatelessWidget {
-  final String label;
-  final String? assetPath;
-  final IconData fallbackIcon;
-
-  const _SwipeInstruction({
-    this.label = 'SWIPE KE KANAN TOMBOLNYA',
-    this.assetPath,
-    this.fallbackIcon = Icons.swipe_right_rounded,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Ikon utama: gunakan asset jika tersedia.
-        AssetOrIcon(
-          assetPath: AppAssets.iconSwipe,
-          fallbackIcon: Icons.swipe_right_alt_rounded,
-          size: 16,
-        ),
-
-        const SizedBox(width: 7),
-        // Teks instruksi.
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.1,
-            color: AppColors.dark,
-          ),
-        ),
-
-        const SizedBox(width: 7),
-        // Ikon panah di sebelah kanan.
-        AssetOrIcon(
-          assetPath: AppAssets.iconPanahSwipe,
-          fallbackIcon: Icons.arrow_forward_rounded,
-          size: 16,
-        ),
-      ],
     );
   }
 }

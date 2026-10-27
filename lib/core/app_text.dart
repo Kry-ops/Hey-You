@@ -16,4 +16,15 @@ class AppText {
     letterSpacing: 0,
     color: AppColors.cream,
   );
+
+  
+  // Gaya teks petunjuk swipe.
+  static const swipeInstruction = TextStyle(
+    fontFamily: mainFont,
+    fontSize: 10,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1.1,
+    color: AppColors.dark,
+  );
+
 }

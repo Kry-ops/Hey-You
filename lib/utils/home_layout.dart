@@ -38,16 +38,11 @@ class HomeLayout {
   // Tombool Geser
   static const double trailLabelCenter = 0.33;
 
-  
   // PETUNJUK SWIPE
-
   // Ukuran kedua ikon.
   static const double swipeIconSize = 16;
-
-  // Jarak antara ikon dan teks.
   static const double swipeIconGap = 7;
-
-  // Jarak vertikal antara header, petunjuk, dan tombol fitur.
   static const double swipeInstructionSpacing = 18;
+
 
 }
