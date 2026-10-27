@@ -39,9 +39,7 @@ class MbtiConfig {
   // Teks kartu awal.
   static const String introTitle = 'Test MBTI';
   static const String introDescription =
-      'Kenali tipe kepribadianmu lewat pernyataan-pernyataan sederhana. '
-      'Tidak ada jawaban benar atau salah, pilih yang paling '
-      'menggambarkan dirimu.';
+      'Test mbti ini adalah hasil buatan manusia yang bukan seorang psikolog melainkan seorang software engineer.' ' Jadi jangan jadikan hasilnya sebagai patokan karena saya ga mau tanggung jawab.' ;
 
   // Lama animasi tirai jatuh (kartu awal dan kartu hasil).
   static const Duration curtainDuration = Duration(milliseconds: 1400);
@@ -57,17 +55,15 @@ class DecoSpot {
 }
 
 class MbtiLayout {
-  // ---------------------------------------------------------------
+
   // LEBAR & JARAK
-  // ---------------------------------------------------------------
   static const double contentWidth = 0.90; // lebar konten*
   static const double topSpace = 42; // jarak tombol atas dari atas layar*
   static const double topToProgress = 16; // tombol atas ke progress*
   static const double progressToCard = 14; // progress ke kartu soal*
   static const double bottomSpace = 12; // jarak tombol NEXT dari bawah*
-  // ---------------------------------------------------------------
+
   // KOMPONEN
-  // ---------------------------------------------------------------
   // UKURAN DUA TOMBOL DI BAGIAN ATAS.
   // Ubah angka ini kalau 30 px terasa terlalu kecil atau terlalu besar.
   static const double topButtonSize = 30;
@@ -82,9 +78,8 @@ class MbtiLayout {
   static const double answerGap = 10;
   static const double nextBarHeight = 56;
   static const double nextBarWidth = 0.90;
-  // ---------------------------------------------------------------
+
   // DEKORASI (kucing, tanaman, kupu-kupu, kilau)
-  // ---------------------------------------------------------------
   static const double catSize = 0.85;
   static const double catRight = -0.17;
   static const double plantLeftSize = 0.40;
@@ -98,11 +93,10 @@ class MbtiLayout {
     DecoSpot(0.34, 0.19, 0.04),
     DecoSpot(0.37, 0.39, 0.04),
   ];
-  // ---------------------------------------------------------------
+
   // UKURAN KARTU SOAL
   // Tinggi kartu dihitung dari nilai-nilai di bawah, jadi selalu sama
   // untuk semua soal, entah teksnya pendek atau panjang.
-  // ---------------------------------------------------------------
   static const double cardPaddingTop = 30; // tepi atas kartu ke area soal*
   static const double cardPaddingSide = 25; // tepi kiri-kanan kartu*
   static const double cardPaddingBottom = cardCurveDepth + 14; // ruang bawah*
@@ -398,11 +392,11 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
         backgroundColor: AppColors.background,
         surfaceTintColor: Colors.transparent,
         title: const Text(
-          'Keluar dari tes?',
+          'Keluar dari test?',
           style: TextStyle(color: AppColors.dark),
         ),
         content: const Text(
-          'Jawaban yang sudah dijawab akan hilang kalau keluar sekarang!!! (¬_¬ )',
+          'Jawaban yang sudah dijawab akan hilang kalau keluar sekarang NYET!!! (¬_¬ )',
           style: TextStyle(color: AppColors.dark),
         ),
         actions: [
@@ -443,16 +437,62 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
 
   void _handleNext() {
     // Soal harus dijawab dulu sebelum lanjut.
+// Tampilkan pop-up jika soal belum dijawab.
     if (_answers[_index] == null) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          const SnackBar(
-            content: Text('Pilih jawaban dulu nyet'),
-            backgroundColor: AppColors.dark,
-            duration: Duration(seconds: 1),
+      showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          backgroundColor: AppColors.cream,
+          surfaceTintColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
           ),
-        );
+
+          // Judul pop-up.
+          title: const Text(
+            'Eits, nyet! (¬_¬")',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.dark,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+
+          // Pesan peringatan.
+          content: const Text(
+            'Pilih jawaban dulu nyet, baru bisa lanjut!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.dark,
+              fontSize: 15,
+            ),
+          ),
+
+          // Tombol untuk menutup pop-up.
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            FilledButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.dark,
+                foregroundColor: AppColors.cream,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 28,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text('Mengerti'),
+            ),
+          ],
+        ),
+      );
+
       return;
     }
     setState(() {
@@ -726,17 +766,21 @@ class _TopBar extends StatelessWidget {
                 context: context,
                 builder: (dialogContext) => AlertDialog(
                   backgroundColor: AppColors.cream,
+                  surfaceTintColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
                   title: const Text(
-                    'Petunjuk Tes',
+                    'Petunjuk Test',
                     style: TextStyle(
                       color: AppColors.dark,
-                      fontSize: 13,
+                      fontSize: 18,
                     ),
                   ),
                   content: const Text(
-                    'Pilih jawaban yang paling menggambarkan dirimu.'
-                    'Usahakan jawab dengan hati.'
-                    'Setelah itu tekan NEXT beb.',
+                    'Pilih jawaban yang paling relevan dengan dirimu. '
+                    'Usahakan jawab dengan hati. Setelah itu bisa tekan '
+                    'NEXT untuk lanjut (っ °Д °;)っ',
                     style: TextStyle(
                       color: AppColors.dark,
                       fontSize: 13,
@@ -751,7 +795,39 @@ class _TopBar extends StatelessWidget {
                         'Mengerti',
                         style: TextStyle(
                           color: AppColors.dark,
-                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (value == 'greeting') {
+              showDialog<void>(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  backgroundColor: AppColors.cream,
+                  surfaceTintColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  content: const Text(
+                    'Hai juga, NYET! 🫶',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.dark,
+                      fontSize: 16,
+                    ),
+                  ),
+                  actionsAlignment: MainAxisAlignment.center,
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(dialogContext).pop();
+                      },
+                      child: const Text(
+                        'Mengerti',
+                        style: TextStyle(
+                          color: AppColors.dark,
                         ),
                       ),
                     ),
@@ -761,29 +837,53 @@ class _TopBar extends StatelessWidget {
             }
           },
 
+          // Daftar pilihan menu beserta ikonnya.
           itemBuilder: (context) => [
+            // Menu petunjuk tes.
             const PopupMenuItem<String>(
               value: 'help',
-              height: 34,
+              height: 42,
               padding: EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                'Petunjuk Tes',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.dark,
-                ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.help_outline_rounded,
+                    size: 20,
+                    color: AppColors.dark,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Petunjuk Tes',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.dark,
+                    ),
+                  ),
+                ],
               ),
             ),
+
+            // Menu sapaan.
             const PopupMenuItem<String>(
-              value: '',
-              height: 34,
+              value: 'greeting',
+              height: 42,
               padding: EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                'Hai NYET 🫶',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.dark,
-                ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.favorite_border_rounded,
+                    size: 20,
+                    color: AppColors.dark,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Hai NYET 🫶',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.dark,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -918,12 +1018,8 @@ class _ProgressBar extends StatelessWidget {
   }
 }
 
-// =====================================================================
-
 // BAGIAN 6 — KARTU SOAL, ISTIRAHAT, DAN HASIL
 // Ketiganya memakai bentuk kartu cokelat yang sama (_CardShell).
-
-// =====================================================================
 // Bentuk kartu: sudut atas membulat, bagian bawah melengkung.
 
 class _CardClipper extends CustomClipper<Path> {
@@ -944,11 +1040,10 @@ class _CardClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
-// ---------------------------------------------------------------------
+
 // 2) class _CardShell (Bagian 6)
 //    GANTI seluruh class-nya dengan ini.
 //    Tanpa `height`, tinggi kartu mengikuti isi (dipakai kartu hasil).
-// ---------------------------------------------------------------------
 
 class _CardShell extends StatelessWidget {
   const _CardShell({required this.child, this.height});
@@ -1128,10 +1223,9 @@ class _IntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notes = [
-      '${mbtiQuestions.length} soal',
-      'Jeda istirahat setiap ${MbtiConfig.restEvery} soal',
-      'Hasil muncul setelah semua soal dijawab',
+    final notes = [ 
+      'Just for fun pren ＞︿＜',
+      'Akan ada 60 soal BTW',
     ];
 
     return _CardShell(
@@ -1167,16 +1261,7 @@ class _IntroCard extends StatelessWidget {
   }
 }
 
-
-// ---------------------------------------------------------------------
 // Kartu soal + 5 pilihan jawaban
-// ---------------------------------------------------------------------
-// ---------------------------------------------------------------------
-// 3) class _QuestionCard (Bagian 6)
-//    GANTI seluruh class-nya dengan ini.
-//    Teks soal memakai area bertinggi tetap. Kalau ada soal yang
-//    lebih panjang dari area itu, ukuran hurufnya mengecil otomatis.
-// ---------------------------------------------------------------------
 
 class _QuestionCard extends StatefulWidget {
   const _QuestionCard({

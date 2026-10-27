@@ -5,11 +5,11 @@ import 'test_mbti_page.dart';
 import '../core/app_colors.dart';
 import '../core/app_assets.dart';
 import '../utils/home_layout.dart';
-import '../widgets/video_header.dart';
-import '../widgets/swipe_feature_button.dart';
-import '../widgets/custom_bottom_nav.dart';
+import '../widgets/home_widgets/video_header.dart';
+import '../widgets/home_widgets/swipe_feature_button.dart';
+import '../widgets/home_widgets/custom_bottom_nav.dart';
 import '../widgets/asset_or_icon.dart';
-import '../widgets/swipe_instruction.dart';
+import '../widgets/home_widgets/swipe_instruction.dart';
 import '../pages/sementara.dart';
 
 // =====================================================================

@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
 
-import '../core/app_assets.dart';
-import '../core/app_colors.dart';
-import '../core/app_text.dart';
-import '../utils/home_layout.dart';
-import 'asset_or_icon.dart';
+import '../../core/app_assets.dart';
+import '../../core/app_colors.dart';
+import '../../core/app_text.dart';
+import '../../utils/home_layout.dart';
+import '../asset_or_icon.dart';
 
 // =====================================================================
 // SWIPE INSTRUCTION

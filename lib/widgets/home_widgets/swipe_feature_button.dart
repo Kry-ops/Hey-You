@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../core/app_colors.dart';
-import '../core/app_text.dart';
-import '../utils/home_layout.dart';
-import '../widgets/asset_or_icon.dart';
+import '../../core/app_colors.dart';
+import '../../core/app_text.dart';
+import '../../utils/home_layout.dart';
+import '../asset_or_icon.dart';
 // BAGIAN 6 — TOMBOL FITUR SWIPE
 // Geser bulatan ke kanan untuk membuka halaman
 

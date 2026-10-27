@@ -26,5 +26,43 @@ class AppText {
     letterSpacing: 1.1,
     color: AppColors.dark,
   );
+  
+
+  // MBTI Page
+  static const question = TextStyle(
+    fontFamily: AppText.mainFont,
+    fontSize: 18,
+    height: 1.5,
+    color: AppColors.cream,
+  );
+  static const answer = TextStyle(
+    fontFamily: AppText.mainFont,
+    fontSize: 15,
+    color: AppColors.cream,
+  );
+  static const counter = TextStyle(
+    fontFamily: AppText.mainFont,
+    fontSize: 16,
+    letterSpacing: 1,
+    color: AppColors.dark,
+  );
+  static const nextLabel = TextStyle(
+    fontFamily: AppText.mainFont,
+    fontSize: 24,
+    letterSpacing: 5,
+    color: AppColors.cream,
+  );
+  static const heading = TextStyle(
+    fontFamily: AppText.mainFont,
+    fontSize: 20,
+    color: AppColors.cream,
+  );
+  static const bigCode = TextStyle(
+    fontFamily: AppText.mainFont,
+    fontSize: 48,
+    letterSpacing: 6,
+    fontWeight: FontWeight.bold,
+    color: AppColors.cream,
+  );
 
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../utils/home_layout.dart';
-import '../core/app_colors.dart';
-import '../widgets/asset_or_icon.dart';
-import '../core/app_text.dart';
+import '../../utils/home_layout.dart';
+import '../../core/app_colors.dart';
+import '../asset_or_icon.dart';
+import '../../core/app_text.dart';
 // BAGIAN 7 — NAVBAR BAWAH
 // Indikator abu-abu bergerak mengikuti menu yang dipilih.
 
