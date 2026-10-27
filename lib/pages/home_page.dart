@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 import 'test_mbti_page.dart';
 
 import '../core/app_colors.dart';
@@ -11,8 +11,9 @@ import '../widgets/custom_bottom_nav.dart';
 import '../widgets/asset_or_icon.dart';
 import '../pages/sementara.dart';
 
-
+// =====================================================================
 // BAGIAN 2 — HALAMAN HOME
+// =====================================================================
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,13 +53,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Menangani pilihan dropdown untuk pengaturan aplikasi.
-  // Menu ini tidak diarahkan ke fitur utama aplikasi.
   void _handleMenuSelection(String value) {
     switch (value) {
       case 'settings':
         _openPage(const PlaceholderPage('Settings'));
         break;
-
       case 'theme':
         _openPage(const PlaceholderPage('Change Theme'));
         break;
@@ -67,22 +66,18 @@ class _HomePageState extends State<HomePage> {
 
   // Menangani navigasi navbar bawah.
   void _handleNavTap(int index) {
-    // Perbarui indikator navbar.
     setState(() {
       _navIndex = index;
     });
 
     // Home adalah halaman yang sedang dibuka.
-    if (index == 0) {
-      return;
-    }
+    if (index == 0) return;
 
     // Buka halaman dummy berdasarkan menu yang dipilih.
     switch (index) {
       case 1:
         _openPage(const PlaceholderPage('Pets'));
         break;
-
       case 2:
         _openPage(const PlaceholderPage('Profile'));
         break;
@@ -102,8 +97,7 @@ class _HomePageState extends State<HomePage> {
             final screenHeight = constraints.maxHeight;
 
             // Lebar konten mengikuti ukuran layar.
-            final contentWidth =
-                screenWidth * HomeLayout.contentWidth;
+            final contentWidth = screenWidth * HomeLayout.contentWidth;
 
             // Margin kiri dan kanan navbar.
             final navSideSpace =
@@ -139,16 +133,17 @@ class _HomePageState extends State<HomePage> {
                       child: SizedBox(
                         width: contentWidth,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            // HEADER GAMBAR.
+                            // HEADER CAROUSEL GAMBAR.
                             VideoHeader(
                               onMenuSelected: _handleMenuSelection,
                             ),
 
-                            // Jarak header ke tombol pertama.
-                            SizedBox(
-                              height: HomeLayout.headerToButton,
-                            ),
+                            // PETUNJUK SWIPE DI ANTARA HEADER DAN FITUR.
+                            SizedBox(height: HomeLayout.headerToButton * 0.45),
+                            const _SwipeInstruction(),
+                            SizedBox(height: HomeLayout.headerToButton * 0.45),
 
                             // FITUR 1 — TEST MBTI
                             SwipeFeatureButton(
@@ -157,13 +152,12 @@ class _HomePageState extends State<HomePage> {
                               fallbackIcon: Icons.checklist_rounded,
                               color: AppColors.green,
                               onCompleted: () {
-                                _openPage(
-                                  const TestMbtiPage(),
-                                );
+                                _openPage(const TestMbtiPage());
                               },
                             ),
 
                             SizedBox(height: HomeLayout.buttonGap),
+
                             // FITUR 2 — CHOSE ONE
                             SwipeFeatureButton(
                               label: 'Chose One',
@@ -171,13 +165,12 @@ class _HomePageState extends State<HomePage> {
                               fallbackIcon: Icons.touch_app_rounded,
                               color: AppColors.orange,
                               onCompleted: () {
-                                _openPage(
-                                  const PlaceholderPage('Chose One'),
-                                );
+                                _openPage(const PlaceholderPage('Chose One'));
                               },
                             ),
 
                             SizedBox(height: HomeLayout.buttonGap),
+
                             // FITUR 3 — PUZZLE GAME
                             SwipeFeatureButton(
                               label: 'Puzzle Game',
@@ -185,9 +178,7 @@ class _HomePageState extends State<HomePage> {
                               fallbackIcon: Icons.extension_rounded,
                               color: AppColors.blue,
                               onCompleted: () {
-                                _openPage(
-                                  const PlaceholderPage('Puzzle Game'),
-                                );
+                                _openPage(const PlaceholderPage('Puzzle Game'));
                               },
                             ),
                           ],
@@ -213,6 +204,59 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
+    );
+  }
+}
+
+// =====================================================================
+// PETUNJUK SWIPE
+// =====================================================================
+
+
+class _SwipeInstruction extends StatelessWidget {
+  final String label;
+  final String? assetPath;
+  final IconData fallbackIcon;
+
+  const _SwipeInstruction({
+    this.label = 'SWIPE KE KANAN TOMBOLNYA',
+    this.assetPath,
+    this.fallbackIcon = Icons.swipe_right_rounded,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Ikon utama: gunakan asset jika tersedia.
+        AssetOrIcon(
+          assetPath: AppAssets.iconSwipe,
+          fallbackIcon: Icons.swipe_right_alt_rounded,
+          size: 16,
+        ),
+
+        const SizedBox(width: 7),
+        // Teks instruksi.
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.1,
+            color: AppColors.dark,
+          ),
+        ),
+
+        const SizedBox(width: 7),
+        // Ikon panah di sebelah kanan.
+        AssetOrIcon(
+          assetPath: AppAssets.iconPanahSwipe,
+          fallbackIcon: Icons.arrow_forward_rounded,
+          size: 16,
+        ),
+      ],
     );
   }
 }

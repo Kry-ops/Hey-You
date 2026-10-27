@@ -80,6 +80,8 @@ flutter:
   - assets/home_page_assets/icon_profile.svg
   - assets/home_page_assets/icon_puzzle.svg
   - assets/home_page_assets/icon_test.svg
+  - assets/home_page_assets/icon_swipe.svg
+  - assets/home_page_assets/icon_panah_swipe.svg
   - assets/home_page_assets/logo_HY_nobg.svg
   - assets/home_page_assets/kucing.png
   # Home Page Assets / Preview Assets

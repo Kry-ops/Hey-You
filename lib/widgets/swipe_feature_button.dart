@@ -7,6 +7,7 @@ import '../widgets/asset_or_icon.dart';
 // BAGIAN 6 — TOMBOL FITUR SWIPE
 // Geser bulatan ke kanan untuk membuka halaman
 
+
 class SwipeFeatureButton extends StatefulWidget {
   const SwipeFeatureButton({
     super.key,
@@ -14,6 +15,7 @@ class SwipeFeatureButton extends StatefulWidget {
     required this.assetPath,
     required this.fallbackIcon,
     required this.color,
+    this.border, // Border tambahan bersifat opsional.
     required this.onCompleted,
   });
 
@@ -21,12 +23,14 @@ class SwipeFeatureButton extends StatefulWidget {
   final String assetPath;
   final IconData fallbackIcon;
   final Color color;
+  final Border? border; // Properti border baru.
   final VoidCallback onCompleted;
 
   @override
   State<SwipeFeatureButton> createState() =>
       _SwipeFeatureButtonState();
 }
+
 
 
 class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
@@ -135,6 +139,7 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
           decoration: BoxDecoration(
             color: AppColors.dark,
             borderRadius: BorderRadius.circular(_height / 2),
+            border: widget.border, // Border dari pemanggilan widget.
           ),
  
           child: Stack(

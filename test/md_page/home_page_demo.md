@@ -1,3 +1,4 @@
+<!-- home_page.dart -->
 
 import 'package:flutter/material.dart';
 import 'test_mbti_page.dart';
@@ -156,6 +157,10 @@ class _HomePageState extends State<HomePage> {
                               assetPath: AppAssets.iconMbti,
                               fallbackIcon: Icons.checklist_rounded,
                               color: AppColors.green,
+                              border: Border.all(
+                                color: AppColors.cream,
+                                width: 3.0,
+                              ),
                               onCompleted: () {
                                 _openPage(
                                   const TestMbtiPage(),
@@ -217,6 +222,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+
+<!-- app_assets.dart -->
 // Lokasi gambar dan ikon.
 class AppAssets {
   static const headerImage = 'assets/videos/amo.png';
@@ -245,6 +252,8 @@ class AppAssets {
   ];
 }
 
+
+<!-- app_colors.dart -->
 import 'package:flutter/material.dart';
 
 // BAGIAN 1 — PENGATURAN UTAMA
@@ -262,12 +271,14 @@ class AppColors {
 
   // Warna indikator navbar dan bingkai header.
   static const navIndicator = Color(0xFF8C8987);
-  static const videoFrame = Color(0xFF8C8987);
+  static const videoFrame = Color(0xFF4B4242);
 
   // Warna latar tombol logo dan menu pada header.
   static const overlay = Color(0xFFFCF1D0);
 }
 
+
+<!-- app_text.dart -->
 import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
 // Pengaturan gaya tulisan.
@@ -288,6 +299,9 @@ class AppText {
   );
 }
 
+
+
+<!-- home_layout.dart -->
 class HomeLayout {
 
   // LEBAR KOMPONEN
@@ -330,6 +344,7 @@ class HomeLayout {
 }
 
 
+<!-- asset_or_icon.dart -->
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // BAGIAN 4 — PEMUAT ASSET
@@ -386,6 +401,8 @@ class AssetOrIcon extends StatelessWidget {
 }
 
 
+
+<!-- custom_bottom_nav.dart -->
 import 'package:flutter/material.dart';
 import '../utils/home_layout.dart';
 import '../core/app_colors.dart';
@@ -513,7 +530,9 @@ class CustomBottomNav extends StatelessWidget {
   }
 }
  
- import 'package:flutter/material.dart';
+
+<!-- swipe_feature_button.dart -->
+import 'package:flutter/material.dart';
 
 import '../core/app_colors.dart';
 import '../core/app_text.dart';
@@ -522,6 +541,7 @@ import '../widgets/asset_or_icon.dart';
 // BAGIAN 6 — TOMBOL FITUR SWIPE
 // Geser bulatan ke kanan untuk membuka halaman
 
+
 class SwipeFeatureButton extends StatefulWidget {
   const SwipeFeatureButton({
     super.key,
@@ -529,6 +549,7 @@ class SwipeFeatureButton extends StatefulWidget {
     required this.assetPath,
     required this.fallbackIcon,
     required this.color,
+    this.border, // Border tambahan bersifat opsional.
     required this.onCompleted,
   });
 
@@ -536,12 +557,14 @@ class SwipeFeatureButton extends StatefulWidget {
   final String assetPath;
   final IconData fallbackIcon;
   final Color color;
+  final Border? border; // Properti border baru.
   final VoidCallback onCompleted;
 
   @override
   State<SwipeFeatureButton> createState() =>
       _SwipeFeatureButtonState();
 }
+
 
 
 class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
@@ -650,6 +673,7 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
           decoration: BoxDecoration(
             color: AppColors.dark,
             borderRadius: BorderRadius.circular(_height / 2),
+            border: widget.border, // Border dari pemanggilan widget.
           ),
  
           child: Stack(
@@ -769,6 +793,8 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
 }
 
 
+
+<!-- video_header.dart -->
 import 'dart:async';
 
 import 'package:flutter/material.dart';

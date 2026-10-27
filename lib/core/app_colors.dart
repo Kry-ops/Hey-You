@@ -15,7 +15,7 @@ class AppColors {
 
   // Warna indikator navbar dan bingkai header.
   static const navIndicator = Color(0xFF8C8987);
-  static const videoFrame = Color(0xFF8C8987);
+  static const videoFrame = Color(0xFF4B4242);
 
   // Warna latar tombol logo dan menu pada header.
   static const overlay = Color(0xFFFCF1D0);
