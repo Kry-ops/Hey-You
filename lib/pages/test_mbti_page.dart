@@ -392,11 +392,11 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
         backgroundColor: AppColors.background,
         surfaceTintColor: Colors.transparent,
         title: const Text(
-          'Keluar dari tes?',
+          'Keluar dari test?',
           style: TextStyle(color: AppColors.dark),
         ),
         content: const Text(
-          'Jawaban yang sudah dijawab akan hilang kalau keluar sekarang!!! (¬_¬ )',
+          'Jawaban yang sudah dijawab akan hilang kalau keluar sekarang NYET!!! (¬_¬ )',
           style: TextStyle(color: AppColors.dark),
         ),
         actions: [
@@ -437,16 +437,62 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
 
   void _handleNext() {
     // Soal harus dijawab dulu sebelum lanjut.
+// Tampilkan pop-up jika soal belum dijawab.
     if (_answers[_index] == null) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          const SnackBar(
-            content: Text('Pilih jawaban dulu nyet'),
-            backgroundColor: AppColors.dark,
-            duration: Duration(seconds: 1),
+      showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          backgroundColor: AppColors.cream,
+          surfaceTintColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
           ),
-        );
+
+          // Judul pop-up.
+          title: const Text(
+            'Eits, nyet! (¬_¬")',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.dark,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+
+          // Pesan peringatan.
+          content: const Text(
+            'Pilih jawaban dulu nyet, baru bisa lanjut!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.dark,
+              fontSize: 15,
+            ),
+          ),
+
+          // Tombol untuk menutup pop-up.
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            FilledButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.dark,
+                foregroundColor: AppColors.cream,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 28,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text('Mengerti'),
+            ),
+          ],
+        ),
+      );
+
       return;
     }
     setState(() {
@@ -720,17 +766,21 @@ class _TopBar extends StatelessWidget {
                 context: context,
                 builder: (dialogContext) => AlertDialog(
                   backgroundColor: AppColors.cream,
+                  surfaceTintColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
                   title: const Text(
-                    'Petunjuk Tes',
+                    'Petunjuk Test',
                     style: TextStyle(
                       color: AppColors.dark,
-                      fontSize: 13,
+                      fontSize: 18,
                     ),
                   ),
                   content: const Text(
-                    'Pilih jawaban yang paling menggambarkan dirimu.'
-                    'Usahakan jawab dengan hati.'
-                    'Setelah itu tekan NEXT beb.',
+                    'Pilih jawaban yang paling relevan dengan dirimu. '
+                    'Usahakan jawab dengan hati. Setelah itu bisa tekan '
+                    'NEXT untuk lanjut (っ °Д °;)っ',
                     style: TextStyle(
                       color: AppColors.dark,
                       fontSize: 13,
@@ -745,7 +795,39 @@ class _TopBar extends StatelessWidget {
                         'Mengerti',
                         style: TextStyle(
                           color: AppColors.dark,
-                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (value == 'greeting') {
+              showDialog<void>(
+                context: context,
+                builder: (dialogContext) => AlertDialog(
+                  backgroundColor: AppColors.cream,
+                  surfaceTintColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  content: const Text(
+                    'Hai juga, NYET! 🫶',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.dark,
+                      fontSize: 16,
+                    ),
+                  ),
+                  actionsAlignment: MainAxisAlignment.center,
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(dialogContext).pop();
+                      },
+                      child: const Text(
+                        'Mengerti',
+                        style: TextStyle(
+                          color: AppColors.dark,
                         ),
                       ),
                     ),
@@ -755,29 +837,53 @@ class _TopBar extends StatelessWidget {
             }
           },
 
+          // Daftar pilihan menu beserta ikonnya.
           itemBuilder: (context) => [
+            // Menu petunjuk tes.
             const PopupMenuItem<String>(
               value: 'help',
-              height: 34,
+              height: 42,
               padding: EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                'Petunjuk Tes',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.dark,
-                ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.help_outline_rounded,
+                    size: 20,
+                    color: AppColors.dark,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Petunjuk Tes',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.dark,
+                    ),
+                  ),
+                ],
               ),
             ),
+
+            // Menu sapaan.
             const PopupMenuItem<String>(
-              value: '',
-              height: 34,
+              value: 'greeting',
+              height: 42,
               padding: EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                'Hai NYET 🫶',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.dark,
-                ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.favorite_border_rounded,
+                    size: 20,
+                    color: AppColors.dark,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Hai NYET 🫶',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.dark,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -934,11 +1040,10 @@ class _CardClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
-// ---------------------------------------------------------------------
+
 // 2) class _CardShell (Bagian 6)
 //    GANTI seluruh class-nya dengan ini.
 //    Tanpa `height`, tinggi kartu mengikuti isi (dipakai kartu hasil).
-// ---------------------------------------------------------------------
 
 class _CardShell extends StatelessWidget {
   const _CardShell({required this.child, this.height});
@@ -1156,16 +1261,7 @@ class _IntroCard extends StatelessWidget {
   }
 }
 
-
-// ---------------------------------------------------------------------
 // Kartu soal + 5 pilihan jawaban
-// ---------------------------------------------------------------------
-// ---------------------------------------------------------------------
-// 3) class _QuestionCard (Bagian 6)
-//    GANTI seluruh class-nya dengan ini.
-//    Teks soal memakai area bertinggi tetap. Kalau ada soal yang
-//    lebih panjang dari area itu, ukuran hurufnya mengecil otomatis.
-// ---------------------------------------------------------------------
 
 class _QuestionCard extends StatefulWidget {
   const _QuestionCard({
