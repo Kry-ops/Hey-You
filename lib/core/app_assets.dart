@@ -64,4 +64,16 @@ class AppAssets {
       'assets/test_mbti_page_assets/kupu_kupu.svg';
   static const String sparkle =
       'assets/test_mbti_page_assets/bintang.svg';
+
+    // Ikon untuk menu Petunjuk Tes.
+  static const String iconPetunjuk = 
+      'assets/test_mbti_page_assets/icon_tanda_seru.svg';
+
+  // Ikon untuk menu Hai NYET.
+  static const String iconHaiNyet = 
+      'assets/test_mbti_page_assets/icon_pisang.svg';
+  
+  // Ikon centang untuk pilihan jawaban MBTI.
+  static const String iconCheck = 
+      'assets/test_mbti_page_assets/icon_centang.svg';
 }

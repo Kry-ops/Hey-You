@@ -35,15 +35,21 @@ class TopBar extends StatelessWidget {
           tooltip: 'Menu',
           padding: EdgeInsets.zero,
           color: AppColors.cream,
-          elevation: 8,
-          menuPadding: const EdgeInsets.symmetric(vertical: 3),
+          elevation: MbtiLayout.menuElevation,
+          menuPadding: const EdgeInsets.symmetric(
+            vertical: MbtiLayout.menuVerticalPadding,
+          ),
           constraints: const BoxConstraints(
-            minWidth: 145,
-            maxWidth: 165,
+            minWidth: MbtiLayout.menuMinWidth,
+            maxWidth: MbtiLayout.menuMaxWidth,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(
+              MbtiLayout.menuRadius,
+            ),
           ),
+
+
 
           // Properti textStyle dihapus karena tidak tersedia di sini.
           onSelected: (value) {
@@ -123,7 +129,8 @@ class TopBar extends StatelessWidget {
             }
           },
 
-          // Daftar pilihan menu beserta ikonnya.
+          
+          // Daftar pilihan menu beserta ikon kustom.
           itemBuilder: (context) => [
             // Menu petunjuk tes.
             const PopupMenuItem<String>(
@@ -132,8 +139,9 @@ class TopBar extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.help_outline_rounded,
+                  AssetOrIcon(
+                    assetPath: AppAssets.iconPetunjuk,
+                    fallbackIcon: Icons.help_outline_rounded,
                     size: 20,
                     color: AppColors.dark,
                   ),
@@ -149,15 +157,16 @@ class TopBar extends StatelessWidget {
               ),
             ),
 
-            // Menu sapaan.
+            // Menu sapaan Hai NYET.
             const PopupMenuItem<String>(
               value: 'greeting',
               height: 42,
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.favorite_border_rounded,
+                  AssetOrIcon(
+                    assetPath: AppAssets.iconHaiNyet,
+                    fallbackIcon: Icons.favorite_border_rounded,
                     size: 20,
                     color: AppColors.dark,
                   ),
@@ -173,6 +182,7 @@ class TopBar extends StatelessWidget {
               ),
             ),
           ],
+
 
           child: Container(
             width: MbtiLayout.topButtonSize,
