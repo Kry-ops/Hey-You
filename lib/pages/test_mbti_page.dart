@@ -39,9 +39,7 @@ class MbtiConfig {
   // Teks kartu awal.
   static const String introTitle = 'Test MBTI';
   static const String introDescription =
-      'Kenali tipe kepribadianmu lewat pernyataan-pernyataan sederhana. '
-      'Tidak ada jawaban benar atau salah, pilih yang paling '
-      'menggambarkan dirimu.';
+      'Test mbti ini adalah hasil buatan manusia yang bukan seorang psikolog melainkan seorang software engineer.' ' Jadi jangan jadikan hasilnya sebagai patokan karena saya ga mau tanggung jawab.' ;
 
   // Lama animasi tirai jatuh (kartu awal dan kartu hasil).
   static const Duration curtainDuration = Duration(milliseconds: 1400);
@@ -57,17 +55,15 @@ class DecoSpot {
 }
 
 class MbtiLayout {
-  // ---------------------------------------------------------------
+
   // LEBAR & JARAK
-  // ---------------------------------------------------------------
   static const double contentWidth = 0.90; // lebar konten*
   static const double topSpace = 42; // jarak tombol atas dari atas layar*
   static const double topToProgress = 16; // tombol atas ke progress*
   static const double progressToCard = 14; // progress ke kartu soal*
   static const double bottomSpace = 12; // jarak tombol NEXT dari bawah*
-  // ---------------------------------------------------------------
+
   // KOMPONEN
-  // ---------------------------------------------------------------
   // UKURAN DUA TOMBOL DI BAGIAN ATAS.
   // Ubah angka ini kalau 30 px terasa terlalu kecil atau terlalu besar.
   static const double topButtonSize = 30;
@@ -82,9 +78,8 @@ class MbtiLayout {
   static const double answerGap = 10;
   static const double nextBarHeight = 56;
   static const double nextBarWidth = 0.90;
-  // ---------------------------------------------------------------
+
   // DEKORASI (kucing, tanaman, kupu-kupu, kilau)
-  // ---------------------------------------------------------------
   static const double catSize = 0.85;
   static const double catRight = -0.17;
   static const double plantLeftSize = 0.40;
@@ -98,11 +93,10 @@ class MbtiLayout {
     DecoSpot(0.34, 0.19, 0.04),
     DecoSpot(0.37, 0.39, 0.04),
   ];
-  // ---------------------------------------------------------------
+
   // UKURAN KARTU SOAL
   // Tinggi kartu dihitung dari nilai-nilai di bawah, jadi selalu sama
   // untuk semua soal, entah teksnya pendek atau panjang.
-  // ---------------------------------------------------------------
   static const double cardPaddingTop = 30; // tepi atas kartu ke area soal*
   static const double cardPaddingSide = 25; // tepi kiri-kanan kartu*
   static const double cardPaddingBottom = cardCurveDepth + 14; // ruang bawah*
@@ -918,12 +912,8 @@ class _ProgressBar extends StatelessWidget {
   }
 }
 
-// =====================================================================
-
 // BAGIAN 6 — KARTU SOAL, ISTIRAHAT, DAN HASIL
 // Ketiganya memakai bentuk kartu cokelat yang sama (_CardShell).
-
-// =====================================================================
 // Bentuk kartu: sudut atas membulat, bagian bawah melengkung.
 
 class _CardClipper extends CustomClipper<Path> {
@@ -1128,10 +1118,9 @@ class _IntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notes = [
-      '${mbtiQuestions.length} soal',
-      'Jeda istirahat setiap ${MbtiConfig.restEvery} soal',
-      'Hasil muncul setelah semua soal dijawab',
+    final notes = [ 
+      'Just for fun pren ＞︿＜',
+      'Akan ada 60 soal BTW',
     ];
 
     return _CardShell(
