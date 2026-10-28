@@ -38,7 +38,7 @@ class _VideoHeaderState extends State<VideoHeader> {
 
   // Jeda sebelum gambar berikutnya muncul.
   static const Duration _autoPlayInterval =
-      Duration(seconds: 4);
+      Duration(seconds: 5);
 
   // Durasi animasi perpindahan gambar.
   static const Duration _animationDuration =
@@ -200,7 +200,7 @@ class _VideoHeaderState extends State<VideoHeader> {
                         AssetOrIcon(
                           assetPath: AppAssets.iconSettings,
                           fallbackIcon: Icons.settings_outlined,
-                          size: 22,
+                          size: 20,
                           color: AppColors.dark,
                         ),
                         const SizedBox(width: 12),
@@ -222,12 +222,33 @@ class _VideoHeaderState extends State<VideoHeader> {
                         AssetOrIcon(
                           assetPath: AppAssets.iconTheme,
                           fallbackIcon: Icons.palette_outlined,
-                          size: 22,
+                          size: 20,
                           color: AppColors.dark,
                         ),
                         const SizedBox(width: 12),
                         const Text(
                           'Dark theme',
+                          style: TextStyle(
+                            color: AppColors.dark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  PopupMenuItem<String>(
+                    value: 'music',
+                    child: Row(
+                      children: [
+                        AssetOrIcon(
+                          assetPath: AppAssets.iconMusic,
+                          fallbackIcon: Icons.library_music_rounded,
+                          size: 20,
+                          color: AppColors.dark,
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Backsound Music',
                           style: TextStyle(
                             color: AppColors.dark,
                           ),

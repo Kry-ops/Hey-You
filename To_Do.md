@@ -1,5 +1,8 @@
 Catatan Hal hal yang harus dilakukan:
 
+## Core Idea
+-- Menambahkan backsound yang senada dengan aplikasi
+
 ## Home Page
 Nih halaman udah oke sebenarnya namun masih memiliki beberapa kekurangan
 -- Preview gambarnya belum di ubah dan belum ada animasinya (ntar aja)

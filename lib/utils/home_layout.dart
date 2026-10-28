@@ -25,7 +25,7 @@ class HomeLayout {
 
 
   // UKURAN IKON
-  static const double featureIconSize = 30;
+  static const double featureIconSize = 32;
   static const double navIconSize = 22;
   static const double overlayButtonSize = 30;
 

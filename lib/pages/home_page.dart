@@ -62,6 +62,9 @@ class _HomePageState extends State<HomePage> {
       case 'theme':
         _openPage(const PlaceholderPage('Change Theme'));
         break;
+      case 'music':
+        _openPage(const PlaceholderPage('Music Control'));
+        break;
     }
   }
 

@@ -136,20 +136,20 @@ class TopBar extends StatelessWidget {
             const PopupMenuItem<String>(
               value: 'help',
               height: 42,
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              // padding: EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 children: [
                   AssetOrIcon(
                     assetPath: AppAssets.iconPetunjuk,
                     fallbackIcon: Icons.help_outline_rounded,
-                    size: 20,
+                    size: MbtiLayout.menuIconSize,
                     color: AppColors.dark,
                   ),
                   SizedBox(width: 10),
                   Text(
                     'Petunjuk',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: MbtiLayout.menuTextSize,
                       color: AppColors.dark,
                     ),
                   ),
@@ -161,20 +161,45 @@ class TopBar extends StatelessWidget {
             const PopupMenuItem<String>(
               value: 'greeting',
               height: 42,
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              // padding: EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 children: [
                   AssetOrIcon(
                     assetPath: AppAssets.iconHaiNyet,
                     fallbackIcon: Icons.favorite_border_rounded,
-                    size: 20,
+                    size: MbtiLayout.menuIconSize,
                     color: AppColors.dark,
                   ),
                   SizedBox(width: 10),
                   Text(
                     'Hai NYET 🫶',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: MbtiLayout.menuTextSize,
+                      color: AppColors.dark,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+
+            const PopupMenuItem<String>(
+              value: 'music',
+              height: 42,
+              // padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  AssetOrIcon(
+                    assetPath: AppAssets.iconMusicMBTI,
+                    fallbackIcon: Icons.library_music_rounded,
+                    size: MbtiLayout.menuIconSize,
+                    color: AppColors.dark,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Backsound Music',
+                    style: TextStyle(
+                      fontSize: MbtiLayout.menuTextSize,
                       color: AppColors.dark,
                     ),
                   ),

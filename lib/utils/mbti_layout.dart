@@ -103,66 +103,44 @@ class MbtiLayout {
 
   static const double curtainRollerHeight = 18; // tebal gulungan tirai
   static const double curtainRollerOverhang = 6; // gulungan lebih lebar dari kartu
-  
-  // ============================================================
+
   // TOMBOL MENU BAGIAN ATAS
-  // ============================================================
-
-
   // Lebar minimum dan maksimum dropdown.
-  static const double menuMinWidth = 145;
-  static const double menuMaxWidth = 165;
+  static const double menuMinWidth = 230;
+  static const double menuMaxWidth = 265;
 
   // Jarak vertikal isi dropdown dari tepinya.
   static const double menuVerticalPadding = 3;
-
   // Jarak horizontal isi menu dari tepi dropdown.
   static const double menuHorizontalPadding = 12;
-
   // Tinggi setiap pilihan menu.
   static const double menuItemHeight = 42;
-
   // Radius sudut dropdown.
   static const double menuRadius = 10;
-
   // Tinggi elevasi atau bayangan dropdown.
   static const double menuElevation = 8;
 
-  // ============================================================
   // IKON DI DALAM DROPDOWN
-  // ============================================================
-
   // Ukuran ikon Petunjuk Tes dan Hai NYET.
-  static const double menuIconSize = 20;
-
+  static const double menuIconSize = 22;
   // Jarak ikon ke tulisan.
-  static const double menuIconTextGap = 10;
-
+  static const double menuIconTextGap = 20;
   // Ukuran tulisan menu.
-  static const double menuTextSize = 12;
+  static const double menuTextSize = 14;
 
-  // ============================================================
   // DIALOG PETUNJUK DAN SAPAAN
-  // ============================================================
-
   // Radius sudut dialog.
   static const double dialogRadius = 22;
-
   // Ukuran judul dialog Petunjuk Tes.
   static const double helpTitleSize = 18;
-
   // Ukuran isi dialog.
   static const double dialogContentSize = 13;
-
   // Ukuran teks dialog sapaan.
   static const double greetingTextSize = 16;
-
   // Jarak padding horizontal dialog.
   static const double dialogHorizontalPadding = 24;
-
   // Jarak padding vertikal dialog.
   static const double dialogVerticalPadding = 20;
-
   // Ukuran teks tombol Mengerti.
   static const double dialogButtonTextSize = 14;
 }
