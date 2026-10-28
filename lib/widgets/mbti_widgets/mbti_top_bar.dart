@@ -63,7 +63,7 @@ class TopBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(22),
                   ),
                   title: const Text(
-                    'Petunjuk Test',
+                    'Petunjuk',
                     style: TextStyle(
                       color: AppColors.dark,
                       fontSize: 18,
@@ -103,21 +103,21 @@ class TopBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(22),
                   ),
                   content: const Text(
-                    'Hai juga, NYET! 🫶',
+                    'Nyari apa sih, ga ada apa apa disini （￣︶￣）',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.dark,
                       fontSize: 16,
                     ),
                   ),
-                  actionsAlignment: MainAxisAlignment.center,
+                  // actionsAlignment: MainAxisAlignment.center,
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.of(dialogContext).pop();
                       },
                       child: const Text(
-                        'Mengerti',
+                        'Dah sana lanjut',
                         style: TextStyle(
                           color: AppColors.dark,
                         ),
@@ -147,7 +147,7 @@ class TopBar extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    'Petunjuk Tes',
+                    'Petunjuk',
                     style: TextStyle(
                       fontSize: 12,
                       color: AppColors.dark,

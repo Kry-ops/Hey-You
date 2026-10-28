@@ -105,7 +105,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
 
           // Judul pop-up.
           title: const Text(
-            'Eits, nyet! (¬_¬")',
+            '(¬_¬")',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.dark,
@@ -142,7 +142,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
                   vertical: 10,
                 ),
               ),
-              child: const Text('Mengerti'),
+              child: const Text('Dah sana lanjut'),
             ),
           ],
         ),
