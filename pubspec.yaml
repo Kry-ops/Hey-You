@@ -88,6 +88,7 @@ flutter:
   - assets/home_page_assets/preview_assets/contoh_1.png
   - assets/home_page_assets/preview_assets/contoh_2.png
   - assets/home_page_assets/preview_assets/HeYou_.png
+  - assets/home_page_assets/preview_assets/mbti_banner.png
 
   # Test MBTI Page Assets
   - assets/test_mbti_page_assets/daun_kanan_atas.svg

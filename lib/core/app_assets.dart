@@ -28,8 +28,10 @@ class AppAssets {
   static const List<String> headerImages = [
     'assets/home_page_assets/preview_assets/contoh_1.png',
     'assets/home_page_assets/preview_assets/HeYou_.png',
+    'assets/home_page_assets/preview_assets/mbti_banner.png',
     'assets/home_page_assets/preview_assets/contoh_1.png',
     'assets/home_page_assets/preview_assets/HeYou_.png',
+    'assets/home_page_assets/preview_assets/mbti_banner.png',
   ];
 
   // +++
