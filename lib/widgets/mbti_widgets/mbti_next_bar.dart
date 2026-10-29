@@ -1,16 +1,15 @@
+// mbti_next_bar.dart
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
 import '../../core/app_text.dart';
 import '../../core/app_assets.dart';
 import '../../widgets/asset_or_icon.dart';
-
 import '../../utils/mbti_layout.dart';
 
 // BAGIAN 7 — TOMBOL NEXT DAN DEKORASI
 // Tombol hijau di bawah: panah kiri = soal sebelumnya,
 // teks tengah dan panah kanan = lanjut.
-
 class NextBar extends StatelessWidget {
   const NextBar({
     required this.label,

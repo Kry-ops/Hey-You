@@ -1,3 +1,4 @@
+// mbti_progress.dart
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
@@ -7,8 +8,7 @@ import '../../widgets/asset_or_icon.dart';
 
 import '../../utils/mbti_layout.dart';
 
-
-
+// progress di atas card
 class ProgressHeader extends StatelessWidget {
   const ProgressHeader({required this.current, required this.total});
   final int current;

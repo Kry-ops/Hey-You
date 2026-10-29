@@ -1,4 +1,4 @@
-
+// swipe_instruction.dart
 import 'package:flutter/material.dart';
 
 import '../../core/app_assets.dart';
@@ -7,11 +7,8 @@ import '../../core/app_text.dart';
 import '../../utils/home_layout.dart';
 import '../asset_or_icon.dart';
 
-// =====================================================================
 // SWIPE INSTRUCTION
 // Widget petunjuk swipe yang pengaturannya diambil dari file lain.
-// =====================================================================
-
 class SwipeInstruction extends StatelessWidget {
   const SwipeInstruction({
     super.key,

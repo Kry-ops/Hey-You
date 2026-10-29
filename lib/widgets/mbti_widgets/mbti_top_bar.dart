@@ -1,15 +1,13 @@
+// mbti_top_bar.dart
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
 import '../../core/app_assets.dart';
 import '../../widgets/asset_or_icon.dart';
-
-
 import '../../utils/mbti_layout.dart';
+
 //  BAGIAN 5 — KOMPONEN BAGIAN ATAS
 // Tombol kembali, tombol menu, dan progress soal.
-
-
 class TopBar extends StatelessWidget {
   const TopBar({
     required this.onBack,

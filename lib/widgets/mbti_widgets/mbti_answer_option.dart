@@ -1,4 +1,4 @@
-
+// mbti_answer_option.dart
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
@@ -7,11 +7,8 @@ import '../../core/app_assets.dart';
 import '../../utils/mbti_layout.dart';
 import '../asset_or_icon.dart';
 
-// =====================================================================
 // KOMPONEN PILIHAN JAWABAN MBTI
 // Menampilkan pilihan jawaban dengan ikon centang kustom.
-// =====================================================================
-
 class AnswerOption extends StatelessWidget {
   const AnswerOption({
     required this.label,

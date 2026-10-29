@@ -1,7 +1,7 @@
+// home_page.dart
 import 'package:flutter/material.dart';
 
 import 'test_mbti_page.dart';
-
 import '../core/app_colors.dart';
 import '../core/app_assets.dart';
 import '../utils/home_layout.dart';
@@ -12,9 +12,6 @@ import '../widgets/asset_or_icon.dart';
 import '../widgets/home_widgets/swipe_instruction.dart';
 import '../pages/sementara.dart';
 
-// =====================================================================
-// BAGIAN 2 — HALAMAN HOME
-// =====================================================================
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

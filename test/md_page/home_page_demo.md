@@ -1,20 +1,17 @@
-<!-- home_page.dart -->
+// home_page.dart
 import 'package:flutter/material.dart';
 
 import 'test_mbti_page.dart';
-
 import '../core/app_colors.dart';
 import '../core/app_assets.dart';
 import '../utils/home_layout.dart';
-import '../widgets/video_header.dart';
-import '../widgets/swipe_feature_button.dart';
-import '../widgets/custom_bottom_nav.dart';
+import '../widgets/home_widgets/video_header.dart';
+import '../widgets/home_widgets/swipe_feature_button.dart';
+import '../widgets/home_widgets/custom_bottom_nav.dart';
 import '../widgets/asset_or_icon.dart';
+import '../widgets/home_widgets/swipe_instruction.dart';
 import '../pages/sementara.dart';
 
-// =====================================================================
-// BAGIAN 2 — HALAMAN HOME
-// =====================================================================
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -61,6 +58,9 @@ class _HomePageState extends State<HomePage> {
         break;
       case 'theme':
         _openPage(const PlaceholderPage('Change Theme'));
+        break;
+      case 'music':
+        _openPage(const PlaceholderPage('Music Control'));
         break;
     }
   }
@@ -140,11 +140,23 @@ class _HomePageState extends State<HomePage> {
                             VideoHeader(
                               onMenuSelected: _handleMenuSelection,
                             ),
+                            // PETUNJUK SWIPE.
+                            SizedBox(
+                              height: HomeLayout.swipeInstructionSpacing,
+                            ),
 
-                            // PETUNJUK SWIPE DI ANTARA HEADER DAN FITUR.
-                            SizedBox(height: HomeLayout.headerToButton * 0.45),
-                            const _SwipeInstruction(),
-                            SizedBox(height: HomeLayout.headerToButton * 0.45),
+                            const SwipeInstruction(
+                              label: 'SWIPE KE KANAN TOMBOLNYA',
+                              assetPath: AppAssets.iconSwipe,
+                              fallbackIcon: Icons.swipe_right_alt_rounded,
+                              rightAssetPath: AppAssets.iconPanahSwipe,
+                              rightFallbackIcon: Icons.arrow_forward_rounded,
+                            ),
+
+                            SizedBox(
+                              height: HomeLayout.swipeInstructionSpacing,
+                            ),
+
 
                             // FITUR 1 — TEST MBTI
                             SwipeFeatureButton(
@@ -209,149 +221,12 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// =====================================================================
-// PETUNJUK SWIPE
-// =====================================================================
-
-
-class _SwipeInstruction extends StatelessWidget {
-  final String label;
-  final String? assetPath;
-  final IconData fallbackIcon;
-
-  const _SwipeInstruction({
-    this.label = 'SWIPE KE KANAN TOMBOLNYA',
-    this.assetPath,
-    this.fallbackIcon = Icons.swipe_right_rounded,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Ikon utama: gunakan asset jika tersedia.
-        AssetOrIcon(
-          assetPath: AppAssets.iconSwipe,
-          fallbackIcon: Icons.swipe_right_alt_rounded,
-          size: 16,
-        ),
-
-        const SizedBox(width: 7),
-        // Teks instruksi.
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.1,
-            color: AppColors.dark,
-          ),
-        ),
-
-        const SizedBox(width: 7),
-        // Ikon panah di sebelah kanan.
-        AssetOrIcon(
-          assetPath: AppAssets.iconPanahSwipe,
-          fallbackIcon: Icons.arrow_forward_rounded,
-          size: 16,
-        ),
-      ],
-    );
-  }
-}
-
-<!-- app_assets.dart -->
-// Lokasi gambar dan ikon.
-class AppAssets {
-  static const headerImage = 'assets/videos/amo.png';
-  static const logo = 'assets/home_page_assets/logo_HY_nobg.svg';
-
-  static const iconMbti = 'assets/home_page_assets/icon_test.svg';
-  static const iconPickOne = 'assets/home_page_assets/icon_pick.svg';
-  static const iconPuzzle = 'assets/home_page_assets/icon_puzzle.svg';
-
-  static const navHome = 'assets/home_page_assets/icon_home.svg';
-  static const navPets = 'assets/home_page_assets/icon_pet.svg';
-  static const navProfile = 'assets/home_page_assets/icon_profile.svg';
-
-  static const cat = 'assets/home_page_assets/kucing.png';
-
-    // Icon dropdown menu.
-  static const iconSettings = 'assets/home_page_assets/icon_settings.svg';
-  static const iconTheme = 'assets/home_page_assets/icon_dark_theme.svg';
-
-  // Icon informasi tengah
-  static const iconSwipe = 'assets/home_page_assets/icon_swipe.svg';
-  static const iconPanahSwipe = 'assets/home_page_assets/icon_panah_swipe.svg';
-
-  // Daftar gambar untuk carousel header.
-  static const List<String> headerImages = [
-    'assets/home_page_assets/preview_assets/contoh_1.png',
-    'assets/home_page_assets/preview_assets/HeYou_.png',
-    'assets/home_page_assets/preview_assets/contoh_1.png',
-    'assets/home_page_assets/preview_assets/HeYou_.png',
-  ];
-}
-
-
-<!-- app_colors.dart -->
-import 'package:flutter/material.dart';
-
-// BAGIAN 1 — PENGATURAN UTAMA
-
-class AppColors {
-  // Warna latar dan komponen utama.
-  static const background = Color(0xFFFCF1D0);
-  static const dark = Color(0xFF4B4242);
-  static const cream = Color(0xFFFCF1D0);
-
-  // Warna tombol fitur.
-  static const green = Color(0xFF7C9A83);
-  static const orange = Color(0xFFD58A65);
-  static const blue = Color(0xFF829AB1);
-
-  // Warna indikator navbar dan bingkai header.
-  static const navIndicator = Color(0xFF8C8987);
-  static const videoFrame = Color(0xFF4B4242);
-
-  // Warna latar tombol logo dan menu pada header.
-  static const overlay = Color(0xFFFCF1D0);
-}
-
-
-<!-- app_text.dart -->
-import 'package:flutter/material.dart';
-import '../core/app_colors.dart';
-// Pengaturan gaya tulisan.
-class AppText {
-  static const String? mainFont = null;
-
-  static const featureTitle = TextStyle(
-    fontFamily: mainFont,
-    fontSize: 15,
-    color: AppColors.cream,
-  );
-
-  static const navLabel = TextStyle(
-    fontFamily: 'monospace',
-    fontSize: 12,
-    letterSpacing: 0,
-    color: AppColors.cream,
-  );
-}
-
-
-
-<!-- home_layout.dart -->
+// home_layout.dart
 class HomeLayout {
-
   // LEBAR KOMPONEN
   static const double contentWidth = 0.90;
   static const double navbarWidth = 0.92;
   static const double catSize = 0.90;
-
 
   // JARAK VERTIKAL
   static const double topSpace = 24;
@@ -359,23 +234,19 @@ class HomeLayout {
   static const double buttonGap = 20;
   static const double bottomSpace = 12;
 
-
   // UKURAN KOMPONEN
   static const double headerAspectRatio = 536 / 284;
   static const double buttonHeight = 62;
   static const double navbarHeight = 60;
 
-
   // BENTUK KOMPONEN
   static const double headerRadius = 22;
   static const double headerBorder = 5;
 
-
   // UKURAN IKON
-  static const double featureIconSize = 30;
+  static const double featureIconSize = 32;
   static const double navIconSize = 22;
   static const double overlayButtonSize = 30;
-
 
   // POINTER NAVBAR
   static const double navIndicatorWidth = 0.68;
@@ -384,75 +255,20 @@ class HomeLayout {
   
   // Tombool Geser
   static const double trailLabelCenter = 0.33;
+
+  // PETUNJUK SWIPE
+  // Ukuran kedua ikon.
+  static const double swipeIconSize = 16;
+  static const double swipeIconGap = 7;
+  static const double swipeInstructionSpacing = 18;
 }
 
-
-<!-- asset_or_icon.dart -->
+// custom_bottom_nav.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// BAGIAN 4 — PEMUAT ASSET
-// Load assets dan backup fallback jika assets gagal dimuat
-
-class AssetOrIcon extends StatelessWidget {
-  const AssetOrIcon({
-    super.key,
-    required this.assetPath,
-    required this.fallbackIcon,
-    this.size = 24,
-    this.color,
-  });
-
-  final String assetPath;
-  final IconData fallbackIcon;
-  final double size;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    // SVG dirender menggunakan flutter_svg.
-    if (assetPath.toLowerCase().endsWith('.svg')) {
-      return SvgPicture.asset(
-        assetPath,
-        width: size,
-        height: size,
-        fit: BoxFit.contain,
-        colorFilter: color == null
-            ? null
-            : ColorFilter.mode(color!, BlendMode.srcIn),
-        placeholderBuilder: (_) => Icon(
-          fallbackIcon,
-          size: size,
-          color: color,
-        ),
-      );
-    }
-
-    // PNG, JPG, dan format gambar biasa.
-    return Image.asset(
-      assetPath,
-      width: size,
-      height: size,
-      fit: BoxFit.contain,
-      color: color,
-      errorBuilder: (_, __, ___) => Icon(
-        fallbackIcon,
-        size: size,
-        color: color,
-      ),
-    );
-  }
-}
-
-
-
-<!-- custom_bottom_nav.dart -->
-import 'package:flutter/material.dart';
-import '../utils/home_layout.dart';
-import '../core/app_colors.dart';
-import '../widgets/asset_or_icon.dart';
-import '../core/app_text.dart';
-// BAGIAN 7 — NAVBAR BAWAH
-// Indikator abu-abu bergerak mengikuti menu yang dipilih.
+import '../../utils/home_layout.dart';
+import '../../core/app_colors.dart';
+import '../asset_or_icon.dart';
+import '../../core/app_text.dart';
 
 // Data untuk satu item navbar.
 class NavItemData {
@@ -572,19 +388,16 @@ class CustomBottomNav extends StatelessWidget {
     );
   }
 }
- 
 
-<!-- swipe_feature_button.dart -->
+// swipe_feature_button.dart
 import 'package:flutter/material.dart';
 
-import '../core/app_colors.dart';
-import '../core/app_text.dart';
-import '../utils/home_layout.dart';
-import '../widgets/asset_or_icon.dart';
-// BAGIAN 6 — TOMBOL FITUR SWIPE
+import '../../core/app_colors.dart';
+import '../../core/app_text.dart';
+import '../../utils/home_layout.dart';
+import '../asset_or_icon.dart';
+// TOMBOL FITUR SWIPE
 // Geser bulatan ke kanan untuk membuka halaman
-
-
 class SwipeFeatureButton extends StatefulWidget {
   const SwipeFeatureButton({
     super.key,
@@ -592,7 +405,7 @@ class SwipeFeatureButton extends StatefulWidget {
     required this.assetPath,
     required this.fallbackIcon,
     required this.color,
-    this.border, // Border tambahan bersifat opsional.
+    this.border,
     required this.onCompleted,
   });
 
@@ -600,7 +413,7 @@ class SwipeFeatureButton extends StatefulWidget {
   final String assetPath;
   final IconData fallbackIcon;
   final Color color;
-  final Border? border; // Properti border baru.
+  final Border? border;
   final VoidCallback onCompleted;
 
   @override
@@ -608,38 +421,27 @@ class SwipeFeatureButton extends StatefulWidget {
       _SwipeFeatureButtonState();
 }
 
-
-
 class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
   // Ukuran tombol diambil dari pengaturan utama.
   static const double _height = HomeLayout.buttonHeight;
- 
   // Jarak bulatan dan jejak warna dari tepi bingkai cokelat.
   static const double _padding = 10;
- 
   // Persentase geseran minimum agar dianggap berhasil.
   static const double _threshold = 0.70;
- 
   // Durasi animasi ketika tombol kembali ke posisi awal.
   static const Duration _resetDuration = Duration(milliseconds: 250);
- 
   // Durasi animasi sebelum halaman tujuan dibuka.
   static const Duration _openingDuration = Duration(milliseconds: 250);
- 
   // Posisi horizontal bulatan yang sedang digeser.
   double _dx = 0;
- 
   // Menandakan apakah pengguna sedang menggeser bulatan.
   bool _dragging = false;
- 
   // Mencegah pengguna memicu navigasi berulang kali.
   bool _opening = false;
- 
   // Mengatur animasi ketika pengguna melepas bulatan.
   Future<void> _onDragEnd(double maxDx) async {
     // Mencegah pemicu ganda ketika proses navigasi berlangsung.
     if (_opening) return;
- 
     // Periksa apakah geseran sudah mencapai batas minimum.
     if (_dx >= maxDx * _threshold) {
       // Geseran berhasil: bulatan meluncur ke ujung kanan.
@@ -651,19 +453,14 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
  
       // Beri waktu agar animasi geseran terlihat.
       await Future.delayed(_openingDuration);
- 
       // Hentikan proses jika widget sudah tidak digunakan.
       if (!mounted) return;
- 
       // Jalankan navigasi menuju halaman yang ditentukan HomePage.
       widget.onCompleted();
- 
       // Tunggu sebentar sebelum mengatur ulang posisi tombol.
       await Future.delayed(const Duration(milliseconds: 400));
- 
       // Pastikan widget masih aktif sebelum memperbarui tampilannya.
       if (!mounted) return;
- 
       // Kembalikan tombol ke posisi awal.
       setState(() {
         _dx = 0;
@@ -683,18 +480,14 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final buttonWidth = constraints.maxWidth;
- 
         // Lebar bulatan menyesuaikan lebar tombol.
         final knobWidth = buttonWidth * 0.28;
- 
         // Hitung jarak maksimal bulatan hingga ujung kanan.
         final maxDx = (
           buttonWidth - _padding * 2 - knobWidth
         ).clamp(0.0, double.infinity).toDouble();
- 
         // Lebar jejak warna = dari tepi kiri sampai ujung kanan bulatan.
         final trailWidth = _dx + knobWidth;
- 
         // Bentuk pil bagian dalam (jejak warna dan bulatan).
         final innerRadius = BorderRadius.circular(
           (_height - _padding * 2) / 2,
@@ -704,10 +497,8 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
         // tombol, sehingga titik tengahnya = buttonWidth * trailLabelCenter.
         final trailLabelAreaWidth =
             buttonWidth * HomeLayout.trailLabelCenter * 2;
- 
         // Saat digeser, animasi dimatikan agar mengikuti jari.
         final animDuration = _dragging ? Duration.zero : _resetDuration;
- 
         return Container(
           height: _height,
  
@@ -835,23 +626,80 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
   }
 }
 
-
-
-<!-- video_header.dart -->
-import 'dart:async';
-
+// swipe_instruction.dart
 import 'package:flutter/material.dart';
 
-import '../core/app_colors.dart';
-import '../core/app_assets.dart';
-import '../utils/home_layout.dart';
-import 'asset_or_icon.dart';
+import '../../core/app_assets.dart';
+import '../../core/app_colors.dart';
+import '../../core/app_text.dart';
+import '../../utils/home_layout.dart';
+import '../asset_or_icon.dart';
 
-// =====================================================================
+// SWIPE INSTRUCTION
+// Widget petunjuk swipe yang pengaturannya diambil dari file lain.
+class SwipeInstruction extends StatelessWidget {
+  const SwipeInstruction({
+    super.key,
+    this.label = 'SWIPE KE KANAN TOMBOLNYA',
+    this.assetPath = AppAssets.iconSwipe,
+    this.fallbackIcon = Icons.swipe_right_alt_rounded,
+    this.rightAssetPath = AppAssets.iconPanahSwipe,
+    this.rightFallbackIcon = Icons.arrow_forward_rounded,
+  });
+
+  // Pengaturan yang dapat diubah saat widget dipanggil.
+  final String label;
+  final String assetPath;
+  final IconData fallbackIcon;
+  final String rightAssetPath;
+  final IconData rightFallbackIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Ikon kiri.
+        AssetOrIcon(
+          assetPath: assetPath,
+          fallbackIcon: fallbackIcon,
+          size: HomeLayout.swipeIconSize,
+          color: AppColors.dark,
+        ),
+
+        SizedBox(width: HomeLayout.swipeIconGap),
+
+        // Label petunjuk.
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: AppText.swipeInstruction,
+        ),
+
+        SizedBox(width: HomeLayout.swipeIconGap),
+
+        // Ikon kanan.
+        AssetOrIcon(
+          assetPath: rightAssetPath,
+          fallbackIcon: rightFallbackIcon,
+          size: HomeLayout.swipeIconSize,
+        ),
+      ],
+    );
+  }
+}
+
+// video_header.dart
+import 'dart:async';
+import 'package:flutter/material.dart';
+
+import '../../core/app_colors.dart';
+import '../../core/app_assets.dart';
+import '../../utils/home_layout.dart';
+import '../asset_or_icon.dart';
+
 // HEADER CAROUSEL
 // Gambar berganti otomatis dan dapat di-swipe secara manual.
-// =====================================================================
-
 class VideoHeader extends StatefulWidget {
   const VideoHeader({
     super.key,
@@ -860,7 +708,6 @@ class VideoHeader extends StatefulWidget {
 
   // Callback ketika pengguna memilih dropdown.
   final ValueChanged<String>? onMenuSelected;
-
   @override
   State<VideoHeader> createState() => _VideoHeaderState();
 }
@@ -868,17 +715,13 @@ class VideoHeader extends StatefulWidget {
 class _VideoHeaderState extends State<VideoHeader> {
   // Controller untuk mengatur perpindahan gambar.
   final PageController _pageController = PageController();
-
   // Timer pergantian gambar otomatis.
   Timer? _autoPlayTimer;
-
   // Indeks halaman yang sedang ditampilkan.
   int _currentPage = 0;
-
   // Jeda sebelum gambar berikutnya muncul.
   static const Duration _autoPlayInterval =
-      Duration(seconds: 4);
-
+      Duration(seconds: 5);
   // Durasi animasi perpindahan gambar.
   static const Duration _animationDuration =
       Duration(milliseconds: 600);
@@ -954,10 +797,7 @@ class _VideoHeaderState extends State<VideoHeader> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // =========================================================
             // 1. CAROUSEL GAMBAR
-            // =========================================================
-
             ClipRRect(
               borderRadius: BorderRadius.circular(
                 HomeLayout.headerRadius -
@@ -965,10 +805,8 @@ class _VideoHeaderState extends State<VideoHeader> {
               ),
               child: PageView.builder(
                 controller: _pageController,
-
                 // Tanpa batas halaman agar bisa berulang terus.
                 itemCount: null,
-
                 // Dipanggil saat halaman berubah.
                 onPageChanged: _onPageChanged,
 
@@ -997,10 +835,7 @@ class _VideoHeaderState extends State<VideoHeader> {
               ),
             ),
 
-            // =========================================================
             // 2. LOGO KIRI ATAS
-            // =========================================================
-
             Positioned(
               top: 8,
               left: 8,
@@ -1013,10 +848,7 @@ class _VideoHeaderState extends State<VideoHeader> {
               ),
             ),
 
-            // =========================================================
             // 3. DROPDOWN KANAN ATAS
-            // =========================================================
-
             Positioned(
               top: 8,
               right: 8,
@@ -1024,7 +856,6 @@ class _VideoHeaderState extends State<VideoHeader> {
                 tooltip: 'Pengaturan aplikasi',
                 color: const Color(0xFFFCF1D0),
                 surfaceTintColor: Colors.transparent,
-
                 // Kirim pilihan ke HomePage.
                 onSelected: (value) {
                   widget.onMenuSelected?.call(value);
@@ -1039,7 +870,7 @@ class _VideoHeaderState extends State<VideoHeader> {
                         AssetOrIcon(
                           assetPath: AppAssets.iconSettings,
                           fallbackIcon: Icons.settings_outlined,
-                          size: 22,
+                          size: 20,
                           color: AppColors.dark,
                         ),
                         const SizedBox(width: 12),
@@ -1061,12 +892,33 @@ class _VideoHeaderState extends State<VideoHeader> {
                         AssetOrIcon(
                           assetPath: AppAssets.iconTheme,
                           fallbackIcon: Icons.palette_outlined,
-                          size: 22,
+                          size: 20,
                           color: AppColors.dark,
                         ),
                         const SizedBox(width: 12),
                         const Text(
                           'Dark theme',
+                          style: TextStyle(
+                            color: AppColors.dark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  PopupMenuItem<String>(
+                    value: 'music',
+                    child: Row(
+                      children: [
+                        AssetOrIcon(
+                          assetPath: AppAssets.iconMusic,
+                          fallbackIcon: Icons.library_music_rounded,
+                          size: 20,
+                          color: AppColors.dark,
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Backsound Music',
                           style: TextStyle(
                             color: AppColors.dark,
                           ),
@@ -1099,10 +951,7 @@ class _VideoHeaderState extends State<VideoHeader> {
   }
 }
 
-// =====================================================================
 // TOMBOL OVERLAY UNTUK LOGO
-// =====================================================================
-
 class _OverlayButton extends StatelessWidget {
   const _OverlayButton({
     required this.child,

@@ -1,6 +1,5 @@
-
+// video_header.dart
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
@@ -8,11 +7,8 @@ import '../../core/app_assets.dart';
 import '../../utils/home_layout.dart';
 import '../asset_or_icon.dart';
 
-// =====================================================================
 // HEADER CAROUSEL
 // Gambar berganti otomatis dan dapat di-swipe secara manual.
-// =====================================================================
-
 class VideoHeader extends StatefulWidget {
   const VideoHeader({
     super.key,
@@ -21,7 +17,6 @@ class VideoHeader extends StatefulWidget {
 
   // Callback ketika pengguna memilih dropdown.
   final ValueChanged<String>? onMenuSelected;
-
   @override
   State<VideoHeader> createState() => _VideoHeaderState();
 }
@@ -29,17 +24,13 @@ class VideoHeader extends StatefulWidget {
 class _VideoHeaderState extends State<VideoHeader> {
   // Controller untuk mengatur perpindahan gambar.
   final PageController _pageController = PageController();
-
   // Timer pergantian gambar otomatis.
   Timer? _autoPlayTimer;
-
   // Indeks halaman yang sedang ditampilkan.
   int _currentPage = 0;
-
   // Jeda sebelum gambar berikutnya muncul.
   static const Duration _autoPlayInterval =
       Duration(seconds: 5);
-
   // Durasi animasi perpindahan gambar.
   static const Duration _animationDuration =
       Duration(milliseconds: 600);
@@ -115,10 +106,7 @@ class _VideoHeaderState extends State<VideoHeader> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // =========================================================
             // 1. CAROUSEL GAMBAR
-            // =========================================================
-
             ClipRRect(
               borderRadius: BorderRadius.circular(
                 HomeLayout.headerRadius -
@@ -126,10 +114,8 @@ class _VideoHeaderState extends State<VideoHeader> {
               ),
               child: PageView.builder(
                 controller: _pageController,
-
                 // Tanpa batas halaman agar bisa berulang terus.
                 itemCount: null,
-
                 // Dipanggil saat halaman berubah.
                 onPageChanged: _onPageChanged,
 
@@ -158,10 +144,7 @@ class _VideoHeaderState extends State<VideoHeader> {
               ),
             ),
 
-            // =========================================================
             // 2. LOGO KIRI ATAS
-            // =========================================================
-
             Positioned(
               top: 8,
               left: 8,
@@ -174,10 +157,7 @@ class _VideoHeaderState extends State<VideoHeader> {
               ),
             ),
 
-            // =========================================================
             // 3. DROPDOWN KANAN ATAS
-            // =========================================================
-
             Positioned(
               top: 8,
               right: 8,
@@ -185,7 +165,6 @@ class _VideoHeaderState extends State<VideoHeader> {
                 tooltip: 'Pengaturan aplikasi',
                 color: const Color(0xFFFCF1D0),
                 surfaceTintColor: Colors.transparent,
-
                 // Kirim pilihan ke HomePage.
                 onSelected: (value) {
                   widget.onMenuSelected?.call(value);
@@ -281,10 +260,7 @@ class _VideoHeaderState extends State<VideoHeader> {
   }
 }
 
-// =====================================================================
 // TOMBOL OVERLAY UNTUK LOGO
-// =====================================================================
-
 class _OverlayButton extends StatelessWidget {
   const _OverlayButton({
     required this.child,

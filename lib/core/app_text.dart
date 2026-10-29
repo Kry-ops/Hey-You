@@ -1,7 +1,9 @@
+// app_text.dart
 import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
 // Pengaturan gaya tulisan.
 class AppText {
+  // Home Page
   static const String? mainFont = null;
 
   static const featureTitle = TextStyle(
@@ -17,7 +19,6 @@ class AppText {
     color: AppColors.cream,
   );
 
-  
   // Gaya teks petunjuk swipe.
   static const swipeInstruction = TextStyle(
     fontFamily: mainFont,

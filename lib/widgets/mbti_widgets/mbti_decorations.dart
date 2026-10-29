@@ -1,11 +1,12 @@
+// mbti_decoration.dart
 import 'package:flutter/material.dart';
 
 import '../../core/app_assets.dart';
 import '../../widgets/asset_or_icon.dart';
 
 import '../../utils/mbti_layout.dart';
-// Dekorasi di belakang konten. Tidak menerima sentuhan.
 
+// Dekorasi di belakang konten. Tidak menerima sentuhan.
 class Decorations extends StatelessWidget {
   const Decorations({required this.width, required this.height});
   final double width;

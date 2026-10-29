@@ -1,13 +1,12 @@
+// swipe_feature_button.dart
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
 import '../../core/app_text.dart';
 import '../../utils/home_layout.dart';
 import '../asset_or_icon.dart';
-// BAGIAN 6 — TOMBOL FITUR SWIPE
+// TOMBOL FITUR SWIPE
 // Geser bulatan ke kanan untuk membuka halaman
-
-
 class SwipeFeatureButton extends StatefulWidget {
   const SwipeFeatureButton({
     super.key,
@@ -15,7 +14,7 @@ class SwipeFeatureButton extends StatefulWidget {
     required this.assetPath,
     required this.fallbackIcon,
     required this.color,
-    this.border, // Border tambahan bersifat opsional.
+    this.border,
     required this.onCompleted,
   });
 
@@ -23,7 +22,7 @@ class SwipeFeatureButton extends StatefulWidget {
   final String assetPath;
   final IconData fallbackIcon;
   final Color color;
-  final Border? border; // Properti border baru.
+  final Border? border;
   final VoidCallback onCompleted;
 
   @override
@@ -31,38 +30,27 @@ class SwipeFeatureButton extends StatefulWidget {
       _SwipeFeatureButtonState();
 }
 
-
-
 class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
   // Ukuran tombol diambil dari pengaturan utama.
   static const double _height = HomeLayout.buttonHeight;
- 
   // Jarak bulatan dan jejak warna dari tepi bingkai cokelat.
   static const double _padding = 10;
- 
   // Persentase geseran minimum agar dianggap berhasil.
   static const double _threshold = 0.70;
- 
   // Durasi animasi ketika tombol kembali ke posisi awal.
   static const Duration _resetDuration = Duration(milliseconds: 250);
- 
   // Durasi animasi sebelum halaman tujuan dibuka.
   static const Duration _openingDuration = Duration(milliseconds: 250);
- 
   // Posisi horizontal bulatan yang sedang digeser.
   double _dx = 0;
- 
   // Menandakan apakah pengguna sedang menggeser bulatan.
   bool _dragging = false;
- 
   // Mencegah pengguna memicu navigasi berulang kali.
   bool _opening = false;
- 
   // Mengatur animasi ketika pengguna melepas bulatan.
   Future<void> _onDragEnd(double maxDx) async {
     // Mencegah pemicu ganda ketika proses navigasi berlangsung.
     if (_opening) return;
- 
     // Periksa apakah geseran sudah mencapai batas minimum.
     if (_dx >= maxDx * _threshold) {
       // Geseran berhasil: bulatan meluncur ke ujung kanan.
@@ -74,19 +62,14 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
  
       // Beri waktu agar animasi geseran terlihat.
       await Future.delayed(_openingDuration);
- 
       // Hentikan proses jika widget sudah tidak digunakan.
       if (!mounted) return;
- 
       // Jalankan navigasi menuju halaman yang ditentukan HomePage.
       widget.onCompleted();
- 
       // Tunggu sebentar sebelum mengatur ulang posisi tombol.
       await Future.delayed(const Duration(milliseconds: 400));
- 
       // Pastikan widget masih aktif sebelum memperbarui tampilannya.
       if (!mounted) return;
- 
       // Kembalikan tombol ke posisi awal.
       setState(() {
         _dx = 0;
@@ -106,18 +89,14 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final buttonWidth = constraints.maxWidth;
- 
         // Lebar bulatan menyesuaikan lebar tombol.
         final knobWidth = buttonWidth * 0.28;
- 
         // Hitung jarak maksimal bulatan hingga ujung kanan.
         final maxDx = (
           buttonWidth - _padding * 2 - knobWidth
         ).clamp(0.0, double.infinity).toDouble();
- 
         // Lebar jejak warna = dari tepi kiri sampai ujung kanan bulatan.
         final trailWidth = _dx + knobWidth;
- 
         // Bentuk pil bagian dalam (jejak warna dan bulatan).
         final innerRadius = BorderRadius.circular(
           (_height - _padding * 2) / 2,
@@ -127,10 +106,8 @@ class _SwipeFeatureButtonState extends State<SwipeFeatureButton> {
         // tombol, sehingga titik tengahnya = buttonWidth * trailLabelCenter.
         final trailLabelAreaWidth =
             buttonWidth * HomeLayout.trailLabelCenter * 2;
- 
         // Saat digeser, animasi dimatikan agar mengikuti jari.
         final animDuration = _dragging ? Duration.zero : _resetDuration;
- 
         return Container(
           height: _height,
  

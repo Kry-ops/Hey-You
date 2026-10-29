@@ -1,8 +1,9 @@
+// asset_or_icon.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// BAGIAN 4 — PEMUAT ASSET
-// Load assets dan backup fallback jika assets gagal dimuat
 
+// PEMUAT ASSET .SVG
+// Load assets dan backup fallback jika assets gagal dimuat
 class AssetOrIcon extends StatelessWidget {
   const AssetOrIcon({
     super.key,

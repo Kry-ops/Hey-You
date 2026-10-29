@@ -1,6 +1,5 @@
+// app_color.dart
 import 'package:flutter/material.dart';
-
-// BAGIAN 1 — PENGATURAN UTAMA
 
 class AppColors {
   // HOME PAGE
@@ -20,6 +19,8 @@ class AppColors {
 
   // Warna latar tombol logo dan menu pada header.
   static const overlay = Color(0xFFFCF1D0);
+
+
 
   // MBTI Page
   // Tambahkan ke class AppColors yang sudah ada.

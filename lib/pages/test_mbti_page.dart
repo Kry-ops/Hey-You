@@ -1,3 +1,4 @@
+// test_mbti_page.dart
 import 'package:flutter/material.dart';
 
 import '../core/app_colors.dart';
@@ -11,12 +12,6 @@ import '../widgets/mbti_widgets/mbti_next_bar.dart';
 import '../widgets/mbti_widgets/mbti_progress.dart';
 import '../widgets/mbti_widgets/mbti_top_bar.dart';
 
-
-
-
-
-// BAGIAN 4 — HALAMAN TEST MBTI
-// Mengatur alur: soal -> istirahat (tiap 20 soal) -> hasil.
 
 enum _Phase { intro, question, rest, result }
 
@@ -91,8 +86,6 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
   }
 
   void _handleNext() {
-    // Soal harus dijawab dulu sebelum lanjut.
-// Tampilkan pop-up jika soal belum dijawab.
     if (_answers[_index] == null) {
       showDialog<void>(
         context: context,
@@ -182,7 +175,6 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
       _phase = _Phase.question;
     });
   }
-//     (setelah "Ulangi Tes", kartu awal muncul lagi lengkap dengan tirainya):
  
   void _restart() {
     setState(() {
@@ -193,11 +185,6 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
     });
   }
 
-  // ---------------------------------------------------------------------
-// LANGKAH 5 — GANTI seluruh method `_buildBody` dengan ini.
-// Perubahan: ada case intro, dan kartu hasil dibungkus _CurtainReveal.
-// `key` wajib ada agar animasi diulang setiap kartunya muncul kembali.
-// ---------------------------------------------------------------------
  
   List<Widget> _buildBody() {
     switch (_phase) {
