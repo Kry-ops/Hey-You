@@ -12,6 +12,9 @@ import '../widgets/asset_or_icon.dart';
 import '../widgets/home_widgets/swipe_instruction.dart';
 import '../pages/sementara.dart';
 
+import '../service/audio_manager.dart';
+import '../widgets/music_widgets/music_popup.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,6 +46,14 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
+  // untuk musik  
+  @override
+  void initState() {
+    super.initState();
+
+    // Mulai backsound saat Home pertama kali dibuka.
+    AudioManager.instance.startIfNeeded();
+  }
   // Membuka halaman tujuan.
   void _openPage(Widget page) {
     Navigator.of(context).push(
@@ -60,7 +71,11 @@ class _HomePageState extends State<HomePage> {
         _openPage(const PlaceholderPage('Change Theme'));
         break;
       case 'music':
-        _openPage(const PlaceholderPage('Music Control'));
+        showDialog<void>(
+          context: context,
+          barrierDismissible: true,
+          builder: (_) => const MusicPopup(),
+          );
         break;
     }
   }
