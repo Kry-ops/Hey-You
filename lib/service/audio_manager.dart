@@ -40,7 +40,9 @@ class AudioManager {
   // DAFTAR BACKSOUND
   // Path dimulai dari dalam folder assets/, bukan assets/
   // ==========================================================
-
+  // - assets/music_assets/backsound_music_assets/cc2_music_by_andriih.mp3
+  // - assets/music_assets/backsound_music_assets/soft_chillhop_by_desifreemusic.mp3
+  // - assets/music_assets/backsound_music_assets/bookshop_afternoon_by_alex_morgan.mp3
   static const List<MusicTrack> tracks = [
     MusicTrack(
       id: 'split_memmories',
@@ -49,11 +51,43 @@ class AudioManager {
       asset:
           'music_assets/backsound_music_assets/split_memmories_by_idoberg.mp3',
     ),
+    MusicTrack(
+      id: 'cc1',
+      title: 'Chill Cozy 1',
+      artist: 'Andriih',
+      asset:
+          'music_assets/backsound_music_assets/cc1_music_by_andriih.mp3',
+    ),
+    MusicTrack(
+      id: 'cc2',
+      title: 'Chill Cozy 2',
+      artist: 'Andriih',
+      asset:
+          'music_assets/backsound_music_assets/cc2_music_by_andriih.mp3',
+    ),
+    MusicTrack(
+      id: 'soft_chillhop',
+      title: 'Soft Chillhop',
+      artist: 'Desifreemusic',
+      asset:
+          'music_assets/backsound_music_assets/soft_chillhop_by_desifreemusic.mp3',
+    ),
+    MusicTrack(
+      id: 'bookshop_afternoon',
+      title: 'Bookshop Afternoon',
+      artist: 'Alex Morgan',
+      asset:
+          'music_assets/backsound_music_assets/bookshop_afternoon_by_alex_morgan.mp3',
+    ),
   ];
 
-  // Lagu yang dicentang secara default.
+  // ID Lagu yang dicentang secara default.
   final Set<String> _selectedIds = {
+    'cc1',
+    'cc2',
     'split_memmories',
+    'soft_chillhop',
+    'bookshop_afternoon',
   };
 
   Set<String> get selectedIds => Set.unmodifiable(_selectedIds);

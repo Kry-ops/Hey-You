@@ -33,7 +33,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
   int get _answeredCount => _answers.where((a) => a != null).length;
   // Tombol kembali: beri konfirmasi jika sudah ada soal yang dijawab.
   Future<void> _handleBack() async {
-    AudioManager.instance.playEffect('assets/music_assets/mbti_sound_assets/back_sound.MP3');
+    AudioManager.instance.playEffect('music_assets/mbti_sound_assets/back_sound.mp3');
     if (_phase == _Phase.result || _answeredCount == 0) {
       Navigator.of(context).pop();
       return;
@@ -76,7 +76,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
 
   void _selectAnswer(int optionIndex) {
     // Efek suara saat jawaban dipilih.
-    AudioManager.instance.playEffect('assets/music_assets/mbti_sound_assets/pencil_sound.MP3');
+    AudioManager.instance.playEffect('music_assets/mbti_sound_assets/pencil_sound.mp3');
 
     setState(() {
       _answers[_index] = optionIndex;
@@ -171,7 +171,7 @@ class _TestMbtiPageState extends State<TestMbtiPage> {
   }
   // Dari layar istirahat: lanjut ke soal berikutnya.
   void _continueAfterRest() {
-    AudioManager.instance.playEffect('assets/music_assets/mbti_sound_assets/next_sound.MP3');
+    AudioManager.instance.playEffect('music_assets/mbti_sound_assets/next_sound.mp3');
     setState(() {
       _index++;
       _phase = _Phase.question;
