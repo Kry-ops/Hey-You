@@ -6,6 +6,8 @@ import '../../core/app_assets.dart';
 import '../../widgets/asset_or_icon.dart';
 import '../../utils/mbti_layout.dart';
 
+import '../music_widgets/music_popup.dart';
+
 //  BAGIAN 5 — KOMPONEN BAGIAN ATAS
 // Tombol kembali, tombol menu, dan progress soal.
 class TopBar extends StatelessWidget {
@@ -123,6 +125,12 @@ class TopBar extends StatelessWidget {
                     ),
                   ],
                 ),
+              );
+            } else if (value == 'music') {
+              showDialog<void>(
+                context: context,
+                barrierDismissible: true,
+                builder: (_) => const MusicPopup(),
               );
             }
           },
