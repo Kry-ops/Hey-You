@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
+import '../../core/app_assets.dart';
+import '../../widgets/asset_or_icon.dart';
 import '../../service/audio_manager.dart';
 
 class MusicPopup extends StatefulWidget {
@@ -109,28 +111,17 @@ class _MusicPopupState extends State<MusicPopup> {
                             children: [
                               SizedBox(
                                 width: 28,
-                                child: Checkbox(
+                                child: _MusicCheckbox(
                                   value: checked,
                                   onChanged: (value) {
                                     setState(() {
-                                      if (value == true) {
+                                      if (value) {
                                         _draftSelection.add(track.id);
                                       } else {
                                         _draftSelection.remove(track.id);
                                       }
                                     });
                                   },
-                                  activeColor: AppColors.green,
-                                  checkColor: AppColors.cream,
-                                  side: BorderSide.none,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(6),
-                                  ),
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                  visualDensity:
-                                      VisualDensity.compact,
                                 ),
                               ),
 
@@ -290,8 +281,7 @@ class _MusicPopupState extends State<MusicPopup> {
                               overlayRadius: 8,
                             ),
                             activeTrackColor: AppColors.green,
-                            inactiveTrackColor: AppColors.dark
-                                .withValues(alpha: 0.3),
+                            inactiveTrackColor: AppColors.dark,
                             thumbColor: AppColors.green,
                           ),
                           child: Slider(
@@ -360,6 +350,57 @@ class _MusicPopupState extends State<MusicPopup> {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+
+// =====================================================================
+// CUSTOM MUSIC CHECKBOX
+// =====================================================================
+
+class _MusicCheckbox extends StatelessWidget {
+  const _MusicCheckbox({
+    required this.value,
+    required this.onChanged,
+  });
+
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onChanged(!value),
+      child: SizedBox(
+        width: 28,
+        height: 28,
+        child: Center(
+          child: Container(
+            width: 22,
+            height: 22,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: value
+                  ? AppColors.cream
+                  : Colors.transparent,
+              border: Border.all(
+                color: AppColors.dark,
+                width: 1.8,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: value
+                ? AssetOrIcon(
+                    assetPath: AppAssets.iconCheck,
+                    fallbackIcon: Icons.check_rounded,
+                    size: 17,
+                    color: AppColors.dark,
+                  )
+                : null,
+          ),
+        ),
       ),
     );
   }
