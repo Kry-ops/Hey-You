@@ -382,12 +382,10 @@ class _MusicCheckbox extends StatelessWidget {
             height: 22,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: value
-                  ? AppColors.cream
-                  : Colors.transparent,
+              color: AppColors.cream,
               border: Border.all(
                 color: AppColors.dark,
-                width: 1.8,
+                width: 1.5,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
@@ -396,7 +394,7 @@ class _MusicCheckbox extends StatelessWidget {
                     assetPath: AppAssets.iconCheck,
                     fallbackIcon: Icons.check_rounded,
                     size: 17,
-                    color: AppColors.dark,
+                    color: AppColors.green,
                   )
                 : null,
           ),
