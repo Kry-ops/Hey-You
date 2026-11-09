@@ -342,7 +342,7 @@ class ResultCard extends StatelessWidget {
           Text(outcome.type, style: AppText.bigCode),
           Text(
             result?.title ?? '',
-            style: AppText.heading.copyWith(color: AppColors.orange),
+            style: AppText.heading.copyWith(color: AppColors.green),
           ),
           const SizedBox(height: 14),
           Text(
