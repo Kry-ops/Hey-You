@@ -244,7 +244,7 @@ class AudioManager {
   // ==========================================================
 
   Future<void> playEffect(String fileName) async {
-    await _effectPlayer.play(
+      await _effectPlayer.play(
       AssetSource('music_assets/$fileName'),
       volume: 0.75,
     );

@@ -115,9 +115,9 @@ flutter:
   - assets/music_assets/backsound_music_assets/soft_chillhop_by_desifreemusic.mp3
   - assets/music_assets/backsound_music_assets/bookshop_afternoon_by_alex_morgan.mp3
   # Sound Effect Assets
-  - assets/music_assets/mbti_sound_assets/back_sound.mp3
-  - assets/music_assets/mbti_sound_assets/next_sound.mp3
-  - assets/music_assets/mbti_sound_assets/pencil_sound.mp3
+  - assets/music_assets/mbti_sound_assets/back_sound.MP3
+  - assets/music_assets/mbti_sound_assets/next_sound.MP3
+  - assets/music_assets/mbti_sound_assets/pencil_sound.MP3
 
 
 
