@@ -26,7 +26,7 @@ class MbtiConfig {
   // Teks kartu awal.
   static const String introTitle = 'Test MBTI';
   static const String introDescription =
-      'Test mbti ini adalah hasil buatan manusia yang bukan seorang psikolog melainkan seorang software engineer.' ' Jadi jangan jadikan hasilnya sebagai patokan karena saya ga mau tanggung jawab.' ;
+      'Test mbti ini adalah hasil buatan manusia yang bukan seorang psikolog melainkan seorang calon presiden ke sembilan.' ' Jadi jangan jadikan hasilnya sebagai patokan karena saya ga mau tanggung jawab (っ °Д °;)っ' ;
 
   // Lama animasi tirai jatuh (kartu awal dan kartu hasil).
   static const Duration curtainDuration = Duration(milliseconds: 1400);
