@@ -34,7 +34,7 @@ class AudioManager {
   static final AudioManager instance = AudioManager._();
 
   final AudioPlayer _musicPlayer = AudioPlayer();
-  final AudioPlayer _effectPlayer = AudioPlayer();
+  // final AudioPlayer _effectPlayer = AudioPlayer();
 
   // ==========================================================
   // DAFTAR BACKSOUND
@@ -243,10 +243,10 @@ class AudioManager {
   // SOUND EFFECT MBTI
   // ==========================================================
 
-  Future<void> playEffect(String fileName) async {
-      await _effectPlayer.play(
-      AssetSource('music_assets/$fileName'),
-      volume: 0.75,
-    );
-  }
+  // Future<void> playEffect(String fileName) async {
+  //     await _effectPlayer.play(
+  //     AssetSource('$fileName'),
+  //     volume: 0.75,
+  //   );
+  // }
 }
