@@ -46,36 +46,36 @@ class AudioManager {
   static const List<MusicTrack> tracks = [
     MusicTrack(
       id: 'split_memmories',
-      title: 'Split Memmories',
-      artist: 'Idoberg',
+      title: 'Kesukaan gueh #1',
+      artist: 'A',
       asset:
           'music_assets/backsound_music_assets/split_memmories_by_idoberg.mp3',
     ),
     MusicTrack(
       id: 'cc1',
-      title: 'Chill Cozy 1',
-      artist: 'Andriih',
+      title: 'Kesukaan gueh #2',
+      artist: 'A',
       asset:
           'music_assets/backsound_music_assets/cc1_music_by_andriih.mp3',
     ),
     MusicTrack(
       id: 'cc2',
-      title: 'Chill Cozy 2',
-      artist: 'Andriih',
+      title: 'Kesukaan gueh #3',
+      artist: 'A',
       asset:
           'music_assets/backsound_music_assets/cc2_music_by_andriih.mp3',
     ),
     MusicTrack(
       id: 'soft_chillhop',
-      title: 'Soft Chillhop',
-      artist: 'Desifreemusic',
+      title: 'Kesukaan gueh #4 ',
+      artist: 'A',
       asset:
           'music_assets/backsound_music_assets/soft_chillhop_by_desifreemusic.mp3',
     ),
     MusicTrack(
       id: 'bookshop_afternoon',
-      title: 'Bookshop Afternoon',
-      artist: 'Alex Morgan',
+      title: 'Kesukaan gueh #1',
+      artist: 'A',
       asset:
           'music_assets/backsound_music_assets/bookshop_afternoon_by_alex_morgan.mp3',
     ),
